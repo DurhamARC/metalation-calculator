@@ -1,0 +1,11 @@
+#metalation_table {
+  td, th {
+    text-align: right;
+    padding: 2px 5px;
+  }
+  input[type=number] {
+    text-align: right;
+    width: 100%;
+    border-width: 1px;
+  }
+}

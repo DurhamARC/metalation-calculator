@@ -1,39 +1,26 @@
 <h2>Metalation Calculator</h2>
 <h3>Predict metal occupancies in vivo</h3>
 
-<p>The metal occupancy of cytosolic metal-binding proteins is predicted from the thermodynamic activities of metals in a cell.</p>
-<p>These activities (as standard free-energies,&nbsp; Δ<em>G°</em>) have been determined in a bacterial cell
-  (Osman <em>et al</em>. (2019) <em>Nat. Chem. Bio.</em> 15: 241–249).</p>
-<p>The resulting predictions can:</p>
-<ol>
-  <li>Identify metal-specificity</li>
-  <li>Infer mis-metalation</li>
-  <li>Reveal erroneous affinity measurements</li>
-  <li>Suggest differences between these thermodynamic metal activities and those of the host cell</li>
-  <li>Indicate where additional mechanisms (such as molecular interactions) must assist metalation</li>
-</ol>
-<p><strong>To predict the metalation state of a protein or molecule, fill in the values in the table below including as
-  many determined metal affinities (activities) as possible.</strong></p>
-<form name="metalationForm" id="metalation_form" action="" method="post">
+<p>To predict the metalation state of a protein or molecule, fill in the values in the table below including as
+  many determined metal affinities (activities) as possible.</p>
 
-  <table id="metalation_table">
-    <thead>
-      <tr>
-        <td></td>
-        <th>Metal affinities of molecule (M)<br/>(dissociation constants)</th>
-        <th>Buffered metal concentration (M)</th>
-        <th>Molecule occupancy with metal</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-    </tbody>
-    <tfoot>
-      <th>Total Metalation</th>
+<table id="metalation_table">
+  <thead>
+    <tr>
       <td></td>
-      <td></td>
-      <th id="total-metalation"></th>
-    </tfoot>
-  </table>
-  <input type="button" value="Calculate" id="calculate_btn"/>
-</form>
+      <th>Metal affinities of molecule (M)<br/>(dissociation constants)</th>
+      <th>Buffered metal concentration (M)</th>
+      <th>Molecule occupancy with metal</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+  <tfoot>
+    <th>Total Metalation</th>
+    <td></td>
+    <td></td>
+    <th id="total-metalation"></th>
+  </tfoot>
+</table>
+<input type="button" value="Calculate" id="calculate_btn"/>
