@@ -60,6 +60,44 @@ function calculate() {
   }
 }
 
+// Quick and simple export target #table_id into a csv
+function downloadTableAsCsv(table_id: string, separator: string = ',') {
+    // Select rows from table_id
+    var rows = document.querySelectorAll('table#' + table_id + ' tr');
+    // Construct csv
+    var csv = [];
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = <NodeListOf<HTMLTableCellElement>>rows[i].querySelectorAll('td, th');
+        for (var j = 0; j < cols.length; j++) {
+            // Clean innertext to remove multiple spaces and jumpline (break csv)
+            var data;
+            const inputs = cols[j].getElementsByTagName('input');
+            if (inputs.length > 0) {
+              data = inputs[0].value;
+            } else {
+              data = cols[j].innerText;
+            }
+            // Remove line breaks and escape double-quote with double-double-quote
+            data = data.replace(/(\r\n|\n|\r)/gm, '').replace(/(\s\s)/gm, ' ');
+            data = data.replace(/"/g, '""');
+            // Push escaped string
+            row.push('"' + data + '"');
+        }
+        csv.push(row.join(separator));
+    }
+    var csv_string = csv.join('\n');
+    // Download it
+    var filename = 'export_' + table_id + '_' + new Date().toLocaleDateString() + '.csv';
+    var link = document.createElement('a');
+    link.style.display = 'none';
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_string));
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 window.addEventListener('DOMContentLoaded', (event) => {
   const metal_table = <HTMLTableElement>document.getElementById('metalation_table');
   for (var m of metals) {
@@ -68,5 +106,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   document.getElementById('calculate_btn').onclick = function() {
     calculate();
+    (<HTMLButtonElement>document.getElementById('download_btn')).disabled = false;
+  };
+
+  document.getElementById('download_btn').onclick = function() {
+    downloadTableAsCsv('metalation_table');
   };
 });
