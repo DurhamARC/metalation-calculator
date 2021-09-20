@@ -18,7 +18,38 @@
 				      <div class="page-standard__grid">
 					      <div class="page-standard__content">
                   <article class="c-single__article s-padding--top">
-                    @@include('./includes/calculator.html')
+                    <h2>Metalation Calculator</h2>
+<h3>Predict metal occupancies in vivo</h3>
+
+<p>To predict the metalation state of a protein or molecule, fill in the values in the table below including as
+  many determined metal affinities (activities) as possible.</p>
+
+<table id="metalation_table">
+  <thead>
+    <tr>
+      <td></td>
+      <th>Metal affinities of molecule (M)<br/>(dissociation constants)</th>
+      <th>∆G for complexation with the molecule (kJ mol-1)</th>
+      <th>Buffered metal concentration (M)</th>
+      <th>Intracellular available ∆G (kJ mol-1)</th>
+      <th>Molecule occupancy with metal</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+  <tfoot>
+    <th>Total Metalation</th>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <th id="total_metalation"></th>
+  </tfoot>
+</table>
+<input type="button" value="Calculate" id="calculate_btn"/>
+<input type="button" disabled value="Download Results" id="download_btn"/>
+
                   </article>
                 </div>
                 <div class="page-standard__sidebar c-sidebar c-block--layout-right">
