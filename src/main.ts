@@ -1,63 +1,70 @@
-interface Metal {
-  name: string;
-  symbol: string;
-  affinity: number;
-  buffered_metal_concentration: number;
-  id_suffix: string;
+import * as metals from "./metals"
+
+function createMetalNumberInput(prefix : string, metal : metals.Metal, metalPropertyName: string, additionalOnChange: (id: string) => void) {
+  const input = <HTMLInputElement>document.createElement('input');
+  input.value = metal.buffered_metal_concentration.toString();
+  input.classList.add(prefix);
+  input.id = prefix + '_' + metal.id_suffix;
+  input.type = 'number';
+  input.addEventListener('change', function(event) {
+    const val = (<HTMLInputElement>event.target).value;
+    var floatVal = parseFloat(val); // TODO: validation!
+    const m = metals.all_metals[metal.id_suffix];
+    Object.assign(m, { [metalPropertyName]: floatVal });
+    if (additionalOnChange) additionalOnChange(metal.id_suffix);
+  });
+  return input;
 }
 
-class MetalFactory {
-  static create(name:string, symbol:string, affinity:number, concentration:number) {
-    var metal: Metal = {
-      name: name,
-      symbol: symbol,
-      affinity: affinity,
-      buffered_metal_concentration: concentration,
-      id_suffix: symbol.toLowerCase()
-    };
-    return metal;
-  }
-}
-
-const metals = [
-  MetalFactory.create("Magnesium", "Mg", 1E3, 2.7E-3),
-  MetalFactory.create("Manganese", "Mn", 1E3, 2.6E-6),
-  MetalFactory.create("Iron", "Fe", 1E-6, 4.8E-8),
-  MetalFactory.create("Cobalt", "Co", 3E-11, 2.5E-9),
-  MetalFactory.create("Nickel", "Ni", 9.8E-10, 1.8E-13),
-  MetalFactory.create("Copper", "Cu", 2.4E-16, 1.2E-18),
-  MetalFactory.create("Zinc", "Zn", 1.9E-13, 1.19E-12),
-]
-
-function appendMetalTableRow(metal: Metal, table: HTMLTableElement) {
+function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   const row: HTMLTableRowElement = table.insertRow(table.rows.length-1);
 
   row.insertCell(-1).outerHTML = "<th>" + metal.symbol + "</th>";
 
   const affinity_cell: HTMLTableCellElement = row.insertCell(-1);
   affinity_cell.classList.add('affinity');
-  affinity_cell.innerHTML = '<input type="number" class="affinity" id="affinity_' + metal.id_suffix + '" value="'
-    + metal.affinity + '"/>';
+  const affinity_input = createMetalNumberInput('affinity', metal, 'affinity', function(id) {
+    const m = metals.all_metals[id];
+    m.metalation_delta_G = m.calculateDeltaG(m.affinity);
+    // FIXME: change this to be watched by Metal?
+    (<HTMLTableCellElement>document.getElementById("metalation_delta_g_" + id)).innerText = m.metalation_delta_G.toFixed(1).toString();
+  });
+  affinity_cell.appendChild(affinity_input);
+
+  const m_delta_g_cell: HTMLTableCellElement = row.insertCell(-1);
+  m_delta_g_cell.id = "metalation_delta_g_" + metal.id_suffix;
+  m_delta_g_cell.innerText = metal.metalation_delta_G.toFixed(1).toString();
 
   const bmc_cell: HTMLTableCellElement = row.insertCell(-1);
   bmc_cell.classList.add('bmc');
-  bmc_cell.innerHTML = '<input type="number" class="bmc" id="bmc_' + metal.id_suffix + '" value="'
-    + metal.buffered_metal_concentration + '"/>';
+  const bmc_input = createMetalNumberInput('bmc', metal, 'buffered_metal_concentration', function(id) {
+    const m = metals.all_metals[id];
+    m.intracellular_available_delta_G = m.calculateDeltaG(m.buffered_metal_concentration);
+    //FIXME: change this to be watched by Metal?
+    (<HTMLInputElement>document.getElementById("ia_delta_g_" + id)).value = m.intracellular_available_delta_G.toString();
+  })
+
+  bmc_cell.appendChild(bmc_input);
+
+  const ia_delta_g_cell: HTMLTableCellElement = row.insertCell(-1);
+  const ia_delta_g_input = createMetalNumberInput('ia_delta_g', metal, 'intracellular_available_delta_G', null);
+  ia_delta_g_cell.appendChild(ia_delta_g_input);
 
   const result_cell: HTMLTableCellElement = row.insertCell(-1);
   result_cell.id = "result_" + metal.id_suffix;
 }
 
 function calculate() {
-  for (var m of metals) {
-    const affinity = (<HTMLInputElement>document.getElementById("affinity_" + m.id_suffix)).value;
-    m.affinity = parseFloat(affinity); // TODO: validation!
-    const bmc = (<HTMLInputElement>document.getElementById("bmc_" + m.id_suffix)).value;
-    m.buffered_metal_concentration = parseFloat(bmc); // TODO: validation!
-    const result_cell = <HTMLTableCellElement>document.getElementById("result_" + m.symbol.toLowerCase());
-    // TODO: replace with real calculation!
-    result_cell.innerHTML = (m.affinity + m.buffered_metal_concentration).toString();
+  const results = metals.calculateOccupancy();
+
+  for (var id in metals.all_metals) {
+    const r = results[id];
+    const result_cell = <HTMLTableCellElement>document.getElementById("result_" + id);
+    result_cell.innerHTML = (r * 100).toFixed(2).toString() + '%';
   }
+
+  const total_cell = <HTMLTableCellElement>document.getElementById("total_metalation");
+  total_cell.innerHTML = (results['total'] * 100).toFixed(2).toString() + '%';
 }
 
 // Quick and simple export target #table_id into a csv
@@ -100,7 +107,8 @@ function downloadTableAsCsv(table_id: string, separator: string = ',') {
 
 window.addEventListener('DOMContentLoaded', (event) => {
   const metal_table = <HTMLTableElement>document.getElementById('metalation_table');
-  for (var m of metals) {
+  for (var id in metals.all_metals) {
+    const m = metals.all_metals[id];
     appendMetalTableRow(m, metal_table);
   }
 

@@ -7,7 +7,7 @@ var tsify = require("tsify");
 var fancy_log = require("fancy-log");
 var sass = require('gulp-sass')(require('sass'));
 var paths = {
-  ts: ["src/main.ts"],
+  ts: ["src/main.ts", "src/metals.ts"],
   pages: ["src/*.html", "src/includes/*.html"],
   styles: ["src/scss/*.scss"]
 };
