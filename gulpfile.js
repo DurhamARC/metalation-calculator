@@ -6,6 +6,8 @@ var watchify = require("watchify");
 var tsify = require("tsify");
 var fancy_log = require("fancy-log");
 var sass = require('gulp-sass')(require('sass'));
+var ghPages = require('gulp-gh-pages');
+
 var paths = {
   ts: ["src/main.ts", "src/metals.ts"],
   pages: ["src/*.html", "src/includes/*.html"],
@@ -49,5 +51,10 @@ function watch() {
 }
 
 gulp.task("default", gulp.series(style, copyHtml, bundle));
+
+/**
+ * Push build to gh-pages
+ */
+gulp.task('deploy', () => gulp.src('./dist/**/*').pipe(ghPages()));
 
 exports.watch = watch
