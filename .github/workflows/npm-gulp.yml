@@ -28,6 +28,6 @@ jobs:
         gulp
 
     - name: Deploy
-      if: contains(github.ref, 'master') || github.event_name == 'release'
+      if: contains(github.ref, 'main') || github.event_name == 'release'
       run: |
         gulp deploy
