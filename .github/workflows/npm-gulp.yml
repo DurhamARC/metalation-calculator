@@ -28,6 +28,8 @@ jobs:
         gulp
 
     - name: Deploy
-      if: contains(github.ref, 'main') || github.event_name == 'release'
-      run: |
-        gulp deploy
+      uses: peaceiris/actions-gh-pages@v3
+        if: startsWith(matrix.node-version, '16.') && (contains(github.ref, 'main') || github.event_name == 'release')
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
