@@ -1,19 +1,35 @@
 import * as metals from "./metals"
 
 function createMetalNumberInput(prefix : string, metal : metals.Metal, metalPropertyName: string, additionalOnChange: (id: string) => void) {
+  const div = <HTMLDivElement>document.createElement('div');
   const input = <HTMLInputElement>document.createElement('input');
+  const msg_p = <HTMLParagraphElement>document.createElement('p');
+  msg_p.classList.add('error_msg')
   input.value = metal.buffered_metal_concentration.toString();
   input.classList.add(prefix);
   input.id = prefix + '_' + metal.id_suffix;
   input.type = 'number';
   input.addEventListener('change', function(event) {
     const val = (<HTMLInputElement>event.target).value;
-    var floatVal = parseFloat(val); // TODO: validation!
-    const m = metals.all_metals[metal.id_suffix];
-    Object.assign(m, { [metalPropertyName]: floatVal });
-    if (additionalOnChange) additionalOnChange(metal.id_suffix);
+    try {
+      msg_p.textContent = '';
+      var floatVal = parseFloat(val);
+      const m = metals.all_metals[metal.id_suffix];
+      Object.assign(m, { [metalPropertyName]: floatVal });
+      if (additionalOnChange) additionalOnChange(metal.id_suffix);
+    } catch (e) {
+      var msg;
+      if (e instanceof RangeError) {
+        msg = e.message;
+      } else {
+        msg = 'Invalid value ' + input.value;
+      }
+      msg_p.textContent = msg;
+    }
   });
-  return input;
+  div.append(input);
+  div.append(msg_p);
+  return div;
 }
 
 function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
@@ -25,8 +41,6 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   affinity_cell.classList.add('affinity');
   const affinity_input = createMetalNumberInput('affinity', metal, 'affinity', function(id) {
     const m = metals.all_metals[id];
-    m.metalation_delta_G = m.calculateDeltaG(m.affinity);
-    // FIXME: change this to be watched by Metal?
     (<HTMLTableCellElement>document.getElementById("metalation_delta_g_" + id)).innerText = m.metalation_delta_G.toFixed(1).toString();
   });
   affinity_cell.appendChild(affinity_input);
@@ -39,8 +53,6 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   bmc_cell.classList.add('bmc');
   const bmc_input = createMetalNumberInput('bmc', metal, 'buffered_metal_concentration', function(id) {
     const m = metals.all_metals[id];
-    m.intracellular_available_delta_G = m.calculateDeltaG(m.buffered_metal_concentration);
-    //FIXME: change this to be watched by Metal?
     (<HTMLInputElement>document.getElementById("ia_delta_g_" + id)).value = m.intracellular_available_delta_G.toString();
   })
 
