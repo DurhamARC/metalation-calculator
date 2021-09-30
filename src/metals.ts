@@ -1,25 +1,58 @@
 export class Metal {
   name: string;
   symbol: string;
-  affinity: number;
-  metalation_delta_G: number;
-  buffered_metal_concentration: number;
-  intracellular_available_delta_G: number;
+  _affinity: number;
+  _metalation_delta_G: number;
+  _buffered_metal_concentration: number;
+  _intracellular_available_delta_G: number;
   id_suffix: string;
+  validator: typeof Proxy;
 
   constructor(name:string, symbol:string, affinity:number, concentration:number) {
     this.name = name;
     this.symbol = symbol;
     this.affinity = affinity;
-    this.metalation_delta_G = this.calculateDeltaG(affinity);
     this.buffered_metal_concentration = concentration;
-    this.intracellular_available_delta_G = this.calculateDeltaG(concentration);
     this.id_suffix = symbol.toLowerCase();
   }
 
   calculateDeltaG(mole_value: number): number {
     return 8.314 * 298.15 * Math.log(mole_value) / 1000;
   }
+
+  get affinity(): number {
+    return this._affinity;
+  }
+
+  set affinity(val:number) {
+    if (val <= 0) throw new RangeError("Affinity must be > 0");
+    this._affinity = val;
+    this._metalation_delta_G = this.calculateDeltaG(this._affinity);
+  }
+
+  get metalation_delta_G(): number {
+    return this._metalation_delta_G;
+  }
+
+  get buffered_metal_concentration(): number {
+    return this._buffered_metal_concentration;
+  }
+
+  set buffered_metal_concentration(val:number) {
+    if (val <= 0) throw new RangeError("Buffered metal concentration must be > 0");
+    this._buffered_metal_concentration = val;
+    this._intracellular_available_delta_G = this.calculateDeltaG(this._buffered_metal_concentration);
+  }
+
+  get intracellular_available_delta_G(): number {
+    return this._intracellular_available_delta_G;
+  }
+
+  set intracellular_available_delta_G(val:number) {
+    if (val <= 0) throw new RangeError("Intracellular available ∆G must be > 0");
+    this._intracellular_available_delta_G = val;
+  }
+
 }
 
 const metal_vals: Array<[string, string, number, number]> = [
