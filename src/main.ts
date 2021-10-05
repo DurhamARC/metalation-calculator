@@ -1,11 +1,11 @@
 import * as metals from "./metals"
 
-function createMetalNumberInput(prefix : string, metal : metals.Metal, metalPropertyName: string, additionalOnChange: (id: string) => void) {
+function createMetalNumberInput(prefix : string, metal : metals.Metal, metalPropertyName: keyof metals.Metal, additionalOnChange: (id: string) => void) {
   const div = <HTMLDivElement>document.createElement('div');
   const input = <HTMLInputElement>document.createElement('input');
   const msg_p = <HTMLParagraphElement>document.createElement('p');
   msg_p.classList.add('error_msg')
-  input.value = metal.buffered_metal_concentration.toString();
+  input.value = metal.getProperty(metalPropertyName).toString();
   input.classList.add(prefix);
   input.id = prefix + '_' + metal.id_suffix;
   input.type = 'number';
