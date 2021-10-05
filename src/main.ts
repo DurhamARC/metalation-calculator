@@ -53,14 +53,14 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   bmc_cell.classList.add('bmc');
   const bmc_input = createMetalNumberInput('bmc', metal, 'buffered_metal_concentration', function(id) {
     const m = metals.all_metals[id];
-    (<HTMLInputElement>document.getElementById("ia_delta_g_" + id)).value = m.intracellular_available_delta_G.toString();
+    (<HTMLInputElement>document.getElementById("ia_delta_g_" + id)).innerText = m.intracellular_available_delta_G.toFixed(1).toString();
   })
 
   bmc_cell.appendChild(bmc_input);
 
   const ia_delta_g_cell: HTMLTableCellElement = row.insertCell(-1);
-  const ia_delta_g_input = createMetalNumberInput('ia_delta_g', metal, 'intracellular_available_delta_G', null);
-  ia_delta_g_cell.appendChild(ia_delta_g_input);
+  ia_delta_g_cell.id = "ia_delta_g_" + metal.id_suffix;
+  ia_delta_g_cell.innerText = metal.intracellular_available_delta_G.toFixed(1).toString();
 
   const result_cell: HTMLTableCellElement = row.insertCell(-1);
   result_cell.id = "result_" + metal.id_suffix;
