@@ -53,6 +53,10 @@ export class Metal {
     this._intracellular_available_delta_G = val;
   }
 
+  getProperty(key: keyof Metal) {
+    return this[key];
+  }
+
 }
 
 const metal_vals: Array<[string, string, number, number]> = [
