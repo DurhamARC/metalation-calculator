@@ -1,14 +1,21 @@
-#metalation_table td, #metalation_table th {
+.metalation_calculator #metalation_table td, .metalation_calculator #metalation_table th {
   text-align: right;
   padding: 2px 5px;
   vertical-align: top;
 }
-#metalation_table input[type=number] {
+.metalation_calculator #metalation_table input[type=number] {
   text-align: right;
   width: 100%;
   border-width: 1px;
 }
-#metalation_table .error_msg {
+.metalation_calculator #metalation_table .error_msg {
   color: red;
   font-size: smaller;
+}
+.metalation_calculator .footnote {
+  font-size: smaller;
+  margin: 10px 0;
+}
+.metalation_calculator .footnote a {
+  font-weight: bold;
 }
