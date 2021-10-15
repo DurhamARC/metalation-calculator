@@ -20,12 +20,19 @@ export class Metal {
     return 8.314 * 298.15 * Math.log(mole_value) / 1000;
   }
 
+  checkRange(val: number, field_name: string) {
+    if (isNaN(val)) throw new RangeError(field_name + " must be set")
+    if (val < 1e-25 || val > 1000) {
+      throw new RangeError(field_name + " must be between 1e-25 and 1000");
+    }
+  }
+
   get affinity(): number {
     return this._affinity;
   }
 
   set affinity(val:number) {
-    if (val <= 0) throw new RangeError("Affinity must be > 0");
+    this.checkRange(val, "Affinity");
     this._affinity = val;
     this._metalation_delta_G = this.calculateDeltaG(this._affinity);
   }
@@ -39,7 +46,7 @@ export class Metal {
   }
 
   set buffered_metal_concentration(val:number) {
-    if (val <= 0) throw new RangeError("Buffered metal concentration must be > 0");
+    this.checkRange(val, "Buffered metal concentration");
     this._buffered_metal_concentration = val;
     this._intracellular_available_delta_G = this.calculateDeltaG(this._buffered_metal_concentration);
   }
