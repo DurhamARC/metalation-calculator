@@ -17,6 +17,7 @@ function createMetalNumberInput(prefix : string, metal : metals.Metal, metalProp
       const m = metals.all_metals[metal.id_suffix];
       Object.assign(m, { [metalPropertyName]: floatVal });
       if (additionalOnChange) additionalOnChange(metal.id_suffix);
+      calculate();
     } catch (e) {
       var msg;
       if (e instanceof RangeError) {
@@ -25,6 +26,7 @@ function createMetalNumberInput(prefix : string, metal : metals.Metal, metalProp
         msg = 'Invalid value ' + input.value;
       }
       msg_p.textContent = msg;
+      clearCalculation();
     }
   });
   div.append(input);
@@ -63,6 +65,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   ia_delta_g_cell.innerText = metal.intracellular_available_delta_G.toFixed(1).toString();
 
   const result_cell: HTMLTableCellElement = row.insertCell(-1);
+  result_cell.classList.add("result");
   result_cell.id = "result_" + metal.id_suffix;
 }
 
@@ -77,6 +80,15 @@ function calculate() {
 
   const total_cell = <HTMLTableCellElement>document.getElementById("total_metalation");
   total_cell.innerHTML = (results['total'] * 100).toFixed(2).toString() + '%';
+
+  (<HTMLButtonElement>document.getElementById('download_btn')).disabled = false;
+}
+
+function clearCalculation() {
+  Array.from(document.getElementsByClassName("result")).forEach(cell => {
+      cell.innerHTML = 'N/A';
+  });
+  (<HTMLButtonElement>document.getElementById('download_btn')).disabled = true;
 }
 
 // Quick and simple export target #table_id into a csv
@@ -124,12 +136,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
     appendMetalTableRow(m, metal_table);
   }
 
-  document.getElementById('calculate_btn').onclick = function() {
-    calculate();
-    (<HTMLButtonElement>document.getElementById('download_btn')).disabled = false;
-  };
-
   document.getElementById('download_btn').onclick = function() {
     downloadTableAsCsv('metalation_table');
   };
+
+  calculate();
 });
