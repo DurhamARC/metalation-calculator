@@ -1,0 +1,35 @@
+authors:
+  - affiliation: "Durham University"
+    family-names: Clarke
+    given-names: Alison
+    orcid: "https://orcid.org/0000-0002-0205-6644"
+cff-version: "1.2.0"
+message: "If you use this software, please cite it using these metadata."
+title: "Metalation Calculator"
+license: MIT
+repository-code: "https://github.com/DurhamARC/metalation-calculator"
+references:
+  - authors:
+      - family-names: Young
+        given-names: "Tessa R."
+      - family-names: Martini
+        given-names: Maria Alessandra
+      - family-names: Foster
+        given-names: "Andrew W."
+      - family-names: Glasfeld
+        given-names: Arthur
+      - family-names: Osman
+        given-names: Deenah
+      - family-names: Morton
+        given-names: "Richard J."
+      - family-names: Deery
+        given-names: Evelyne
+      - family-names: Warren
+        given-names: "Martin J."
+      - family-names: Robinson
+        given-names: "Nigel J."
+    title: "The foundation of Research Software"
+    journal: "Nature Communications"
+    volume: 12
+    pages: 1195
+    year: 2021
