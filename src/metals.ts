@@ -22,8 +22,8 @@ export class Metal {
 
   checkRange(val: number, field_name: string) {
     if (isNaN(val)) throw new RangeError(field_name + " must be set")
-    if (val < 1e-25 || val > 1000) {
-      throw new RangeError(field_name + " must be between 1e-25 and 1000");
+    if (val < 1e-30 || val > 1000) {
+      throw new RangeError(field_name + " must be between 1e-30 and 1000");
     }
   }
 
