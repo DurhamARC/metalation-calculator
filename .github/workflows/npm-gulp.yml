@@ -21,10 +21,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build
+    - name: Build and test
       run: |
         npm install
         gulp
+        gulp jest
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
