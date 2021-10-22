@@ -82,7 +82,7 @@ for (var m of metal_vals) {
   all_metals[m[1].toLowerCase()] = new Metal(...m);
 }
 
-export function calculateOccupancy() {
+export function calculateOccupancy(): { [id: string]: number; } {
   var exp_scaled_differences: { [id: string]: number; } = {};
   var total_diffs: number = 0;
   for (var id in all_metals) {
