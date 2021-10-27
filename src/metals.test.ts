@@ -77,3 +77,21 @@ test('metalValueRanges', () => {
   expect(() => m.affinity = 0).toThrow(RangeError);
   expect(m.affinity).toBeCloseTo(1e-30, 32);
 });
+
+test('deltaGCalculation', () => {
+  // Create a new metal
+  var m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
+  // Delta Gs should be 0
+  expect(m.metalation_delta_G).toBeCloseTo(0);
+  expect(m.intracellular_available_delta_G).toBeCloseTo(0);
+
+  // Set affinity and check metalation delta G is updated
+  m.affinity = 1000;
+  expect(m.metalation_delta_G).toBeCloseTo(17.12, 2);
+  expect(m.intracellular_available_delta_G).toBeCloseTo(0);
+
+  // Set bmc and check intracellular available delta G is updated
+  m.buffered_metal_concentration = 3e-11;
+  expect(m.metalation_delta_G).toBeCloseTo(17.12, 2);
+  expect(m.intracellular_available_delta_G).toBeCloseTo(-60.06, 2);
+});
