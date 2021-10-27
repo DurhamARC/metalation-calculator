@@ -1,8 +1,8 @@
-import { allMetals, calculateOccupancy, Metal } from "./metals";
+import { MetalDataSet, Metal } from './metals';
 
 function checkIsCloseTo(value: number, expectedValue: number) {
   // Use IsCloseTo but to 10 significant figures
-  let sigAfterDecimal = 10 - Math.floor(Math.log(expectedValue) / Math.log(10));
+  let sigAfterDecimal = 10 - Math.floor((Math.log(expectedValue)/Math.log(10)));
   // Don't go too deep (e.g. for 0-ish values)
   if (sigAfterDecimal > 15) {
     sigAfterDecimal = 15;
@@ -10,18 +10,19 @@ function checkIsCloseTo(value: number, expectedValue: number) {
   expect(value).toBeCloseTo(expectedValue, sigAfterDecimal);
 }
 
-test("calculateOccupancy", () => {
-  let occupancies = calculateOccupancy();
+test('calculateOccupancy', () => {
+  const metalDataSet = new MetalDataSet();
+  var occupancies = metalDataSet.calculateOccupancy();
   // Expected values are copied from original spreadsheet
-  let expectedOccupancies: { [id: string]: number } = {
-    mg: 0.000000029784992858,
-    mn: 0.000000000028681845,
-    fe: 0.000529510984138436,
-    co: 0.919289903018121,
-    ni: 0.000002026189990326,
-    cu: 0.000055157394181087,
-    zn: 0.0690918937636772,
-    total: 0.988968521163783,
+  var expectedOccupancies: { [id: string]: number; } = {
+    "mg": 0.000000029784992858,
+    "mn": 0.000000000028681845,
+    "fe": 0.000529510984138436,
+    "co": 0.919289903018121,
+    "ni": 0.000002026189990326,
+    "cu": 0.000055157394181087,
+    "zn": 0.0690918937636772,
+    "total": 0.988968521163783,
   };
 
   expect(occupancies.keys).toEqual(expectedOccupancies.keys);
@@ -31,34 +32,34 @@ test("calculateOccupancy", () => {
   }
 
   // Change some values and check again
-  allMetals["mg"].affinity = 1e-6;
-  allMetals["ni"].affinity = 1000;
-  allMetals["mn"].bufferedMetalConcentration = 2.6e-8;
-  allMetals["co"].bufferedMetalConcentration = 1e-12;
+  metalDataSet.metals["mg"].affinity = 1e-6;
+  metalDataSet.metals["ni"].affinity = 1000;
+  metalDataSet.metals["mn"].bufferedMetalConcentration = 2.6e-8;
+  metalDataSet.metals["co"].bufferedMetalConcentration = 1e-12;
 
-  occupancies = calculateOccupancy();
+  occupancies = metalDataSet.calculateOccupancy();
   // Expected values are copied from original spreadsheet
   expectedOccupancies = {
-    mg: 0.99728535556569,
-    mn: 0.000000000000009603,
-    fe: 0.000017729517432279,
-    co: 0.000012312164883527,
-    ni: 0.0,
-    cu: 0.000001846824732529,
-    zn: 0.00231339098074691,
-    total: 0.999630635053494,
+    "mg": 0.99728535556569,
+    "mn": 0.000000000000009603,
+    "fe": 0.000017729517432279,
+    "co": 0.000012312164883527,
+    "ni": 0.0,
+    "cu": 0.000001846824732529,
+    "zn": 0.002313390980746910,
+    "total": 0.999630635053494,
   };
 
   expect(occupancies.keys).toEqual(expectedOccupancies.keys);
 
-  for (const id in expectedOccupancies) {
+  for (var id in expectedOccupancies) {
     checkIsCloseTo(occupancies[id], expectedOccupancies[id]);
   }
 });
 
-test("metalValueRanges", () => {
+test('metalValueRanges', () => {
   // Create a new metal
-  const m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
+  var m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
 
   // Set affinity and bmc to extreme ends of valid values
   m.affinity = 1000;
@@ -72,15 +73,15 @@ test("metalValueRanges", () => {
   expect(m.bufferedMetalConcentration).toBeCloseTo(1e-30, 32);
 
   // Set affinity outside of range
-  expect(() => (m.affinity = 1001)).toThrow(RangeError);
+  expect(() => m.affinity = 1001).toThrow(RangeError);
   expect(m.affinity).toBeCloseTo(1e-30, 32);
-  expect(() => (m.affinity = 0)).toThrow(RangeError);
-  expect(m.affinity).toBeCloseTo(1e-30, 32);
+  expect(() => m.affinity = 0).toThrow(RangeError)
+        expect(m.affinity).toBeCloseTo(1e-30, 32)
 });
 
-test("deltaGCalculation", () => {
+test('deltaGCalculation', () => {
   // Create a new metal
-  const m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
+  var m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
   // Delta Gs should be 0
   expect(m.metalationDeltaG).toBeCloseTo(0);
   expect(m.intracellularAvailableDeltaG).toBeCloseTo(0);
