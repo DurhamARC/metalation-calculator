@@ -1,11 +1,14 @@
+/**
+ * An object to store values for a single metal and calculate delta G values
+ */
 export class Metal {
   name: string;
   symbol: string;
   _affinity: number;
-  _metalation_delta_G: number;
-  _buffered_metal_concentration: number;
-  _intracellular_available_delta_G: number;
-  id_suffix: string;
+  _metalationDeltaG: number;
+  _bufferedMetalConcentration: number;
+  _intracellularAvailableDeltaG: number;
+  idSuffix: string;
   validator: typeof Proxy;
 
   constructor(
@@ -17,18 +20,18 @@ export class Metal {
     this.name = name;
     this.symbol = symbol;
     this.affinity = affinity;
-    this.buffered_metal_concentration = concentration;
-    this.id_suffix = symbol.toLowerCase();
+    this.bufferedMetalConcentration = concentration;
+    this.idSuffix = symbol.toLowerCase();
   }
 
-  calculateDeltaG(mole_value: number): number {
-    return (8.314 * 298.15 * Math.log(mole_value)) / 1000;
+  calculateDeltaG(moleValue: number): number {
+    return (8.314 * 298.15 * Math.log(moleValue)) / 1000;
   }
 
-  checkRange(val: number, field_name: string) {
-    if (isNaN(val)) throw new RangeError(field_name + " must be set");
+  checkRange(val: number, fieldName: string) {
+    if (isNaN(val)) throw new RangeError(fieldName + " must be set");
     if (val < 1e-30 || val > 1000) {
-      throw new RangeError(field_name + " must be between 1e-30 and 1000");
+      throw new RangeError(fieldName + " must be between 1e-30 and 1000");
     }
   }
 
@@ -39,33 +42,33 @@ export class Metal {
   set affinity(val: number) {
     this.checkRange(val, "Affinity");
     this._affinity = val;
-    this._metalation_delta_G = this.calculateDeltaG(this._affinity);
+    this._metalationDeltaG = this.calculateDeltaG(this._affinity);
   }
 
-  get metalation_delta_G(): number {
-    return this._metalation_delta_G;
+  get metalationDeltaG(): number {
+    return this._metalationDeltaG;
   }
 
-  get buffered_metal_concentration(): number {
-    return this._buffered_metal_concentration;
+  get bufferedMetalConcentration(): number {
+    return this._bufferedMetalConcentration;
   }
 
-  set buffered_metal_concentration(val: number) {
+  set bufferedMetalConcentration(val: number) {
     this.checkRange(val, "Buffered metal concentration");
-    this._buffered_metal_concentration = val;
-    this._intracellular_available_delta_G = this.calculateDeltaG(
-      this._buffered_metal_concentration
+    this._bufferedMetalConcentration = val;
+    this._intracellularAvailableDeltaG = this.calculateDeltaG(
+      this._bufferedMetalConcentration
     );
   }
 
-  get intracellular_available_delta_G(): number {
-    return this._intracellular_available_delta_G;
+  get intracellularAvailableDeltaG(): number {
+    return this._intracellularAvailableDeltaG;
   }
 
-  set intracellular_available_delta_G(val: number) {
+  set intracellularAvailableDeltaG(val: number) {
     if (val <= 0)
       throw new RangeError("Intracellular available ∆G must be > 0");
-    this._intracellular_available_delta_G = val;
+    this._intracellularAvailableDeltaG = val;
   }
 
   getProperty(key: keyof Metal) {
@@ -73,7 +76,7 @@ export class Metal {
   }
 }
 
-const metal_vals: Array<[string, string, number, number]> = [
+const METAL_VALS: Array<[string, string, number, number]> = [
   ["Magnesium", "Mg", 1e3, 2.7e-3],
   ["Manganese", "Mn", 1e3, 2.6e-6],
   ["Iron", "Fe", 1e-6, 4.8e-8],
@@ -83,32 +86,32 @@ const metal_vals: Array<[string, string, number, number]> = [
   ["Zinc", "Zn", 1.9e-13, 1.19e-12],
 ];
 
-export const all_metals: { [id: string]: Metal } = {};
+export const allMetals: { [id: string]: Metal } = {};
 
-for (const m of metal_vals) {
-  all_metals[m[1].toLowerCase()] = new Metal(...m);
+for (const m of METAL_VALS) {
+  allMetals[m[1].toLowerCase()] = new Metal(...m);
 }
 
 export function calculateOccupancy(): { [id: string]: number } {
-  const exp_scaled_differences: { [id: string]: number } = {};
-  let total_diffs = 0;
-  for (const id in all_metals) {
-    const m = all_metals[id];
-    exp_scaled_differences[id] = Math.exp(
-      (1000 * (m.intracellular_available_delta_G - m.metalation_delta_G)) /
+  const expScaledDifferences: { [id: string]: number } = {};
+  let totalDiffs = 0;
+  for (const id in allMetals) {
+    const m = allMetals[id];
+    expScaledDifferences[id] = Math.exp(
+      (1000 * (m.intracellularAvailableDeltaG - m.metalationDeltaG)) /
         (8.314 * 298.15)
     );
-    total_diffs += exp_scaled_differences[id];
+    totalDiffs += expScaledDifferences[id];
   }
 
   const occupancies: { [id: string]: number } = {};
-  let total_occupancy = 0;
+  let totalOccupancy = 0;
 
-  for (const id in all_metals) {
-    occupancies[id] = exp_scaled_differences[id] / (1 + total_diffs);
-    total_occupancy += occupancies[id];
+  for (const id in allMetals) {
+    occupancies[id] = expScaledDifferences[id] / (1 + totalDiffs);
+    totalOccupancy += occupancies[id];
   }
-  occupancies["total"] = total_occupancy;
+  occupancies["total"] = totalOccupancy;
 
   return occupancies;
 }

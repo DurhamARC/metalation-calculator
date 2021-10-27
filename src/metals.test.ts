@@ -1,4 +1,4 @@
-import { all_metals, calculateOccupancy, Metal } from "./metals";
+import { allMetals, calculateOccupancy, Metal } from "./metals";
 
 function checkIsCloseTo(value: number, expectedValue: number) {
   // Use IsCloseTo but to 10 significant figures
@@ -31,10 +31,10 @@ test("calculateOccupancy", () => {
   }
 
   // Change some values and check again
-  all_metals["mg"].affinity = 1e-6;
-  all_metals["ni"].affinity = 1000;
-  all_metals["mn"].buffered_metal_concentration = 2.6e-8;
-  all_metals["co"].buffered_metal_concentration = 1e-12;
+  allMetals["mg"].affinity = 1e-6;
+  allMetals["ni"].affinity = 1000;
+  allMetals["mn"].bufferedMetalConcentration = 2.6e-8;
+  allMetals["co"].bufferedMetalConcentration = 1e-12;
 
   occupancies = calculateOccupancy();
   // Expected values are copied from original spreadsheet
@@ -66,10 +66,10 @@ test("metalValueRanges", () => {
   m.affinity = 1e-30;
   expect(m.affinity).toBeCloseTo(1e-30, 32);
 
-  m.buffered_metal_concentration = 1000;
-  expect(m.buffered_metal_concentration).toEqual(1000);
-  m.buffered_metal_concentration = 1e-30;
-  expect(m.buffered_metal_concentration).toBeCloseTo(1e-30, 32);
+  m.bufferedMetalConcentration = 1000;
+  expect(m.bufferedMetalConcentration).toEqual(1000);
+  m.bufferedMetalConcentration = 1e-30;
+  expect(m.bufferedMetalConcentration).toBeCloseTo(1e-30, 32);
 
   // Set affinity outside of range
   expect(() => (m.affinity = 1001)).toThrow(RangeError);
@@ -82,16 +82,16 @@ test("deltaGCalculation", () => {
   // Create a new metal
   const m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
   // Delta Gs should be 0
-  expect(m.metalation_delta_G).toBeCloseTo(0);
-  expect(m.intracellular_available_delta_G).toBeCloseTo(0);
+  expect(m.metalationDeltaG).toBeCloseTo(0);
+  expect(m.intracellularAvailableDeltaG).toBeCloseTo(0);
 
   // Set affinity and check metalation delta G is updated
   m.affinity = 1000;
-  expect(m.metalation_delta_G).toBeCloseTo(17.12, 2);
-  expect(m.intracellular_available_delta_G).toBeCloseTo(0);
+  expect(m.metalationDeltaG).toBeCloseTo(17.12, 2);
+  expect(m.intracellularAvailableDeltaG).toBeCloseTo(0);
 
   // Set bmc and check intracellular available delta G is updated
-  m.buffered_metal_concentration = 3e-11;
-  expect(m.metalation_delta_G).toBeCloseTo(17.12, 2);
-  expect(m.intracellular_available_delta_G).toBeCloseTo(-60.06, 2);
+  m.bufferedMetalConcentration = 3e-11;
+  expect(m.metalationDeltaG).toBeCloseTo(17.12, 2);
+  expect(m.intracellularAvailableDeltaG).toBeCloseTo(-60.06, 2);
 });
