@@ -3,6 +3,7 @@
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
+  /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
 }
 .metalation_calculator #metalation_table td, .metalation_calculator #metalation_table th {
   text-align: right;
@@ -14,6 +15,13 @@
   text-align: right;
   width: 100%;
   border-width: 1px;
+  /* hide number up/down arrows in Firefox */
+  -moz-appearance: textfield;
+}
+.metalation_calculator #metalation_table input::-webkit-outer-spin-button,
+.metalation_calculator #metalation_table input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .metalation_calculator #metalation_table .error_msg {
   color: red;
