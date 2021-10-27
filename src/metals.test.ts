@@ -11,22 +11,22 @@ function checkIsCloseTo(value: number, expectedValue: number) {
 }
 
 test('calculateOccupancy', () => {
-  var occupancies = calculateOccupancy();
+  let occupancies = calculateOccupancy();
   // Expected values are copied from original spreadsheet
-  var expectedOccupancies: { [id: string]: number; } = {
+  let expectedOccupancies: { [id: string]: number; } = {
     "mg": 0.000000029784992858,
     "mn": 0.000000000028681845,
     "fe": 0.000529510984138436,
-    "co": 0.919289903018121000,
+    "co": 0.919289903018121,
     "ni": 0.000002026189990326,
     "cu": 0.000055157394181087,
-    "zn": 0.069091893763677200,
-    "total": 0.988968521163783000,
+    "zn": 0.0690918937636772,
+    "total": 0.988968521163783,
   };
 
   expect(occupancies.keys).toEqual(expectedOccupancies.keys);
 
-  for (var id in expectedOccupancies) {
+  for (const id in expectedOccupancies) {
     checkIsCloseTo(occupancies[id], expectedOccupancies[id]);
   }
 
@@ -39,26 +39,26 @@ test('calculateOccupancy', () => {
   occupancies = calculateOccupancy();
   // Expected values are copied from original spreadsheet
   expectedOccupancies = {
-    "mg": 0.997285355565690000,
+    "mg": 0.99728535556569,
     "mn": 0.000000000000009603,
     "fe": 0.000017729517432279,
     "co": 0.000012312164883527,
-    "ni": 0.000000000000000000,
+    "ni": 0.0,
     "cu": 0.000001846824732529,
     "zn": 0.002313390980746910,
-    "total": 0.999630635053494000,
+    "total": 0.999630635053494,
   };
 
   expect(occupancies.keys).toEqual(expectedOccupancies.keys);
 
-  for (var id in expectedOccupancies) {
+  for (const id in expectedOccupancies) {
     checkIsCloseTo(occupancies[id], expectedOccupancies[id]);
   }
 });
 
 test('metalValueRanges', () => {
   // Create a new metal
-  var m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
+  const m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
 
   // Set affinity and bmc to extreme ends of valid values
   m.affinity = 1000;
@@ -74,13 +74,13 @@ test('metalValueRanges', () => {
   // Set affinity outside of range
   expect(() => m.affinity = 1001).toThrow(RangeError);
   expect(m.affinity).toBeCloseTo(1e-30, 32);
-  expect(() => m.affinity = 0).toThrow(RangeError);
-  expect(m.affinity).toBeCloseTo(1e-30, 32);
+  expect(() => m.affinity = 0).toThrow(RangeError)
+        expect(m.affinity).toBeCloseTo(1e-30, 32)
 });
 
 test('deltaGCalculation', () => {
   // Create a new metal
-  var m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
+  const m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
   // Delta Gs should be 0
   expect(m.metalation_delta_G).toBeCloseTo(0);
   expect(m.intracellular_available_delta_G).toBeCloseTo(0);

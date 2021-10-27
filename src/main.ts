@@ -13,13 +13,13 @@ function createMetalNumberInput(prefix : string, metal : metals.Metal, metalProp
     const val = (<HTMLInputElement>event.target).value;
     try {
       msg_p.textContent = '';
-      var floatVal = parseFloat(val);
+      const floatVal = parseFloat(val);
       const m = metals.all_metals[metal.id_suffix];
       Object.assign(m, { [metalPropertyName]: floatVal });
       if (additionalOnChange) additionalOnChange(metal.id_suffix);
       calculate();
     } catch (e) {
-      var msg;
+      let msg;
       if (e instanceof RangeError) {
         msg = e.message;
       } else {
@@ -72,7 +72,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
 function calculate() {
   const results = metals.calculateOccupancy();
 
-  for (var id in metals.all_metals) {
+  for (const id in metals.all_metals) {
     const r = results[id];
     const result_cell = <HTMLTableCellElement>document.getElementById("result_" + id);
     result_cell.innerHTML = (r * 100).toFixed(2).toString() + '%';
@@ -92,16 +92,17 @@ function clearCalculation() {
 }
 
 // Quick and simple export target #table_id into a csv
-function downloadTableAsCsv(table_id: string, separator: string = ',') {
+function downloadTableAsCsv(table_id: string, separator = ',') {
     // Select rows from table_id
-    var rows = document.querySelectorAll('table#' + table_id + ' tr');
+    const rows = document.querySelectorAll('table#' + table_id + ' tr');
     // Construct csv
-    var csv = [];
-    for (var i = 0; i < rows.length; i++) {
-        var row = [], cols = <NodeListOf<HTMLTableCellElement>>rows[i].querySelectorAll('td, th');
-        for (var j = 0; j < cols.length; j++) {
+    const csv = [];
+    for (let i = 0; i < rows.length; i++) {
+        const row = []
+        const cols = <NodeListOf<HTMLTableCellElement>>rows[i].querySelectorAll('td, th');
+        for (let j = 0; j < cols.length; j++) {
             // Clean innertext to remove multiple spaces and jumpline (break csv)
-            var data;
+            let data;
             const inputs = cols[j].getElementsByTagName('input');
             if (inputs.length > 0) {
               data = inputs[0].value;
@@ -116,10 +117,10 @@ function downloadTableAsCsv(table_id: string, separator: string = ',') {
         }
         csv.push(row.join(separator));
     }
-    var csv_string = csv.join('\n');
+    const csv_string = csv.join('\n');
     // Download it
-    var filename = 'export_' + table_id + '_' + new Date().toLocaleDateString() + '.csv';
-    var link = document.createElement('a');
+    const filename = 'export_' + table_id + '_' + new Date().toLocaleDateString() + '.csv';
+    const link = document.createElement('a');
     link.style.display = 'none';
     link.setAttribute('target', '_blank');
     link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_string));
@@ -129,9 +130,9 @@ function downloadTableAsCsv(table_id: string, separator: string = ',') {
     document.body.removeChild(link);
 }
 
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', () => {
   const metal_table = <HTMLTableElement>document.getElementById('metalation_table');
-  for (var id in metals.all_metals) {
+  for (const id in metals.all_metals) {
     const m = metals.all_metals[id];
     appendMetalTableRow(m, metal_table);
   }

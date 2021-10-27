@@ -78,14 +78,14 @@ const metal_vals: Array<[string, string, number, number]> = [
 
 export const all_metals: { [id: string]: Metal; } = {};
 
-for (var m of metal_vals) {
+for (const m of metal_vals) {
   all_metals[m[1].toLowerCase()] = new Metal(...m);
 }
 
 export function calculateOccupancy(): { [id: string]: number; } {
-  var exp_scaled_differences: { [id: string]: number; } = {};
-  var total_diffs: number = 0;
-  for (var id in all_metals) {
+  const exp_scaled_differences: { [id: string]: number; } = {};
+  let total_diffs = 0;
+  for (const id in all_metals) {
     const m = all_metals[id];
     exp_scaled_differences[id] = Math.exp(
       1000 * (m.intracellular_available_delta_G - m.metalation_delta_G)
@@ -94,10 +94,10 @@ export function calculateOccupancy(): { [id: string]: number; } {
     total_diffs += exp_scaled_differences[id];
   }
 
-  var occupancies: { [id: string]: number; } = {};
-  var total_occupancy: number = 0;
+  const occupancies: { [id: string]: number; } = {};
+  let total_occupancy = 0;
 
-  for (var id in all_metals) {
+  for (const id in all_metals) {
     occupancies[id] = exp_scaled_differences[id] / (1 + total_diffs);
     total_occupancy += occupancies[id];
   }
