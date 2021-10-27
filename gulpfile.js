@@ -6,10 +6,12 @@ var watchify = require("watchify");
 var tsify = require("tsify");
 var fancy_log = require("fancy-log");
 var sass = require('gulp-sass')(require('sass'));
+var jest = require('gulp-jest').default;
 var paths = {
   ts: ["src/main.ts", "src/metals.ts"],
   pages: ["src/*.html", "src/includes/*.html"],
-  styles: ["src/scss/*.scss"]
+  styles: ["src/scss/*.scss"],
+  tests: ["src/?(*.)+(spec|test).+(ts|tsx|js)"]
 };
 
 function style() {
@@ -47,6 +49,15 @@ function watch() {
   gulp.watch(paths.pages, copyHtml);
   gulp.watch(paths.ts, bundle);
 }
+
+gulp.task('jest', function () {
+  return gulp.src(paths.tests).pipe(jest({
+    "preprocessorIgnorePatterns": [
+      "<rootDir>/dist/", "<rootDir>/node_modules/"
+    ],
+    "automock": false
+  }));
+});
 
 gulp.task("default", gulp.series(style, copyHtml, bundle));
 
