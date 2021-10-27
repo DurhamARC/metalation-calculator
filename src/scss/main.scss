@@ -15,6 +15,14 @@
       text-align: right;
       width: 100%;
       border-width: 1px;
+      /* hide number up/down arrows in Firefox */
+      -moz-appearance: textfield;
+    }
+    /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
     .error_msg {
       color: red;
