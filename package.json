@@ -4,10 +4,7 @@
   "description": "Metalation Calculator =====================",
   "main": "./dist/main.js",
   "scripts": {
-    "prettier": "prettier 'src/**/*.ts'",
-    "prettier:fix": "prettier --write 'src/**/*.ts'",
-    "eslint": "eslint 'src/**/*.ts'",
-    "eslint:fix": "eslint --fix 'src/**/*.ts'"
+    "test": "gulp jest"
   },
   "author": "",
   "license": "MIT",
