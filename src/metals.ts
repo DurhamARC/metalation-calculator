@@ -87,7 +87,7 @@ const METAL_VALS: Array<[string, string, number, number]> = [
 ];
 
 export class MetalDataSet {
-  metals: {[id: string]: Metal};
+  metals: { [id: string]: Metal };
 
   constructor() {
     this.metals = {};
@@ -119,5 +119,4 @@ export class MetalDataSet {
 
     return occupancies;
   }
-
 }
