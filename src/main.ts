@@ -1,5 +1,7 @@
 import * as metals from "./metals";
 
+let metalDataSet = new metals.MetalDataSet();
+
 function createMetalNumberInput(
   prefix: string,
   metal: metals.Metal,
@@ -19,7 +21,7 @@ function createMetalNumberInput(
     try {
       msgP.textContent = "";
       const floatVal = parseFloat(val);
-      const m = metals.allMetals[metal.idSuffix];
+      const m = metalDataSet.metals[metal.idSuffix];
       Object.assign(m, { [metalPropertyName]: floatVal });
       if (additionalOnChange) additionalOnChange(metal.idSuffix);
       calculate();
@@ -51,7 +53,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
     metal,
     "affinity",
     function (id) {
-      const m = metals.allMetals[id];
+      const m = metalDataSet.metals[id];
       (<HTMLTableCellElement>(
         document.getElementById("metalation_delta_g_" + id)
       )).innerText = m.metalationDeltaG.toFixed(1).toString();
@@ -70,7 +72,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
     metal,
     "bufferedMetalConcentration",
     function (id) {
-      const m = metals.allMetals[id];
+      const m = metalDataSet.metals[id];
       (<HTMLInputElement>(
         document.getElementById("ia_delta_g_" + id)
       )).innerText = m.intracellularAvailableDeltaG.toFixed(1).toString();
@@ -91,9 +93,9 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
 }
 
 function calculate() {
-  const results = metals.calculateOccupancy();
+  const results = metalDataSet.calculateOccupancy();
 
-  for (const id in metals.allMetals) {
+  for (const id in metalDataSet.metals) {
     const r = results[id];
     const resultCell = <HTMLTableCellElement>(
       document.getElementById("result_" + id)
@@ -114,6 +116,24 @@ function clearCalculation() {
     cell.innerHTML = "N/A";
   });
   (<HTMLButtonElement>document.getElementById("download_btn")).disabled = true;
+}
+
+function reset() {
+  metalDataSet = new metals.MetalDataSet();
+  for (const id in metalDataSet.metals) {
+    const m = metalDataSet.metals[id];
+    (<HTMLInputElement>document.getElementById("affinity_" + id)).value =
+      m.affinity.toString();
+    (<HTMLTableCellElement>(
+      document.getElementById("metalation_delta_g_" + id)
+    )).innerText = m.metalationDeltaG.toFixed(1).toString();
+    (<HTMLInputElement>document.getElementById("bmc_" + id)).value =
+      m.bufferedMetalConcentration.toString();
+    (<HTMLTableCellElement>(
+      document.getElementById("ia_delta_g_" + id)
+    )).innerText = m.intracellularAvailableDeltaG.toFixed(1).toString();
+  }
+  calculate();
 }
 
 // Quick and simple export target #tableId into a csv
@@ -165,13 +185,17 @@ window.addEventListener("DOMContentLoaded", () => {
   const metalTable = <HTMLTableElement>(
     document.getElementById("metalation_table")
   );
-  for (const id in metals.allMetals) {
-    const m = metals.allMetals[id];
+  for (const id in metalDataSet.metals) {
+    const m = metalDataSet.metals[id];
     appendMetalTableRow(m, metalTable);
   }
 
   document.getElementById("download_btn").onclick = function () {
     downloadTableAsCsv("metalation_table");
+  };
+
+  document.getElementById("reset_btn").onclick = function () {
+    reset();
   };
 
   calculate();

@@ -86,32 +86,37 @@ const METAL_VALS: Array<[string, string, number, number]> = [
   ["Zinc", "Zn", 1.9e-13, 1.19e-12],
 ];
 
-export const allMetals: { [id: string]: Metal } = {};
+export class MetalDataSet {
+  metals: { [id: string]: Metal };
 
-for (const m of METAL_VALS) {
-  allMetals[m[1].toLowerCase()] = new Metal(...m);
-}
-
-export function calculateOccupancy(): { [id: string]: number } {
-  const expScaledDifferences: { [id: string]: number } = {};
-  let totalDiffs = 0;
-  for (const id in allMetals) {
-    const m = allMetals[id];
-    expScaledDifferences[id] = Math.exp(
-      (1000 * (m.intracellularAvailableDeltaG - m.metalationDeltaG)) /
-        (8.314 * 298.15)
-    );
-    totalDiffs += expScaledDifferences[id];
+  constructor() {
+    this.metals = {};
+    for (const m of METAL_VALS) {
+      this.metals[m[1].toLowerCase()] = new Metal(...m);
+    }
   }
 
-  const occupancies: { [id: string]: number } = {};
-  let totalOccupancy = 0;
+  calculateOccupancy(): { [id: string]: number } {
+    const expScaledDifferences: { [id: string]: number } = {};
+    let totalDiffs = 0;
+    for (const id in this.metals) {
+      const m = this.metals[id];
+      expScaledDifferences[id] = Math.exp(
+        (1000 * (m.intracellularAvailableDeltaG - m.metalationDeltaG)) /
+          (8.314 * 298.15)
+      );
+      totalDiffs += expScaledDifferences[id];
+    }
 
-  for (const id in allMetals) {
-    occupancies[id] = expScaledDifferences[id] / (1 + totalDiffs);
-    totalOccupancy += occupancies[id];
+    const occupancies: { [id: string]: number } = {};
+    let totalOccupancy = 0;
+
+    for (const id in this.metals) {
+      occupancies[id] = expScaledDifferences[id] / (1 + totalDiffs);
+      totalOccupancy += occupancies[id];
+    }
+    occupancies["total"] = totalOccupancy;
+
+    return occupancies;
   }
-  occupancies["total"] = totalOccupancy;
-
-  return occupancies;
 }

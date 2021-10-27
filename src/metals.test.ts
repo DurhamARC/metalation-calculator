@@ -1,4 +1,4 @@
-import { allMetals, calculateOccupancy, Metal } from "./metals";
+import { MetalDataSet, Metal } from "./metals";
 
 function checkIsCloseTo(value: number, expectedValue: number) {
   // Use IsCloseTo but to 10 significant figures
@@ -11,7 +11,8 @@ function checkIsCloseTo(value: number, expectedValue: number) {
 }
 
 test("calculateOccupancy", () => {
-  let occupancies = calculateOccupancy();
+  const metalDataSet = new MetalDataSet();
+  let occupancies = metalDataSet.calculateOccupancy();
   // Expected values are copied from original spreadsheet
   let expectedOccupancies: { [id: string]: number } = {
     mg: 0.000000029784992858,
@@ -31,12 +32,12 @@ test("calculateOccupancy", () => {
   }
 
   // Change some values and check again
-  allMetals["mg"].affinity = 1e-6;
-  allMetals["ni"].affinity = 1000;
-  allMetals["mn"].bufferedMetalConcentration = 2.6e-8;
-  allMetals["co"].bufferedMetalConcentration = 1e-12;
+  metalDataSet.metals["mg"].affinity = 1e-6;
+  metalDataSet.metals["ni"].affinity = 1000;
+  metalDataSet.metals["mn"].bufferedMetalConcentration = 2.6e-8;
+  metalDataSet.metals["co"].bufferedMetalConcentration = 1e-12;
 
-  occupancies = calculateOccupancy();
+  occupancies = metalDataSet.calculateOccupancy();
   // Expected values are copied from original spreadsheet
   expectedOccupancies = {
     mg: 0.99728535556569,
