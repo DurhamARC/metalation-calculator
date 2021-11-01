@@ -24,6 +24,7 @@ To compile on-the-fly, run:
 gulp watch
 ```
 
+
 Then open `dist/index.html` to view the calculator.
 
 The plan is to turn the calculator into a Wordpress Plugin so that the calculator can be added as a new block to a Wordpress page, with customisable default values.
