@@ -6,8 +6,12 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-typescript:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: typescript
 
     strategy:
       matrix:
