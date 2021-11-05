@@ -12,6 +12,7 @@ import { __ } from '@wordpress/i18n';
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
 import { useBlockProps } from '@wordpress/block-editor';
+import { TextControl } from '@wordpress/components';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -29,13 +30,14 @@ import './editor.scss';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
-	return (
-		<p {...useBlockProps()}>
-			{__(
-				'Metalation Calculator Wp – hello from the editor!',
-				'metalation-calculator-wp'
-			)}
-		</p>
-	);
-}
+ export default function Edit( { attributes, setAttributes } ) {
+     return (
+         <div { ...useBlockProps() }>
+             <TextControl
+                 label={ __( 'Message', 'gutenpride' ) }
+                 value={ attributes.message }
+                 onChange={ ( val ) => setAttributes( { message: val } ) }
+             />
+         </div>
+     );
+ }

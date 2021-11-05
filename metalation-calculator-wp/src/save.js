@@ -22,13 +22,8 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function save() {
-	return (
-		<p {...useBlockProps.save()}>
-			{__(
-				'Metalation Calculator Wp – hello from the saved content!',
-				'metalation-calculator-wp'
-			)}
-		</p>
-	);
-}
+ export default function save( { attributes } ) {
+     return <div { ...useBlockProps.save() }>
+        <p>{ attributes.message }</p>
+     </div>;
+ }
