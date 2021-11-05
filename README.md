@@ -8,11 +8,26 @@ If you spot any problems with the calculator, please [log an issue](https://gith
 
 ## Development
 
-This is a work in progress, currently using TypeScript with gulp to generate a static website. GitHub Actions builds the `main` branch and pushes the compiled site to GitHub Pages (on the `gh-pages` branch).
+This is a work in progress, currently using TypeScript with gulp to generate a static website. GitHub Actions builds the `main` branch from the `typescript` directory and pushes the compiled site to GitHub Pages (on the `gh-pages` branch).
 
-See https://www.typescriptlang.org/docs/handbook/gulp.html for gulp installation instructions.
 
-To compile, run:
+### TypeScript Calculator
+
+Ensure you have [Node.js](https://nodejs.org/en/) and npm installed.
+
+Run:
+
+```bash
+cd typescript
+npm install
+```
+
+This should install the necessary npm packages, including gulp. See https://www.typescriptlang.org/docs/handbook/gulp.html
+for further information on installing gulp.
+
+Commands below should also be run from the `typescript` directory.
+
+To compile the website with gulp, run:
 
 ```bash
 gulp
@@ -24,6 +39,6 @@ To compile on-the-fly, run:
 gulp watch
 ```
 
-Then open `dist/index.html` to view the calculator.
+Open `dist/index.html` (from the `typescript` directory) to view the calculator.
 
 The plan is to turn the calculator into a Wordpress Plugin so that the calculator can be added as a new block to a Wordpress page, with customisable default values.
