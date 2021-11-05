@@ -4,8 +4,8 @@
 	"version": "0.1.0",
 	"title": "Metalation Calculator Wp",
 	"category": "widgets",
-	"icon": "smiley",
-	"description": "Example block written with ESNext standard and JSX support – build step required.",
+	"icon": "calculator",
+	"description": "Calculator to predict metal occupancies in vivo",
 	"supports": {
 		"html": false
 	},
