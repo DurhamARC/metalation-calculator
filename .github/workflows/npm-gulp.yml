@@ -36,4 +36,4 @@ jobs:
       if: startsWith(matrix.node-version, '16.') && (contains(github.ref, 'main') || github.event_name == 'release')
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
+        publish_dir: ./typescript/dist
