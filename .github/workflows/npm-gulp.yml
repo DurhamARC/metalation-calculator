@@ -36,6 +36,7 @@ jobs:
       working-directory: metalation-calculator-wp
       run: |
         npm install
+        npm install
         npm run build
         npm run format
         npm run lint:js
