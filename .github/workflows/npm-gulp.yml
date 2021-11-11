@@ -6,12 +6,11 @@ on:
     branches: [ main ]
 
 jobs:
-  build-typescript:
+  build:
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
-        working-directory: typescript
 
     strategy:
       matrix:
@@ -25,19 +24,29 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build and test
+    - name: Build and test typescript
+      working-directory: typescript
       run: |
         npm install
         gulp
         gulp jest
-
-    - name: Build for wordpress and check plugin is up-to-date
-      run: |
         gulp wp
-        if [[ `git status --porcelain ../metalation-calculator-wp` ]]; then
-          echo "Wordpress plugin files are not up to date with typescript directory:"
-          git status --porcelain ../metalation-calculator-wp
-          echo "Run 'gulp wp' and commit the changes."
+
+    - name: Build and lint wordpress plugin
+      working-directory: metalation-calculator-wp
+      run: |
+        npm install
+        npm run build
+        npm run format
+        npm run lint:js
+        npm run lint:css
+
+    - name: Check plugin files are up-to-date
+      run: |
+        if [[ `git status --porcelain metalation-calculator-wp` ]]; then
+          echo "Wordpress plugin files are not up to date:"
+          git status --porcelain metalation-calculator-wp
+          echo "Run 'gulp wp' in 'typescript', and 'npm run build'/'npm run format' in 'metalation-calculator-wp' and commit the changes."
           exit 1
         fi
 
