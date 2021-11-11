@@ -33,11 +33,11 @@ import './editor.scss';
  export default function Edit( { attributes, setAttributes } ) {
      return (
          <div { ...useBlockProps() }>
-             <TextControl
-                 label={ __( 'Message', 'gutenpride' ) }
-                 value={ attributes.message }
-                 onChange={ ( val ) => setAttributes( { message: val } ) }
-             />
+            {__(
+                'Metalation Calculator will appear here',
+                'metalation-calculator-wp'
+            )}
+
          </div>
      );
  }

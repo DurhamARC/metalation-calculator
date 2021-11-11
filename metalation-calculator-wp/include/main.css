@@ -1,0 +1,36 @@
+.metalation_calculator #metalation_table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
+}
+.metalation_calculator #metalation_table td, .metalation_calculator #metalation_table th {
+  text-align: right;
+  padding: 2px 5px;
+  vertical-align: top;
+  border: 0;
+}
+.metalation_calculator #metalation_table input[type=number] {
+  text-align: right;
+  width: 100%;
+  border-width: 1px;
+  /* hide number up/down arrows in Firefox */
+  -moz-appearance: textfield;
+}
+.metalation_calculator #metalation_table input::-webkit-outer-spin-button,
+.metalation_calculator #metalation_table input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.metalation_calculator #metalation_table .error_msg {
+  color: red;
+  font-size: smaller;
+}
+.metalation_calculator .footnote {
+  font-size: smaller;
+  margin: 10px 0;
+}
+.metalation_calculator .footnote a {
+  font-weight: bold;
+}
