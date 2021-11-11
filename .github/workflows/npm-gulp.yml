@@ -34,9 +34,9 @@ jobs:
     - name: Build for wordpress and check plugin is up-to-date
       run: |
         gulp wp
-        if [[ `git status --porcelain` ]]; then
+        if [[ `git status --porcelain ../metalation-calculator-wp` ]]; then
           echo "Wordpress plugin files are not up to date with typescript directory:"
-          git status --porcelain
+          git status --porcelain ../metalation-calculator-wp
           echo "Run 'gulp wp' and commit the changes."
           exit 1
         fi
