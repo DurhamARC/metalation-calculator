@@ -31,6 +31,16 @@ jobs:
         gulp
         gulp jest
 
+    - name: Build for wordpress and check plugin is up-to-date
+      run: |
+        gulp wp
+        if [[ `git status --porcelain` ]]; then
+          echo "Wordpress plugin files are not up to date with typescript directory:"
+          git status --porcelain
+          echo "Run 'gulp wp' and commit the changes."
+          exit 1
+        fi
+
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       if: startsWith(matrix.node-version, '16.') && (contains(github.ref, 'main') || github.event_name == 'release')
