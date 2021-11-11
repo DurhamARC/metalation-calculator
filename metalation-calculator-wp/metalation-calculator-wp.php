@@ -13,17 +13,17 @@
  * @package           create-block
  */
 
- function metalation_calculator_wp_render_callback( $block_attributes, $content ) {
-     $js = file_get_contents( plugin_dir_path( __FILE__ ) . "include/bundle.js" );
-     $css = file_get_contents( plugin_dir_path( __FILE__ ) . "include/main.css" );
-     $html = file_get_contents( plugin_dir_path( __FILE__ ) . "include/calculator.html" );
+function metalation_calculator_wp_render_callback( $block_attributes, $content ) {
+  $js = file_get_contents( plugin_dir_path( __FILE__ ) . 'include/bundle.js' );
+  $css = file_get_contents( plugin_dir_path( __FILE__ ) . 'include/main.css' );
+  $html = file_get_contents( plugin_dir_path( __FILE__ ) . 'include/calculator.html' );
 
-    return <<<END
-    <script type="text/javascript">$js</script>
-    <style>$css</style>
-    $html
+  return <<<END
+<script type="text/javascript">$js</script>
+<style>$css</style>
+$html
 END;
- }
+}
 
 /**
  * Registers the block using the metadata loaded from the `block.json` file.
@@ -36,10 +36,10 @@ function create_block_metalation_calculator_wp_block_init() {
   $asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');
 
   wp_register_script(
-      'metalation_calculator_wp',
-      plugins_url( 'build/block.js', __FILE__ ),
-      $asset_file['dependencies'],
-      $asset_file['version']
+    'metalation_calculator_wp',
+    plugins_url( 'build/block.js', __FILE__ ),
+    $asset_file['dependencies'],
+    $asset_file['version']
   );
 
 	register_block_type( __DIR__, array(
