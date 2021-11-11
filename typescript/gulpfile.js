@@ -13,7 +13,8 @@ const paths = {
   ts: ["src/main.ts", "src/metals.ts"],
   pages: ["src/*.html", "src/includes/*.html"],
   styles: ["src/scss/*.scss"],
-  tests: ["src/?(*.)+(spec|test).+(ts|tsx|js)"]
+  tests: ["src/?(*.)+(spec|test).+(ts|tsx|js)"],
+  wppages: ["dist/calculator.html", "dist/bundle.js", "dist/main.css"]
 };
 
 function style() {
@@ -46,6 +47,10 @@ function bundle() {
     .pipe(gulp.dest("dist"));
 }
 
+function wpCopy() {
+  return gulp.src(paths.wppages).pipe(gulp.dest("../metalation-calculator-wp/include"));
+}
+
 function watch() {
   gulp.watch(paths.styles, style);
   gulp.watch(paths.pages, copyHtml);
@@ -73,5 +78,7 @@ gulp.task('jest', function () {
 });
 
 gulp.task("default", gulp.series(lint, style, copyHtml, bundle));
+
+gulp.task("wp", gulp.series(lint, style, copyHtml, bundle, wpCopy));
 
 exports.watch = watch

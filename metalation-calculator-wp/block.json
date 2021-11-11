@@ -1,0 +1,24 @@
+{
+	"apiVersion": 2,
+	"name": "create-block/metalation-calculator-wp",
+	"version": "0.1.0",
+	"title": "Metalation Calculator",
+	"category": "widgets",
+	"icon": "calculator",
+	"description": "Calculator to predict metal occupancies in vivo",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "metalation-calculator-wp",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css",
+  "attributes": {
+    "message": {
+        "type": "string",
+        "source": "text",
+        "selector": "div",
+        "default": ""
+    }
+  }
+}

@@ -41,4 +41,25 @@ gulp watch
 
 Open `dist/index.html` (from the `typescript` directory) to view the calculator.
 
-The plan is to turn the calculator into a Wordpress Plugin so that the calculator can be added as a new block to a Wordpress page, with customisable default values.
+After making changes to the calculator, ensure you run `gulp wp` to update the files in the Wordpress plugin and commit
+the modified files in `metalation-calculator-wp/include`.
+
+### Wordpress Plugin
+
+The Wordpress Plugin (currently a work in progress) allows Wordpress authors to add a calculator as a new block in a
+Wordpress page. The aim is to allow authors to customise the default values.
+
+To work on/test the plugin, follow the development instructions at https://developer.wordpress.org/block-editor/getting-started/devenv/ to set up a Wordpress development environment.
+
+Then do:
+
+```bash
+cd metalation-calculator-wp
+npm run build
+wp-env start
+```
+
+You should then be able to access your local Wordpress instance at http://localhost:8888, and to log in at
+http://localhost:8888/wp-admin.
+
+Enable the **Metalation Calculator** plugin, then add a 'metalation calculator' block to a post or page to test it out.
