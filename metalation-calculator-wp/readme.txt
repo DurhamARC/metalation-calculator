@@ -1,19 +1,20 @@
-=== Metalation Calculator Wp ===
-Contributors:      The WordPress Contributors
+=== Metalation Calculator ===
+Contributors:      Alison Clarke
 Tags:              block
 Tested up to:      5.8.0
 Stable tag:        0.1.0
-License:           GPL-2.0-or-later
-License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+License:           MIT
+License URI:       http://opensource.org/licenses/MIT
 
-Example block written with ESNext standard and JSX support – build step required.
+Calculator to predict metal occupancies in vivo.
 
 == Description ==
 
-This is the long description. No limit, and you can use Markdown (as well as in the following sections).
+This plugin adds a 'Metalation Calculator' block type, which enables authors to add a calculator to a page or post.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+The calculator predicts metal occupancies in vivo and is based on Nature Communications 12 1195- (2021)
+(https://doi.org/10.1038/s41467-021-21479-8) and supported by grant BB/V006002/1 from the Biotechnology and Biological
+Sciences Research Council.
 
 == Installation ==
 

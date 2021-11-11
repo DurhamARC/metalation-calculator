@@ -2,7 +2,7 @@
 	"apiVersion": 2,
 	"name": "create-block/metalation-calculator-wp",
 	"version": "0.1.0",
-	"title": "Metalation Calculator Wp",
+	"title": "Metalation Calculator",
 	"category": "widgets",
 	"icon": "calculator",
 	"description": "Calculator to predict metal occupancies in vivo",

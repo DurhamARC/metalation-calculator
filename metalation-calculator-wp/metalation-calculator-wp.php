@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name:       Metalation Calculator Wp
- * Description:       Example block written with ESNext standard and JSX support – build step required.
+ * Plugin Name:       Metalation Calculator
+ * Description:       Calculator to predict metal occupancies in vivo.
  * Requires at least: 5.8
  * Requires PHP:      7.0
  * Version:           0.1.0
- * Author:            The WordPress Contributors
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Author:            Alison Clarke
+ * License:           MIT
+ * License URI:       http://opensource.org/licenses/MIT
  * Text Domain:       metalation-calculator-wp
  *
  * @package           create-block

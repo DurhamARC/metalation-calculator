@@ -2,8 +2,8 @@
 	"name": "metalation-calculator-wp",
 	"version": "0.1.0",
 	"description": "Calculator to predict metal occupancies in vivo",
-	"author": "The WordPress Contributors",
-	"license": "GPL-2.0-or-later",
+	"author": "Alison Clarke",
+	"license": "MIT",
 	"main": "build/index.js",
 	"scripts": {
 		"build": "wp-scripts build",
