@@ -23,7 +23,7 @@ npm install
 
 sudo npm install -g gulp-cli
 ```
-Enter your password to install gulp globally as admin. See [Gulp](https://www.typescriptlang.org/docs/handbook/gulp.html).
+Enter your password to install gulp globally as admin. See [Gulp](https://www.typescriptlang.org/docs/handbook/gulp.html) for further information.
 
 All necessary packages should now be installed.
 
