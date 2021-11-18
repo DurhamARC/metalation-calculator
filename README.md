@@ -17,13 +17,18 @@ Ensure you have [Node.js](https://nodejs.org/en/) and npm installed.
 
 Run:
 
+```
+sudo npm install -g gulp-cli
+```
+
+Enter your password to install gulp globally as admin. See [Gulp](https://www.typescriptlang.org/docs/handbook/gulp.html) for further information.
+
+To work within the `typescript` directory and install the necessary packages, run:
+
 ```bash
 cd typescript
 npm install
-
-sudo npm install -g gulp-cli
 ```
-Enter your password to install gulp globally as admin. See [Gulp](https://www.typescriptlang.org/docs/handbook/gulp.html) for further information.
 
 All necessary packages should now be installed.
 
