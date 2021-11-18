@@ -20,10 +20,12 @@ Run:
 ```bash
 cd typescript
 npm install
-```
 
-This should install the necessary npm packages, including gulp. See https://www.typescriptlang.org/docs/handbook/gulp.html
-for further information on installing gulp.
+sudo npm install -g gulp-cli
+```
+Enter your password to install gulp globally as admin. See [Gulp](https://www.typescriptlang.org/docs/handbook/gulp.html).
+
+All necessary packages should now be installed.
 
 Commands below should also be run from the `typescript` directory.
 
