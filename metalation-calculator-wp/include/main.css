@@ -8,6 +8,8 @@ $color-section-shading-gray: rgb(222, 222, 222)
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
+  /* Tooltip text */
+  /* Show the tooltip text when you mouse over the tooltip container */
   /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
 }
 .metalation_calculator #metalation_table td, .metalation_calculator #metalation_table th {
@@ -26,6 +28,22 @@ $color-section-shading-gray: rgb(222, 222, 222)
 }
 .metalation_calculator #metalation_table tr:nth-child(even) {
   background-color: #ededed;
+}
+.metalation_calculator #metalation_table .tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  display: block;
+  bottom: 47%;
+}
+.metalation_calculator #metalation_table .tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 .metalation_calculator #metalation_table input[type=number] {
   text-align: right;
