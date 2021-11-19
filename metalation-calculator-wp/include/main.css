@@ -1,3 +1,8 @@
+/*
+$color-light-blue: rgb(136, 206, 222);
+$color-row-gray: rgb(237, 237, 237);
+$color-section-shading-gray: rgb(222, 222, 222)
+*/
 .metalation_calculator #metalation_table {
   table-layout: fixed;
   width: 100%;
@@ -6,10 +11,21 @@
   /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
 }
 .metalation_calculator #metalation_table td, .metalation_calculator #metalation_table th {
-  text-align: right;
+  text-align: center;
   padding: 2px 5px;
-  vertical-align: top;
   border: 0;
+  justify-content: center;
+}
+.metalation_calculator #metalation_table thead, .metalation_calculator #metalation_table .bottom {
+  background-color: #88cede;
+  padding: 1.2%;
+}
+.metalation_calculator #metalation_table td, .metalation_calculator #metalation_table .result {
+  text-align: right;
+  padding-right: 20px;
+}
+.metalation_calculator #metalation_table tr:nth-child(even) {
+  background-color: #ededed;
 }
 .metalation_calculator #metalation_table input[type=number] {
   text-align: right;

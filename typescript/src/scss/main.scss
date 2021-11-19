@@ -1,3 +1,4 @@
+
 /*
 $color-light-blue: rgb(136, 206, 222);
 $color-row-gray: rgb(237, 237, 237);
@@ -15,6 +16,17 @@ $color-section-shading-gray: rgb(222, 222, 222)
       padding: 2px 5px;
       border: 0;
       justify-content: center;
+    }
+    thead, .bottom{
+      background-color: rgb(136, 206, 222);
+      padding: 1.2%
+    }
+    td, .result{
+      text-align: right;
+      padding-right: 20px;
+    }
+    tr:nth-child(even) {
+      background-color: rgb(237, 237, 237);
     }
 
     input[type=number] {
