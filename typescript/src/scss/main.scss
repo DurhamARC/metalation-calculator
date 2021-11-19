@@ -6,10 +6,10 @@
     margin: 20px 0;
 
     td, th {
-      text-align: right;
+      text-align: center;
       padding: 2px 5px;
-      vertical-align: top;
       border: 0;
+      justify-content: center;
     }
     input[type=number] {
       text-align: right;
