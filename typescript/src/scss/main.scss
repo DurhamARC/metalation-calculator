@@ -1,3 +1,8 @@
+/*
+$color-light-blue: rgb(136, 206, 222);
+$color-row-gray: rgb(237, 237, 237);
+$color-section-shading-gray: rgb(222, 222, 222)
+*/
 .metalation_calculator {
   #metalation_table {
     table-layout: fixed;
@@ -11,6 +16,7 @@
       border: 0;
       justify-content: center;
     }
+
     input[type=number] {
       text-align: right;
       width: 100%;
