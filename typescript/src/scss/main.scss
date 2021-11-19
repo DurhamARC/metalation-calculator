@@ -79,9 +79,15 @@
     }
   }
 
+  #download_btn, #reset_btn {
+    display: inline;
+    float: right;
+    margin-right: 2px;
+  }
+
   .footnote {
     font-size: smaller;
-    margin: 10px 0;
+    margin: 70px 0;
 
     a {
       font-weight: bold;
