@@ -24,6 +24,9 @@
 .metalation_calculator #metalation_table tr:nth-child(even) {
   background-color: #ededed;
 }
+.metalation_calculator #metalation_table tfoot > tr > :nth-child(2), .metalation_calculator #metalation_table tfoot > tr > :nth-child(3), .metalation_calculator #metalation_table tfoot > tr > :nth-child(4), .metalation_calculator #metalation_table tfoot > tr > :nth-child(5) {
+  background-color: rgba(96, 96, 96, 0.1);
+}
 .metalation_calculator #metalation_table .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
