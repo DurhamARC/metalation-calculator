@@ -1,8 +1,3 @@
-/*
-$color-light-blue: rgb(136, 206, 222);
-$color-row-gray: rgb(237, 237, 237);
-$color-section-shading-gray: rgb(222, 222, 222)
-*/
 .metalation_calculator #metalation_table {
   table-layout: fixed;
   width: 100%;
@@ -32,8 +27,8 @@ $color-section-shading-gray: rgb(222, 222, 222)
 .metalation_calculator #metalation_table .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
-  background-color: black;
-  color: #fff;
+  background-color: #606060;
+  color: white;
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
@@ -44,6 +39,17 @@ $color-section-shading-gray: rgb(222, 222, 222)
 }
 .metalation_calculator #metalation_table .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+.metalation_calculator #metalation_table .tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #606060 transparent transparent transparent;
 }
 .metalation_calculator #metalation_table input[type=number] {
   text-align: right;
@@ -61,9 +67,14 @@ $color-section-shading-gray: rgb(222, 222, 222)
   color: red;
   font-size: smaller;
 }
+.metalation_calculator #download_btn, .metalation_calculator #reset_btn {
+  display: inline;
+  float: right;
+  margin-right: 2px;
+}
 .metalation_calculator .footnote {
   font-size: smaller;
-  margin: 10px 0;
+  margin: 70px 0;
 }
 .metalation_calculator .footnote a {
   font-weight: bold;
