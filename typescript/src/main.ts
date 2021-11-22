@@ -49,7 +49,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   row.insertCell(-1).outerHTML = "<th>" + metal.symbol + "</th>";
 
   const affinityCell: HTMLTableCellElement = row.insertCell(-1);
-  affinityCell.classList.add("affinity");
+  affinityCell.classList.add("affinity", "grouped");
   const affinityInput = createMetalNumberInput(
     "affinity",
     metal,
@@ -64,11 +64,12 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   affinityCell.appendChild(affinityInput);
 
   const mDeltaGCell: HTMLTableCellElement = row.insertCell(-1);
+  mDeltaGCell.classList.add("grouped");
   mDeltaGCell.id = "metalation_delta_g_" + metal.idSuffix;
   mDeltaGCell.innerText = metal.metalationDeltaG.toFixed(1).toString();
 
   const bmcCell: HTMLTableCellElement = row.insertCell(-1);
-  bmcCell.classList.add("bmc");
+  bmcCell.classList.add("bmc", "grouped");
   const bmcInput = createMetalNumberInput(
     "bmc",
     metal,
@@ -84,6 +85,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   bmcCell.appendChild(bmcInput);
 
   const iaDeltaGCell: HTMLTableCellElement = row.insertCell(-1);
+  iaDeltaGCell.classList.add("grouped");
   iaDeltaGCell.id = "ia_delta_g_" + metal.idSuffix;
   iaDeltaGCell.innerText = metal.intracellularAvailableDeltaG
     .toFixed(1)
