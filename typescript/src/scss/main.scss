@@ -35,6 +35,10 @@
     }
 
     /* Tooltip text */
+    .tooltip{
+      position: relative;
+    }
+
     .tooltip .tooltiptext {
       visibility: hidden;
       width: 120px;
@@ -46,7 +50,7 @@
       position: absolute;
       z-index: 1;
       display: block;
-      bottom: 47%;
+      bottom: 100%;
     }
 
     /* Show the tooltip text when you mouse over the tooltip container */
