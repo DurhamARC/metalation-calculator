@@ -32,7 +32,7 @@
       background-color: $row_gray;
     }
       // TODO:  Change the tfoot to tbody when thejs issue is fixed to fix the overall shading
-    tfoot>tr>:nth-child(2), tfoot>tr>:nth-child(3),tfoot>tr>:nth-child(4),tfoot>tr>:nth-child(5) {
+    .grouped {
       background-color: $section_gray;
     }
 
