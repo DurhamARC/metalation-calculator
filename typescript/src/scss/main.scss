@@ -9,8 +9,9 @@
   #metalation_table {
     table-layout: fixed;
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
     margin: 20px 0;
+    border-spacing: 0;
 
     td, th {
       text-align: center;
@@ -66,6 +67,13 @@
       border-width: 5px;
       border-style: solid;
       border-color: $dark_gray transparent transparent transparent;
+    }
+
+    .right_spacing_odd {
+      border-right: 15px solid $white;
+    }
+    .right_spacing_even{
+      border-right: 15px solid $medium_gray;
     }
 
     input[type=number] {
