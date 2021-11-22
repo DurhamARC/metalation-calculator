@@ -19,8 +19,7 @@
       border: 0;
       justify-content: center;
     }
-    // TODO: remove .bottom tags from calculator.html and change .bottom to tfoot when the js issue is fixed.
-    thead, .bottom {
+    thead, tfoot {
       background-color: $light_blue;
       padding: 1.2%
     }
@@ -31,7 +30,7 @@
     tr:nth-child(even) {
       background-color: $row_gray;
     }
-      // TODO:  Change the tfoot to tbody when thejs issue is fixed to fix the overall shading
+    
     .grouped {
       background-color: $section_gray;
     }
