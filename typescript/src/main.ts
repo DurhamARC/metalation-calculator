@@ -42,7 +42,9 @@ function createMetalNumberInput(
 }
 
 function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
-  const row: HTMLTableRowElement = table.insertRow(table.rows.length - 1);
+  const row: HTMLTableRowElement = table
+    .getElementsByTagName("tbody")[0]
+    .insertRow();
 
   row.insertCell(-1).outerHTML = "<th>" + metal.symbol + "</th>";
 
