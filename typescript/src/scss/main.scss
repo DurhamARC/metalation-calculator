@@ -1,10 +1,9 @@
 
   $light_blue: rgb(136, 206, 222);
-  $row_gray: rgb(237, 237, 237);
-  $shading_gray: rgb(222, 222, 222);
-  $tooltip_gray: rgb(96, 96, 96);
+  $medium_gray: rgb(237, 237, 237);
+  $dark_gray: rgb(96, 96, 96);
   $white: rgb(255, 255, 255);
-  $section_gray: rgb(96, 96, 96, 0.1);
+  $low_opacity_gray: rgb(96, 96, 96, 0.1);
 
 .metalation_calculator {
   #metalation_table {
@@ -28,18 +27,18 @@
       padding-right: 20px;
     }
     tr:nth-child(even) {
-      background-color: $row_gray;
+      background-color: $medium_gray;
     }
-    
+
     .grouped {
-      background-color: $section_gray;
+      background-color: $low_opacity_gray;
     }
 
     /* Tooltip text */
     .tooltip .tooltiptext {
       visibility: hidden;
       width: 120px;
-      background-color: $tooltip_gray;
+      background-color: $dark_gray;
       color: $white;
       text-align: center;
       padding: 5px 0;
@@ -62,7 +61,7 @@
       margin-left: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: $tooltip_gray transparent transparent transparent;
+      border-color: $dark_gray transparent transparent transparent;
     }
 
     input[type=number] {
