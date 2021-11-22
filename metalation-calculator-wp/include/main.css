@@ -64,6 +64,9 @@
 .metalation_calculator #metalation_table .right_spacing_even {
   border-right: 15px solid #ededed;
 }
+.metalation_calculator #metalation_table #total_metalation {
+  padding: 18px;
+}
 .metalation_calculator #metalation_table input[type=number] {
   text-align: right;
   width: 100%;
