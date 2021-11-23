@@ -23,6 +23,11 @@
       background-color: $light_blue;
       padding: 1.2%
     }
+    
+    sup {
+      white-space: nowrap;
+    }
+
     td, .result {
       text-align: right;
       padding-right: 20px;
