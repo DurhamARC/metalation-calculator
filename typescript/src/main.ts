@@ -40,7 +40,6 @@ function createMetalNumberInput(
   div.append(msgP);
   return div;
 }
-let counter = 1;
 function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   const row: HTMLTableRowElement = table
     .getElementsByTagName("tbody")[0]
@@ -64,12 +63,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   affinityCell.appendChild(affinityInput);
 
   const mDeltaGCell: HTMLTableCellElement = row.insertCell(-1);
-  if (counter % 2 == 0) {
-    mDeltaGCell.classList.add("grouped", "right_spacing_even");
-  } else {
-    mDeltaGCell.classList.add("grouped", "right_spacing_odd");
-  }
-  counter++;
+  mDeltaGCell.classList.add("grouped", "right_spacing");
   mDeltaGCell.id = "metalation_delta_g_" + metal.idSuffix;
   mDeltaGCell.innerText = metal.metalationDeltaG.toFixed(1).toString();
 

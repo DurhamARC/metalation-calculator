@@ -32,8 +32,19 @@
       text-align: right;
       padding-right: 20px;
     }
+
     tr:nth-child(even) {
       background-color: $medium_gray;
+
+      td.right_spacing {
+        border-right: 15px solid $medium_gray;
+      }
+    }
+
+    tr:nth-child(odd) {
+      td.right_spacing{
+        border-right: 15px solid $white;
+      }
     }
 
     .grouped {
@@ -74,12 +85,7 @@
       border-color: $dark_gray transparent transparent transparent;
     }
 
-    .right_spacing_odd {
-      border-right: 15px solid $white;
-    }
-    .right_spacing_even{
-      border-right: 15px solid $medium_gray;
-    }
+
     #total_metalation {
       padding: 18px;
     }
