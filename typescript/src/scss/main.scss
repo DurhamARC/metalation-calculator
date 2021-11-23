@@ -19,6 +19,9 @@
       border: 0;
       justify-content: center;
     }
+    thead {
+      padding: 18px;
+    }
     thead, tfoot {
       background-color: $light_blue;
       padding: 1.2%
@@ -54,6 +57,7 @@
     /* Tooltip text */
     .tooltip{
       position: relative;
+      padding: 1.115%;
     }
 
     .tooltip .tooltiptext {
