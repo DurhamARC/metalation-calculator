@@ -186,7 +186,7 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
 
 window.addEventListener("DOMContentLoaded", () => {
   const metalTable = <HTMLTableElement>(
-    document.getElementById("metalation_table")
+    document.getElementById("metalation-table")
   );
   for (const id in metalDataSet.metals) {
     const m = metalDataSet.metals[id];
@@ -194,7 +194,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   document.getElementById("download_btn").onclick = function () {
-    downloadTableAsCsv("metalation_table");
+    downloadTableAsCsv("metalation-table");
   };
 
   document.getElementById("reset_btn").onclick = function () {

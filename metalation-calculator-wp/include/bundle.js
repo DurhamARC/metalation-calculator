@@ -144,13 +144,13 @@ function downloadTableAsCsv(tableId, separator) {
     document.body.removeChild(link);
 }
 window.addEventListener("DOMContentLoaded", function () {
-    var metalTable = (document.getElementById("metalation_table"));
+    var metalTable = (document.getElementById("metalation-table"));
     for (var id in metalDataSet.metals) {
         var m = metalDataSet.metals[id];
         appendMetalTableRow(m, metalTable);
     }
     document.getElementById("download_btn").onclick = function () {
-        downloadTableAsCsv("metalation_table");
+        downloadTableAsCsv("metalation-table");
     };
     document.getElementById("reset_btn").onclick = function () {
         reset();

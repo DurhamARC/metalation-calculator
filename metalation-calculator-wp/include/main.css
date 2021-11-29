@@ -1,4 +1,4 @@
-.metalation-calculator #metalation_table {
+.metalation-calculator #metalation-table {
   table-layout: fixed;
   width: 100%;
   border-collapse: separate;
@@ -6,45 +6,45 @@
   border-spacing: 0;
   /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
 }
-.metalation-calculator #metalation_table td, .metalation-calculator #metalation_table th {
+.metalation-calculator #metalation-table td, .metalation-calculator #metalation-table th {
   padding: 2px 5px;
   border: 0;
   justify-content: center;
 }
-.metalation-calculator #metalation_table th {
+.metalation-calculator #metalation-table th {
   text-align: center;
 }
-.metalation-calculator #metalation_table td, .metalation-calculator #metalation_table .result {
+.metalation-calculator #metalation-table td, .metalation-calculator #metalation-table .result {
   text-align: right;
   padding-right: 20px;
 }
-.metalation-calculator #metalation_table thead, .metalation-calculator #metalation_table tfoot {
+.metalation-calculator #metalation-table thead, .metalation-calculator #metalation-table tfoot {
   background-color: #88cede;
   padding: 1.2%;
 }
-.metalation-calculator #metalation_table sup {
+.metalation-calculator #metalation-table sup {
   white-space: nowrap;
 }
-.metalation-calculator #metalation_table tbody .grouped {
+.metalation-calculator #metalation-table tbody .grouped {
   background-color: rgba(96, 96, 96, 0.2);
 }
-.metalation-calculator #metalation_table tbody tr:nth-child(odd) {
+.metalation-calculator #metalation-table tbody tr:nth-child(odd) {
   background-color: white;
 }
-.metalation-calculator #metalation_table tbody tr:nth-child(odd) td.right_spacing {
+.metalation-calculator #metalation-table tbody tr:nth-child(odd) td.right_spacing {
   border-right: 15px solid white;
 }
-.metalation-calculator #metalation_table tbody tr:nth-child(even) {
+.metalation-calculator #metalation-table tbody tr:nth-child(even) {
   background-color: #ededed;
 }
-.metalation-calculator #metalation_table tbody tr:nth-child(even) td.right_spacing {
+.metalation-calculator #metalation-table tbody tr:nth-child(even) td.right_spacing {
   border-right: 15px solid #ededed;
 }
-.metalation-calculator #metalation_table .tooltip {
+.metalation-calculator #metalation-table .tooltip {
   position: relative;
   padding: 1.115%;
 }
-.metalation-calculator #metalation_table .tooltip .tooltiptext {
+.metalation-calculator #metalation-table .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
   background-color: #606060;
@@ -57,7 +57,7 @@
   display: block;
   bottom: 100%;
 }
-.metalation-calculator #metalation_table .tooltip .tooltiptext::after {
+.metalation-calculator #metalation-table .tooltip .tooltiptext::after {
   content: " ";
   position: absolute;
   top: 100%;
@@ -68,25 +68,25 @@
   border-style: solid;
   border-color: #606060 transparent transparent transparent;
 }
-.metalation-calculator #metalation_table .tooltip:hover .tooltiptext {
+.metalation-calculator #metalation-table .tooltip:hover .tooltiptext {
   visibility: visible;
 }
-.metalation-calculator #metalation_table #total_metalation {
+.metalation-calculator #metalation-table #total_metalation {
   padding: 18px;
 }
-.metalation-calculator #metalation_table input[type=number] {
+.metalation-calculator #metalation-table input[type=number] {
   text-align: right;
   width: 100%;
   border-width: 1px;
   /* hide number up/down arrows in Firefox */
   -moz-appearance: textfield;
 }
-.metalation-calculator #metalation_table input::-webkit-outer-spin-button,
-.metalation-calculator #metalation_table input::-webkit-inner-spin-button {
+.metalation-calculator #metalation-table input::-webkit-outer-spin-button,
+.metalation-calculator #metalation-table input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.metalation-calculator #metalation_table .error_msg {
+.metalation-calculator #metalation-table .error_msg {
   color: red;
   font-size: smaller;
 }
