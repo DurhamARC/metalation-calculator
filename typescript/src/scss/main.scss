@@ -36,6 +36,11 @@
     }
 
     tbody{
+
+      .grouped {
+        background-color: $low_opacity_gray;
+      }
+      
       tr:nth-child(odd) {
         background-color: $white;
         td.right_spacing{
@@ -83,10 +88,7 @@
           visibility: visible;
       }
     }
-    
-    .grouped {
-      background-color: $low_opacity_gray;
-    }
+
 
     #total_metalation {
       padding: 18px;
