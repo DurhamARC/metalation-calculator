@@ -26,9 +26,9 @@
       background-color: $light_blue;
       padding: 1.2%
     }
-
     sup {
       white-space: nowrap;
+      //sup tag already has white-space:nowrap
     }
 
     td, .result {
