@@ -105,13 +105,17 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
       border-width: 1px;
 
       /* hide number up/down arrows in Firefox */
+      /* stylelint-disable */
       -moz-appearance: textfield;
+      /* stylelint-enable */
     }
 
     /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
+      /* stylelint-disable */
       -webkit-appearance: none;
+      /* stylelint-enable */
       margin: 0;
     }
 
