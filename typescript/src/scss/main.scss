@@ -47,7 +47,7 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
       tr:nth-child(odd) {
         background-color: $white;
 
-        td.right_spacing {
+        td.right-spacing {
           border-right: 15px solid $white;
         }
       }
@@ -55,7 +55,7 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
       tr:nth-child(even) {
         background-color: $medium-gray;
 
-        td.right_spacing {
+        td.right-spacing {
           border-right: 15px solid $medium-gray;
         }
       }

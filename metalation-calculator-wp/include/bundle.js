@@ -53,7 +53,7 @@ function appendMetalTableRow(metal, table) {
     });
     affinityCell.appendChild(affinityInput);
     var mDeltaGCell = row.insertCell(-1);
-    mDeltaGCell.classList.add("grouped", "right_spacing");
+    mDeltaGCell.classList.add("grouped", "right-spacing");
     mDeltaGCell.id = "metalation_delta_g_" + metal.idSuffix;
     mDeltaGCell.innerText = metal.metalationDeltaG.toFixed(1).toString();
     var bmcCell = row.insertCell(-1);

@@ -31,13 +31,13 @@
 .metalation-calculator #metalation-table tbody tr:nth-child(odd) {
   background-color: white;
 }
-.metalation-calculator #metalation-table tbody tr:nth-child(odd) td.right_spacing {
+.metalation-calculator #metalation-table tbody tr:nth-child(odd) td.right-spacing {
   border-right: 15px solid white;
 }
 .metalation-calculator #metalation-table tbody tr:nth-child(even) {
   background-color: #ededed;
 }
-.metalation-calculator #metalation-table tbody tr:nth-child(even) td.right_spacing {
+.metalation-calculator #metalation-table tbody tr:nth-child(even) td.right-spacing {
   border-right: 15px solid #ededed;
 }
 .metalation-calculator #metalation-table .tooltip {
