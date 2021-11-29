@@ -4,18 +4,19 @@
   border-collapse: separate;
   margin: 20px 0;
   border-spacing: 0;
-  /* Tooltip text */
-  /* Show the tooltip text when you mouse over the tooltip container */
   /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
 }
 .metalation_calculator #metalation_table td, .metalation_calculator #metalation_table th {
-  text-align: center;
   padding: 2px 5px;
   border: 0;
   justify-content: center;
 }
-.metalation_calculator #metalation_table thead {
-  padding: 18px;
+.metalation_calculator #metalation_table th {
+  text-align: center;
+}
+.metalation_calculator #metalation_table td, .metalation_calculator #metalation_table .result {
+  text-align: right;
+  padding-right: 20px;
 }
 .metalation_calculator #metalation_table thead, .metalation_calculator #metalation_table tfoot {
   background-color: #88cede;
@@ -23,10 +24,6 @@
 }
 .metalation_calculator #metalation_table sup {
   white-space: nowrap;
-}
-.metalation_calculator #metalation_table td, .metalation_calculator #metalation_table .result {
-  text-align: right;
-  padding-right: 20px;
 }
 .metalation_calculator #metalation_table tbody tr:nth-child(odd) {
   background-color: white;
@@ -39,9 +36,6 @@
 }
 .metalation_calculator #metalation_table tbody tr:nth-child(even) td.right_spacing {
   border-right: 15px solid #ededed;
-}
-.metalation_calculator #metalation_table .grouped {
-  background-color: rgba(96, 96, 96, 0.2);
 }
 .metalation_calculator #metalation_table .tooltip {
   position: relative;
@@ -60,9 +54,6 @@
   display: block;
   bottom: 100%;
 }
-.metalation_calculator #metalation_table .tooltip:hover .tooltiptext {
-  visibility: visible;
-}
 .metalation_calculator #metalation_table .tooltip .tooltiptext::after {
   content: " ";
   position: absolute;
@@ -73,6 +64,12 @@
   border-width: 5px;
   border-style: solid;
   border-color: #606060 transparent transparent transparent;
+}
+.metalation_calculator #metalation_table .tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.metalation_calculator #metalation_table .grouped {
+  background-color: rgba(96, 96, 96, 0.2);
 }
 .metalation_calculator #metalation_table #total_metalation {
   padding: 18px;
