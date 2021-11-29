@@ -71,7 +71,7 @@
 .metalation-calculator #metalation-table .tooltip:hover .tooltiptext {
   visibility: visible;
 }
-.metalation-calculator #metalation-table #total_metalation {
+.metalation-calculator #metalation-table #total-metalation {
   padding: 18px;
 }
 .metalation-calculator #metalation-table input[type=number] {

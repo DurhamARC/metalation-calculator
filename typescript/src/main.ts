@@ -107,7 +107,7 @@ function calculate() {
   }
 
   const totalCell = <HTMLTableCellElement>(
-    document.getElementById("total_metalation")
+    document.getElementById("total-metalation")
   );
   totalCell.innerHTML = (results["total"] * 100).toFixed(2).toString() + "%";
 

@@ -80,7 +80,7 @@ function calculate() {
         var resultCell = (document.getElementById("result_" + id));
         resultCell.innerHTML = (r * 100).toFixed(2).toString() + "%";
     }
-    var totalCell = (document.getElementById("total_metalation"));
+    var totalCell = (document.getElementById("total-metalation"));
     totalCell.innerHTML = (results["total"] * 100).toFixed(2).toString() + "%";
     document.getElementById("download_btn").disabled = false;
 }
