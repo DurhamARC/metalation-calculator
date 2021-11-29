@@ -25,6 +25,9 @@
 .metalation_calculator #metalation_table sup {
   white-space: nowrap;
 }
+.metalation_calculator #metalation_table tbody .grouped {
+  background-color: rgba(96, 96, 96, 0.2);
+}
 .metalation_calculator #metalation_table tbody tr:nth-child(odd) {
   background-color: white;
 }
@@ -67,9 +70,6 @@
 }
 .metalation_calculator #metalation_table .tooltip:hover .tooltiptext {
   visibility: visible;
-}
-.metalation_calculator #metalation_table .grouped {
-  background-color: rgba(96, 96, 96, 0.2);
 }
 .metalation_calculator #metalation_table #total_metalation {
   padding: 18px;
