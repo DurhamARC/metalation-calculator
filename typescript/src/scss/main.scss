@@ -26,7 +26,7 @@
       background-color: $light_blue;
       padding: 1.2%
     }
-    
+
     sup {
       white-space: nowrap;
     }
@@ -36,19 +36,23 @@
       padding-right: 20px;
     }
 
-    tr:nth-child(even) {
-      background-color: $medium_gray;
+    tbody{
+      tr:nth-child(odd) {
+        background-color: $white;
+        td.right_spacing{
+          border-right: 15px solid $white;
+        }
+      }
 
-      td.right_spacing {
-        border-right: 15px solid $medium_gray;
+      tr:nth-child(even) {
+        background-color: $medium_gray;
+
+        td.right_spacing {
+          border-right: 15px solid $medium_gray;
+        }
       }
     }
 
-    tr:nth-child(odd) {
-      td.right_spacing{
-        border-right: 15px solid $white;
-      }
-    }
 
     .grouped {
       background-color: $low_opacity_gray;
