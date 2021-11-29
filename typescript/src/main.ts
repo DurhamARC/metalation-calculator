@@ -111,14 +111,14 @@ function calculate() {
   );
   totalCell.innerHTML = (results["total"] * 100).toFixed(2).toString() + "%";
 
-  (<HTMLButtonElement>document.getElementById("download_btn")).disabled = false;
+  (<HTMLButtonElement>document.getElementById("download-btn")).disabled = false;
 }
 
 function clearCalculation() {
   Array.from(document.getElementsByClassName("result")).forEach((cell) => {
     cell.innerHTML = "N/A";
   });
-  (<HTMLButtonElement>document.getElementById("download_btn")).disabled = true;
+  (<HTMLButtonElement>document.getElementById("download-btn")).disabled = true;
 }
 
 function reset() {
@@ -193,7 +193,7 @@ window.addEventListener("DOMContentLoaded", () => {
     appendMetalTableRow(m, metalTable);
   }
 
-  document.getElementById("download_btn").onclick = function () {
+  document.getElementById("download-btn").onclick = function () {
     downloadTableAsCsv("metalation-table");
   };
 

@@ -82,13 +82,13 @@ function calculate() {
     }
     var totalCell = (document.getElementById("total-metalation"));
     totalCell.innerHTML = (results["total"] * 100).toFixed(2).toString() + "%";
-    document.getElementById("download_btn").disabled = false;
+    document.getElementById("download-btn").disabled = false;
 }
 function clearCalculation() {
     Array.from(document.getElementsByClassName("result")).forEach(function (cell) {
         cell.innerHTML = "N/A";
     });
-    document.getElementById("download_btn").disabled = true;
+    document.getElementById("download-btn").disabled = true;
 }
 function reset() {
     metalDataSet = new metals.MetalDataSet();
@@ -149,7 +149,7 @@ window.addEventListener("DOMContentLoaded", function () {
         var m = metalDataSet.metals[id];
         appendMetalTableRow(m, metalTable);
     }
-    document.getElementById("download_btn").onclick = function () {
+    document.getElementById("download-btn").onclick = function () {
         downloadTableAsCsv("metalation-table");
     };
     document.getElementById("reset_btn").onclick = function () {
