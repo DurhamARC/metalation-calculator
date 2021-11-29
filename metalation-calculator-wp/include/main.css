@@ -86,7 +86,7 @@
   -webkit-appearance: none;
   margin: 0;
 }
-.metalation-calculator #metalation-table .error_msg {
+.metalation-calculator #metalation-table .error-msg {
   color: red;
   font-size: smaller;
 }

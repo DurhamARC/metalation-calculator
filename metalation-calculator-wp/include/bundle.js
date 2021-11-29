@@ -7,7 +7,7 @@ function createMetalNumberInput(prefix, metal, metalPropertyName, additionalOnCh
     var div = document.createElement("div");
     var input = document.createElement("input");
     var msgP = document.createElement("p");
-    msgP.classList.add("error_msg");
+    msgP.classList.add("error-msg");
     input.value = metal.getProperty(metalPropertyName).toString();
     input.classList.add(prefix);
     input.id = prefix + "_" + metal.idSuffix;

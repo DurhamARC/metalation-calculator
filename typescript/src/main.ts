@@ -11,7 +11,7 @@ function createMetalNumberInput(
   const div = <HTMLDivElement>document.createElement("div");
   const input = <HTMLInputElement>document.createElement("input");
   const msgP = <HTMLParagraphElement>document.createElement("p");
-  msgP.classList.add("error_msg");
+  msgP.classList.add("error-msg");
   input.value = metal.getProperty(metalPropertyName).toString();
   input.classList.add(prefix);
   input.id = prefix + "_" + metal.idSuffix;
