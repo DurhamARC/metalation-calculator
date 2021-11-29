@@ -90,7 +90,7 @@
   color: red;
   font-size: smaller;
 }
-.metalation-calculator #download-btn, .metalation-calculator #reset_btn {
+.metalation-calculator #download-btn, .metalation-calculator #reset-btn {
   display: inline;
   float: right;
   margin-right: 2px;

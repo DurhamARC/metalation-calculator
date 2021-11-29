@@ -152,7 +152,7 @@ window.addEventListener("DOMContentLoaded", function () {
     document.getElementById("download-btn").onclick = function () {
         downloadTableAsCsv("metalation-table");
     };
-    document.getElementById("reset_btn").onclick = function () {
+    document.getElementById("reset-btn").onclick = function () {
         reset();
     };
     calculate();
