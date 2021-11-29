@@ -1,9 +1,8 @@
-
-  $light_blue: rgb(136, 206, 222);
-  $medium_gray: rgb(237, 237, 237);
-  $dark_gray: rgb(96, 96, 96);
+  $light-blue: rgb(136, 206, 222);
+  $medium-gray: rgb(237, 237, 237);
+  $dark-gray: rgb(96, 96, 96);
   $white: rgb(255, 255, 255);
-  $low_opacity_gray: rgb(96, 96, 96, 0.2);
+  $low-opacity-gray: rgb(96, 96, 96, 0.2);
 
 .metalation_calculator {
   #metalation_table {
@@ -28,7 +27,7 @@
     }
 
     thead, tfoot {
-      background-color: $light_blue;
+      background-color: $light-blue;
       padding: 1.2%
     }
     sup {
@@ -38,9 +37,9 @@
     tbody{
 
       .grouped {
-        background-color: $low_opacity_gray;
+        background-color: $low-opacity-gray;
       }
-      
+
       tr:nth-child(odd) {
         background-color: $white;
         td.right_spacing{
@@ -49,10 +48,10 @@
       }
 
       tr:nth-child(even) {
-        background-color: $medium_gray;
+        background-color: $medium-gray;
 
         td.right_spacing {
-          border-right: 15px solid $medium_gray;
+          border-right: 15px solid $medium-gray;
         }
       }
     }
@@ -63,7 +62,7 @@
       .tooltiptext {
         visibility: hidden;
         width: 120px;
-        background-color: $dark_gray;
+        background-color: $dark-gray;
         color: $white;
         text-align: center;
         padding: 5px 0;
@@ -81,7 +80,7 @@
           margin-left: -5px;
           border-width: 5px;
           border-style: solid;
-          border-color: $dark_gray transparent transparent transparent;
+          border-color: $dark-gray transparent transparent transparent;
         }
       }
       &:hover .tooltiptext {
