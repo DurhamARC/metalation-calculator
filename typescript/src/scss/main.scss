@@ -67,23 +67,23 @@
         z-index: 1;
         display: block;
         bottom: 100%;
+
+        &::after {
+          content: " ";
+          position: absolute;
+          top: 100%; /* At the bottom of the tooltip */
+          left: 50%;
+          margin-left: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: $dark_gray transparent transparent transparent;
+        }
       }
-      .tooltiptext::after {
-        content: " ";
-        position: absolute;
-        top: 100%; /* At the bottom of the tooltip */
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: $dark_gray transparent transparent transparent;
+      &:hover .tooltiptext {
+          visibility: visible;
       }
     }
-
-    .tooltip:hover .tooltiptext {
-      visibility: visible;
-    }
-
+    
     .grouped {
       background-color: $low_opacity_gray;
     }
