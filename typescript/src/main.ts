@@ -11,7 +11,7 @@ function createMetalNumberInput(
   const div = <HTMLDivElement>document.createElement("div");
   const input = <HTMLInputElement>document.createElement("input");
   const msgP = <HTMLParagraphElement>document.createElement("p");
-  msgP.classList.add("error_msg");
+  msgP.classList.add("error-msg");
   input.value = metal.getProperty(metalPropertyName).toString();
   input.classList.add(prefix);
   input.id = prefix + "_" + metal.idSuffix;
@@ -63,7 +63,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   affinityCell.appendChild(affinityInput);
 
   const mDeltaGCell: HTMLTableCellElement = row.insertCell(-1);
-  mDeltaGCell.classList.add("grouped", "right_spacing");
+  mDeltaGCell.classList.add("grouped", "right-spacing");
   mDeltaGCell.id = "metalation_delta_g_" + metal.idSuffix;
   mDeltaGCell.innerText = metal.metalationDeltaG.toFixed(1).toString();
 
@@ -107,18 +107,18 @@ function calculate() {
   }
 
   const totalCell = <HTMLTableCellElement>(
-    document.getElementById("total_metalation")
+    document.getElementById("total-metalation")
   );
   totalCell.innerHTML = (results["total"] * 100).toFixed(2).toString() + "%";
 
-  (<HTMLButtonElement>document.getElementById("download_btn")).disabled = false;
+  (<HTMLButtonElement>document.getElementById("download-btn")).disabled = false;
 }
 
 function clearCalculation() {
   Array.from(document.getElementsByClassName("result")).forEach((cell) => {
     cell.innerHTML = "N/A";
   });
-  (<HTMLButtonElement>document.getElementById("download_btn")).disabled = true;
+  (<HTMLButtonElement>document.getElementById("download-btn")).disabled = true;
 }
 
 function reset() {
@@ -186,18 +186,18 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
 
 window.addEventListener("DOMContentLoaded", () => {
   const metalTable = <HTMLTableElement>(
-    document.getElementById("metalation_table")
+    document.getElementById("metalation-table")
   );
   for (const id in metalDataSet.metals) {
     const m = metalDataSet.metals[id];
     appendMetalTableRow(m, metalTable);
   }
 
-  document.getElementById("download_btn").onclick = function () {
-    downloadTableAsCsv("metalation_table");
+  document.getElementById("download-btn").onclick = function () {
+    downloadTableAsCsv("metalation-table");
   };
 
-  document.getElementById("reset_btn").onclick = function () {
+  document.getElementById("reset-btn").onclick = function () {
     reset();
   };
 

@@ -9,6 +9,7 @@ const sass = require('gulp-sass')(require('sass'));
 const eslint = require('gulp-eslint-new');
 const jest = require('gulp-jest').default;
 const debug = require('gulp-debug');
+const gulpStylelint = require('gulp-stylelint');
 const paths = {
   ts: ["src/main.ts", "src/metals.ts"],
   pages: ["src/*.html", "src/includes/*.html"],
@@ -66,7 +67,20 @@ function lint() {
     .pipe(eslint.failAfterError());
 }
 
+function lintScss() {
+
+  return gulp
+    .src(paths.styles)
+    .pipe(gulpStylelint({
+      reporters: [
+        {formatter: 'string', console: true}
+      ]
+    }));
+}
+
 gulp.task('lint', lint);
+
+gulp.task('lint-scss', lintScss);
 
 gulp.task('jest', function () {
   return gulp.src(paths.tests).pipe(jest({
@@ -77,8 +91,8 @@ gulp.task('jest', function () {
   }));
 });
 
-gulp.task("default", gulp.series(lint, style, copyHtml, bundle));
+gulp.task("default", gulp.series(lint, lintScss, style, copyHtml, bundle));
 
-gulp.task("wp", gulp.series(lint, style, copyHtml, bundle, wpCopy));
+gulp.task("wp", gulp.series(lint, lintScss, style, copyHtml, bundle, wpCopy));
 
 exports.watch = watch
