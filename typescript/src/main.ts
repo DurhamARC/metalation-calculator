@@ -162,6 +162,7 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
       // Remove line breaks and escape double-quote with double-double-quote
       data = data.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
       data = data.replace(/"/g, '""');
+      data = data.replace(/\u2206/g, "Delta ");
       // Push escaped string
       row.push('"' + data + '"');
     }
