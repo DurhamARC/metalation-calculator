@@ -45,7 +45,13 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
     .getElementsByTagName("tbody")[0]
     .insertRow();
 
-  row.insertCell(-1).outerHTML = "<th>" + metal.symbol + "</th>";
+  const label = <HTMLInputElement>document.createElement("input");
+  label.type = "checkbox";
+  label.checked = true;
+  const metalCell = <HTMLTableCellElement>document.createElement("th");
+  metalCell.appendChild(label);
+  metalCell.innerHTML += metal.symbol;
+  row.appendChild(metalCell);
 
   const affinityCell: HTMLTableCellElement = row.insertCell(-1);
   affinityCell.classList.add("affinity", "grouped");
