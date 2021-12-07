@@ -47,10 +47,35 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
 
   const label = <HTMLInputElement>document.createElement("input");
   label.type = "checkbox";
-  label.checked = true;
+  label.id = "toggle_" + metal.idSuffix;
   const metalCell = <HTMLTableCellElement>document.createElement("th");
+
+  label.addEventListener("change", function () {
+    if (this.checked) {
+      (
+        document.getElementById(
+          "affinity_" + metal.idSuffix
+        ) as HTMLInputElement
+      ).disabled = true;
+      (
+        document.getElementById("bmc_" + metal.idSuffix) as HTMLInputElement
+      ).disabled = true;
+    } else {
+      (
+        document.getElementById(
+          "affinity_" + metal.idSuffix
+        ) as HTMLInputElement
+      ).disabled = false;
+      (
+        document.getElementById("bmc_" + metal.idSuffix) as HTMLInputElement
+      ).disabled = false;
+    }
+  });
+
   metalCell.appendChild(label);
-  metalCell.innerHTML += metal.symbol;
+  const metalID = <HTMLParagraphElement>document.createElement("th");
+  metalID.innerHTML = metal.symbol;
+  metalCell.appendChild(metalID);
   row.appendChild(metalCell);
 
   const affinityCell: HTMLTableCellElement = row.insertCell(-1);
