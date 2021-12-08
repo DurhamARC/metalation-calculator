@@ -73,7 +73,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
       ).disabled = false;
       metal.resetValues();
     }
-    calculate();
+    updateRow(metal);
   });
 
   metalCell.appendChild(toggleButton);
@@ -129,6 +129,21 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   const resultCell: HTMLTableCellElement = row.insertCell(-1);
   resultCell.classList.add("result");
   resultCell.id = "result_" + metal.idSuffix;
+}
+
+function updateRow(metal: metals.Metal) {
+  const id = metal.idSuffix;
+  (<HTMLInputElement>document.getElementById("affinity_" + id)).value =
+    metal.affinity.toString();
+  (<HTMLTableCellElement>(
+    document.getElementById("metalation_delta_g_" + id)
+  )).innerText = metal.metalationDeltaG.toFixed(1).toString();
+  (<HTMLInputElement>document.getElementById("bmc_" + id)).value =
+    metal.bufferedMetalConcentration.toString();
+  (<HTMLTableCellElement>(
+    document.getElementById("ia_delta_g_" + id)
+  )).innerText = metal.intracellularAvailableDeltaG.toFixed(1).toString();
+  calculate();
 }
 
 function calculate() {
