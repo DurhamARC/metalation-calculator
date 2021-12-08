@@ -96,3 +96,32 @@ test("deltaGCalculation", () => {
   expect(m.metalationDeltaG).toBeCloseTo(17.12, 2);
   expect(m.intracellularAvailableDeltaG).toBeCloseTo(-60.06, 2);
 });
+
+test("disableEnableMetal", () => {
+  //Create new metal
+  const m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
+
+  //Affinity should be 1000 and buffered Metal Concentration should stay the same
+  m.disableMetal();
+  expect(m.affinity).toEqual(1000);
+  expect(m.bufferedMetalConcentration).toEqual(1);
+
+  // affinity and buffered metal concentration should revert back to default values of 1,1
+  m.resetValues();
+  expect(m.affinity).toEqual(1);
+  expect(m.bufferedMetalConcentration).toEqual(1);
+
+  //set a new value for affinity and buffered Metal Concentration
+  m.affinity = 1.8;
+  m.bufferedMetalConcentration = 0.72;
+
+  //Affinity should be 1000 and buffered Metal Concentration should revert back to the default value of 1
+  m.disableMetal();
+  expect(m.affinity).toEqual(1000);
+  expect(m.bufferedMetalConcentration).toEqual(1);
+
+  // affinity and buffered metal concentration should revert back to default values of 1,1
+  m.resetValues();
+  expect(m.affinity).toEqual(1);
+  expect(m.bufferedMetalConcentration).toEqual(1);
+});
