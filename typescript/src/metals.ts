@@ -5,8 +5,10 @@ export class Metal {
   name: string;
   symbol: string;
   _affinity: number;
+  _defaultAffinity: number;
   _metalationDeltaG: number;
   _bufferedMetalConcentration: number;
+  _defaultMetalConcentration: number;
   _intracellularAvailableDeltaG: number;
   idSuffix: string;
   validator: typeof Proxy;
@@ -22,6 +24,8 @@ export class Metal {
     this.affinity = affinity;
     this.bufferedMetalConcentration = concentration;
     this.idSuffix = symbol.toLowerCase();
+    this._defaultAffinity = affinity;
+    this._defaultMetalConcentration = concentration;
   }
 
   calculateDeltaG(moleValue: number): number {
@@ -73,6 +77,16 @@ export class Metal {
 
   getProperty(key: keyof Metal) {
     return this[key];
+  }
+
+  disableMetal() {
+    this.affinity = 1000;
+    this.bufferedMetalConcentration = this._defaultMetalConcentration;
+  }
+
+  resetValues() {
+    this.affinity = this._defaultAffinity;
+    this.bufferedMetalConcentration = this._defaultMetalConcentration;
   }
 }
 

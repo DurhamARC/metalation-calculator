@@ -61,6 +61,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
       (
         document.getElementById("bmc_" + metal.idSuffix) as HTMLInputElement
       ).disabled = true;
+      metal.disableMetal();
     } else {
       (
         document.getElementById(
@@ -70,7 +71,9 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
       (
         document.getElementById("bmc_" + metal.idSuffix) as HTMLInputElement
       ).disabled = false;
+      metal.resetValues();
     }
+    calculate();
   });
 
   metalCell.appendChild(toggleButton);
