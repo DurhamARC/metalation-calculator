@@ -146,17 +146,19 @@ function downloadTableAsCsv(tableId, separator) {
 }
 function setupCalculator(tableId) {
     var metalTable = document.getElementById(tableId);
-    for (var id in metalDataSet.metals) {
-        var m = metalDataSet.metals[id];
-        appendMetalTableRow(m, metalTable);
+    if (metalTable !== null) {
+        for (var id in metalDataSet.metals) {
+            var m = metalDataSet.metals[id];
+            appendMetalTableRow(m, metalTable);
+        }
+        document.getElementById("download-btn").onclick = function () {
+            downloadTableAsCsv("metalation-table");
+        };
+        document.getElementById("reset-btn").onclick = function () {
+            reset();
+        };
+        calculate();
     }
-    document.getElementById("download-btn").onclick = function () {
-        downloadTableAsCsv("metalation-table");
-    };
-    document.getElementById("reset-btn").onclick = function () {
-        reset();
-    };
-    calculate();
 }
 exports.setupCalculator = setupCalculator;
 window.addEventListener("DOMContentLoaded", function () {

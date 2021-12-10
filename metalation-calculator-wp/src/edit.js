@@ -13,6 +13,7 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
+import '../include/main.css';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -39,23 +40,35 @@ export default function Edit() {
 
 	return (
 		<div {...useBlockProps()}>
-			<table>
-				<thead>
-					<tr>
-						<td></td>
-						<th>Metal Affinity (M)</th>
-						<th>
-							∆G (kJ mol<sup>-1</sup>)
-						</th>
-						<th>Metal Availability (M)</th>
-						<th>
-							Available ∆G (kJ&nbsp;mol<sup>-1</sup>)
-						</th>
-						<th>Occupancy</th>
-					</tr>
-				</thead>
-				<tbody>{tableRows}</tbody>
-			</table>
+			<div className="metalation-calculator">
+				<table id="metalation-table">
+					<thead>
+						<tr>
+							<td></td>
+							<th>Metal Affinity (M)</th>
+							<th>
+								∆G (kJ mol<sup>-1</sup>)
+							</th>
+							<th>Metal Availability (M)</th>
+							<th>
+								Available ∆G (kJ&nbsp;mol<sup>-1</sup>)
+							</th>
+							<th>Occupancy</th>
+						</tr>
+					</thead>
+					<tbody>{tableRows}</tbody>
+					<tfoot>
+						<tr>
+							<th>Total Metalation</th>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<th className="result">-</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
 		</div>
 	);
 }

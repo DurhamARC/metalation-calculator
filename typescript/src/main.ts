@@ -187,20 +187,22 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
 
 export function setupCalculator(tableId: string) {
   const metalTable = <HTMLTableElement>document.getElementById(tableId);
-  for (const id in metalDataSet.metals) {
-    const m = metalDataSet.metals[id];
-    appendMetalTableRow(m, metalTable);
+  if (metalTable !== null) {
+    for (const id in metalDataSet.metals) {
+      const m = metalDataSet.metals[id];
+      appendMetalTableRow(m, metalTable);
+    }
+
+    document.getElementById("download-btn").onclick = function () {
+      downloadTableAsCsv("metalation-table");
+    };
+
+    document.getElementById("reset-btn").onclick = function () {
+      reset();
+    };
+
+    calculate();
   }
-
-  document.getElementById("download-btn").onclick = function () {
-    downloadTableAsCsv("metalation-table");
-  };
-
-  document.getElementById("reset-btn").onclick = function () {
-    reset();
-  };
-
-  calculate();
 }
 
 window.addEventListener("DOMContentLoaded", () => {

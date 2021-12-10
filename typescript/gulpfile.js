@@ -17,7 +17,7 @@ const paths = {
   pages: ["src/*.html", "src/includes/*.html"],
   styles: ["src/scss/*.scss"],
   tests: ["src/?(*.)+(spec|test).+(ts|tsx|js)"],
-  wppages: ["dist/calculator.html", "dist/bundle.js", "dist/main.css"]
+  wppages: ["dist/calculator.html", "dist/bundle.js", "dist/main.css", "dist/metals.js"]
 };
 
 function style() {
@@ -45,7 +45,7 @@ function tsToJs() {
 function bundle() {
   return browserify({
     basedir: ".",
-    debug: true,
+    debug: false,
     entries: paths.ts,
     cache: {},
     packageCache: {},
@@ -101,6 +101,6 @@ gulp.task('jest', function () {
 
 gulp.task("default", gulp.series(lint, lintScss, style, copyHtml, bundle));
 
-gulp.task("wp", gulp.series(lint, lintScss, style, copyHtml, tsToJs, bundle));
+gulp.task("wp", gulp.series(lint, lintScss, style, copyHtml, tsToJs, bundle, wpCopy));
 
 exports.watch = watch
