@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.setupCalculator = void 0;
 var metals = require("./metals");
 var metalDataSet = new metals.MetalDataSet();
 function createMetalNumberInput(prefix, metal, metalPropertyName, additionalOnChange) {
@@ -143,8 +144,8 @@ function downloadTableAsCsv(tableId, separator) {
     link.click();
     document.body.removeChild(link);
 }
-window.addEventListener("DOMContentLoaded", function () {
-    var metalTable = (document.getElementById("metalation-table"));
+function setupCalculator(tableId) {
+    var metalTable = document.getElementById(tableId);
     for (var id in metalDataSet.metals) {
         var m = metalDataSet.metals[id];
         appendMetalTableRow(m, metalTable);
@@ -156,4 +157,8 @@ window.addEventListener("DOMContentLoaded", function () {
         reset();
     };
     calculate();
+}
+exports.setupCalculator = setupCalculator;
+window.addEventListener("DOMContentLoaded", function () {
+    setupCalculator("metalation-table");
 });
