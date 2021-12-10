@@ -1,4 +1,6 @@
 const gulp = require("gulp");
+const ts = require('gulp-typescript');
+const tsProject = ts.createProject("tsconfig.json");
 const browserify = require("browserify");
 const fileinclude = require('gulp-file-include');
 const source = require("vinyl-source-stream");
@@ -32,6 +34,12 @@ function copyHtml() {
     prefix: '@@',
     basepath: '@file'
   })).pipe(gulp.dest("dist"));
+}
+
+function tsToJs() {
+  return tsProject.src()
+    .pipe(tsProject())
+    .pipe(gulp.dest("../metalation-calculator-wp/include"))
 }
 
 function bundle() {
@@ -93,6 +101,6 @@ gulp.task('jest', function () {
 
 gulp.task("default", gulp.series(lint, lintScss, style, copyHtml, bundle));
 
-gulp.task("wp", gulp.series(lint, lintScss, style, copyHtml, bundle, wpCopy));
+gulp.task("wp", gulp.series(lint, lintScss, style, copyHtml, tsToJs, bundle));
 
 exports.watch = watch
