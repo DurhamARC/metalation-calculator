@@ -185,10 +185,8 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
   document.body.removeChild(link);
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  const metalTable = <HTMLTableElement>(
-    document.getElementById("metalation-table")
-  );
+export function setupCalculator(tableId: string) {
+  const metalTable = <HTMLTableElement>document.getElementById(tableId);
   for (const id in metalDataSet.metals) {
     const m = metalDataSet.metals[id];
     appendMetalTableRow(m, metalTable);
@@ -203,4 +201,8 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
   calculate();
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  setupCalculator("metalation-table");
 });

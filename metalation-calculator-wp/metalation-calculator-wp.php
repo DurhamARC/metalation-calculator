@@ -19,9 +19,13 @@ function metalation_calculator_wp_render_callback( $block_attributes, $content )
   $html = file_get_contents( plugin_dir_path( __FILE__ ) . 'include/calculator.html' );
 
   return <<<END
-<script type="text/javascript">$js</script>
+<div id="calculator_wrapper">
+<script type="text/javascript" id="metalation_js">$js
+debugger;
+</script>
 <style>$css</style>
 $html
+</div>
 END;
 }
 
