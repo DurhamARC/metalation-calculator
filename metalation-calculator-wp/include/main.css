@@ -38,7 +38,6 @@
 .metalation-calculator #metalation-table tbody th .metal-symbol {
   display: inline-block;
   margin-left: 15px;
-  margin-bottom: 5px;
 }
 .metalation-calculator #metalation-table tbody tr:nth-child(odd) {
   background-color: white;
