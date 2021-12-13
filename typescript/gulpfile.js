@@ -17,7 +17,8 @@ const paths = {
   pages: ["src/*.html", "src/includes/*.html"],
   styles: ["src/scss/*.scss"],
   tests: ["src/?(*.)+(spec|test).+(ts|tsx|js)"],
-  wppages: ["dist/calculator.html", "dist/bundle.js", "dist/main.css"]
+  tsWpEdit: ["src/metals.ts"],
+  wpPages: ["dist/calculator.html", "dist/bundle.js", "dist/main.css"]
 };
 
 function style() {
@@ -51,13 +52,14 @@ function bundle() {
 }
 
 function wpJs() {
-  return tsProject.src()
+  return gulp.src(paths.tsWpEdit)
     .pipe(tsProject())
     .pipe(gulp.dest("../metalation-calculator-wp/include"))
 }
 
 function wpCopy() {
-  return gulp.src(paths.wppages).pipe(gulp.dest("../metalation-calculator-wp/include"));
+  return gulp.src(paths.wpPages)
+    .pipe(gulp.dest("../metalation-calculator-wp/include"));
 }
 
 function watch() {
