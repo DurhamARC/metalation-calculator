@@ -178,6 +178,7 @@ function clearCalculation() {
 function reset() {
   for (const id in metalDataSet.metals) {
     const m = metalDataSet.metals[id];
+    m.resetValues();
     updateRow(m);
   }
 }
