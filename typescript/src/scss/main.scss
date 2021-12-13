@@ -1,5 +1,6 @@
 $light-blue: rgb(136 206 222);
 $medium-gray: rgb(237 237 237);
+$dark-medium-gray: rgb(190 190 190);
 $dark-gray: rgb(96 96 96);
 $white: rgb(255 255 255);
 $low-opacity-gray: rgb(96 96 96 / 20%);
@@ -46,10 +47,12 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
 
       th {
         text-align: left;
+        justify-content: center;
 
         .metal-symbol {
-          display: inline;
-          margin-left: 35px;
+          display: inline-block;
+          margin-left: 15px;
+          margin-bottom: 5px;
         }
       }
 
@@ -120,8 +123,8 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
     }
 
     /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
       /* stylelint-disable */
       -webkit-appearance: none;
       /* stylelint-enable */
@@ -131,6 +134,45 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
     .error-msg {
       color: red;
       font-size: smaller;
+    }
+
+    input[type="checkbox"] {
+      height: 0;
+      width: 0;
+      visibility: hidden;
+    }
+
+    label {
+      cursor: pointer;
+      text-indent: -9999px;
+      width: 30px;
+      height: 16px;
+      background: #88cede;
+      display: inline-block;
+      border-radius: 6px;
+      position: relative;
+      top: 3px;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: calc(100% - 2px);
+        transform: translateX(-100%);
+        width: 12px;
+        height: 12px;
+        background: white;
+        border-radius: 5px;
+        transition: 0.5s;
+      }
+    }
+
+    input:checked + label {
+      background: $dark-medium-gray;
+
+      &::after {
+        left: 14px;
+      }
     }
   }
 

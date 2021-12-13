@@ -46,9 +46,11 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
     .insertRow();
 
   const toggleButton = <HTMLInputElement>document.createElement("input");
+  const label = <HTMLLabelElement>document.createElement("label");
   toggleButton.type = "checkbox";
   toggleButton.classList.add("toggle");
   toggleButton.id = "toggle_" + metal.idSuffix;
+  label.htmlFor = "toggle_" + metal.idSuffix;
   const metalCell = <HTMLTableCellElement>document.createElement("th");
 
   toggleButton.addEventListener("change", function () {
@@ -77,6 +79,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   });
 
   metalCell.appendChild(toggleButton);
+  metalCell.appendChild(label);
   const metalID = <HTMLParagraphElement>document.createElement("th");
   metalID.innerHTML = metal.symbol;
   metalID.classList.add("metal-symbol");
