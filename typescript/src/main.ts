@@ -1,6 +1,6 @@
 import * as metals from "./metals";
 
-let metalDataSet = new metals.MetalDataSet();
+const metalDataSet = new metals.MetalDataSet();
 
 function createMetalNumberInput(
   prefix: string,
@@ -173,21 +173,10 @@ function clearCalculation() {
 }
 
 function reset() {
-  metalDataSet = new metals.MetalDataSet();
   for (const id in metalDataSet.metals) {
     const m = metalDataSet.metals[id];
-    (<HTMLInputElement>document.getElementById("affinity_" + id)).value =
-      m.affinity.toString();
-    (<HTMLTableCellElement>(
-      document.getElementById("metalation_delta_g_" + id)
-    )).innerText = m.metalationDeltaG.toFixed(1).toString();
-    (<HTMLInputElement>document.getElementById("bmc_" + id)).value =
-      m.bufferedMetalConcentration.toString();
-    (<HTMLTableCellElement>(
-      document.getElementById("ia_delta_g_" + id)
-    )).innerText = m.intracellularAvailableDeltaG.toFixed(1).toString();
+    updateRow(m);
   }
-  calculate();
 }
 
 // Quick and simple export target #tableId into a csv
