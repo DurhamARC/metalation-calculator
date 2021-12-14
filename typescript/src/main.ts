@@ -63,7 +63,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
       (
         document.getElementById("bmc_" + metal.idSuffix) as HTMLInputElement
       ).disabled = true;
-      metal.disableMetal();
+      metal.switchOffMetal();
     } else {
       (
         document.getElementById(

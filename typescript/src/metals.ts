@@ -79,7 +79,7 @@ export class Metal {
     return this[key];
   }
 
-  disableMetal() {
+  switchOffMetal() {
     this.affinity = 1000;
     this.bufferedMetalConcentration = this._defaultMetalConcentration;
   }
