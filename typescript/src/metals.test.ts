@@ -102,7 +102,7 @@ test("disableEnableMetal", () => {
   const m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
 
   //Affinity should be 1000 and buffered Metal Concentration should stay the same
-  m.disableMetal();
+  m.switchOffMetal();
   expect(m.affinity).toEqual(1000);
   expect(m.bufferedMetalConcentration).toEqual(1);
 
@@ -116,7 +116,7 @@ test("disableEnableMetal", () => {
   m.bufferedMetalConcentration = 0.72;
 
   //Affinity should be 1000 and buffered Metal Concentration should revert back to the default value of 1
-  m.disableMetal();
+  m.switchOffMetal();
   expect(m.affinity).toEqual(1000);
   expect(m.bufferedMetalConcentration).toEqual(1);
 
