@@ -76,6 +76,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
       metal.resetValues();
     }
     updateRow(metal);
+    calculate();
   });
 
   metalCell.appendChild(toggleButton);
@@ -146,7 +147,6 @@ function updateRow(metal: metals.Metal) {
   (<HTMLTableCellElement>(
     document.getElementById("ia_delta_g_" + id)
   )).innerText = metal.intracellularAvailableDeltaG.toFixed(1).toString();
-  calculate();
 }
 
 function calculate() {
@@ -181,6 +181,7 @@ function reset() {
     m.resetValues();
     updateRow(m);
   }
+  calculate();
 }
 
 // Quick and simple export target #tableId into a csv
