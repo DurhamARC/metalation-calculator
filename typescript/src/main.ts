@@ -59,7 +59,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
 
   metalCell.appendChild(toggleButton);
   metalCell.appendChild(label);
-  const metalID = <HTMLParagraphElement>document.createElement("th");
+  const metalID = <HTMLParagraphElement>document.createElement("span");
   metalID.innerHTML = metal.symbol;
   metalID.classList.add("metal-symbol");
   metalCell.appendChild(metalID);
