@@ -132,14 +132,12 @@ function updateRow(metal: metals.Metal) {
   const id = metal.idSuffix;
   (<HTMLInputElement>document.getElementById("affinity_" + id)).value =
     metal.affinity.toString();
-  (<HTMLTableCellElement>(
-    document.getElementById("metalation_delta_g_" + id)
-  )).innerText = metal.metalationDeltaG.toFixed(1).toString();
+  document.getElementById("metalation_delta_g_" + id).innerText =
+    metal.metalationDeltaG.toFixed(1).toString();
   (<HTMLInputElement>document.getElementById("bmc_" + id)).value =
     metal.bufferedMetalConcentration.toString();
-  (<HTMLTableCellElement>(
-    document.getElementById("ia_delta_g_" + id)
-  )).innerText = metal.intracellularAvailableDeltaG.toFixed(1).toString();
+  document.getElementById("ia_delta_g_" + id).innerText =
+    metal.intracellularAvailableDeltaG.toFixed(1).toString();
 }
 
 function calculate() {
