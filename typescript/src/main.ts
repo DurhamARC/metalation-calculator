@@ -112,14 +112,14 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   resultCell.classList.add("result");
   resultCell.id = "result_" + metal.idSuffix;
 }
-function toggleMetal(bool: boolean, metal: metals.Metal) {
+function toggleMetal(isOff: boolean, metal: metals.Metal) {
   (
     document.getElementById("affinity_" + metal.idSuffix) as HTMLInputElement
-  ).disabled = bool;
+  ).disabled = isOff;
   (
     document.getElementById("bmc_" + metal.idSuffix) as HTMLInputElement
-  ).disabled = bool;
-  if (bool) {
+  ).disabled = isOff;
+  if (isOff) {
     metal.switchOffMetal();
   } else {
     metal.resetValues();
