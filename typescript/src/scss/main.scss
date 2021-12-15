@@ -135,12 +135,6 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
       font-size: smaller;
     }
 
-    input[type="checkbox"] {
-      height: 0;
-      width: 0;
-      visibility: hidden;
-    }
-
     label {
       cursor: pointer;
       text-indent: -9999px;
@@ -166,11 +160,17 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
       }
     }
 
-    input:checked + label {
-      background: $dark-medium-gray;
+    input[type="checkbox"] {
+      height: 0;
+      width: 0;
+      visibility: hidden;
 
-      &::after {
-        left: 14px;
+      &:checked + label {
+        background: $dark-medium-gray;
+
+        &::after {
+          left: 14px;
+        }
       }
     }
   }
