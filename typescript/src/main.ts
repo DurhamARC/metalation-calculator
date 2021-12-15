@@ -55,6 +55,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
 
   toggleButton.addEventListener("change", function () {
     toggleMetal(this.checked, metal);
+    calculate();
   });
 
   metalCell.appendChild(toggleButton);
@@ -125,7 +126,6 @@ function toggleMetal(willTurnOff: boolean, metal: metals.Metal) {
     metal.resetValues();
   }
   updateRow(metal);
-  calculate();
 }
 
 function updateRow(metal: metals.Metal) {
@@ -169,8 +169,11 @@ function clearCalculation() {
 function reset() {
   for (const id in metalDataSet.metals) {
     const m = metalDataSet.metals[id];
+    (
+      document.getElementById("toggle_" + m.idSuffix) as HTMLInputElement
+    ).checked = false;
     m.resetValues();
-    updateRow(m);
+    toggleMetal(false, m);
   }
   calculate();
 }
