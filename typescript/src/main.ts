@@ -54,29 +54,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   const metalCell = <HTMLTableCellElement>document.createElement("th");
 
   toggleButton.addEventListener("change", function () {
-    if (this.checked) {
-      (
-        document.getElementById(
-          "affinity_" + metal.idSuffix
-        ) as HTMLInputElement
-      ).disabled = true;
-      (
-        document.getElementById("bmc_" + metal.idSuffix) as HTMLInputElement
-      ).disabled = true;
-      metal.switchOffMetal();
-    } else {
-      (
-        document.getElementById(
-          "affinity_" + metal.idSuffix
-        ) as HTMLInputElement
-      ).disabled = false;
-      (
-        document.getElementById("bmc_" + metal.idSuffix) as HTMLInputElement
-      ).disabled = false;
-      metal.resetValues();
-    }
-    updateRow(metal);
-    calculate();
+    toggleMetal(this.checked, metal);
   });
 
   metalCell.appendChild(toggleButton);
@@ -133,6 +111,21 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   const resultCell: HTMLTableCellElement = row.insertCell(-1);
   resultCell.classList.add("result");
   resultCell.id = "result_" + metal.idSuffix;
+}
+function toggleMetal(bool: boolean, metal: metals.Metal) {
+  (
+    document.getElementById("affinity_" + metal.idSuffix) as HTMLInputElement
+  ).disabled = bool;
+  (
+    document.getElementById("bmc_" + metal.idSuffix) as HTMLInputElement
+  ).disabled = bool;
+  if (bool) {
+    metal.switchOffMetal();
+  } else {
+    metal.resetValues();
+  }
+  updateRow(metal);
+  calculate();
 }
 
 function updateRow(metal: metals.Metal) {
