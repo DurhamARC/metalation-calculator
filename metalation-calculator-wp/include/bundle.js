@@ -45,7 +45,24 @@ function appendMetalTableRow(metal, table) {
     var row = table
         .getElementsByTagName("tbody")[0]
         .insertRow();
-    row.insertCell(-1).outerHTML = "<th>" + metal.symbol + "</th>";
+    var toggleButton = document.createElement("input");
+    var label = document.createElement("label");
+    toggleButton.type = "checkbox";
+    toggleButton.classList.add("toggle");
+    toggleButton.id = "toggle_" + metal.idSuffix;
+    label.htmlFor = "toggle_" + metal.idSuffix;
+    var metalCell = document.createElement("th");
+    toggleButton.addEventListener("change", function () {
+        toggleMetal(this.checked, metal);
+        calculate();
+    });
+    metalCell.appendChild(toggleButton);
+    metalCell.appendChild(label);
+    var metalID = document.createElement("span");
+    metalID.innerHTML = metal.symbol;
+    metalID.classList.add("metal-symbol");
+    metalCell.appendChild(metalID);
+    row.appendChild(metalCell);
     var affinityCell = row.insertCell(-1);
     affinityCell.classList.add("affinity", "grouped");
     var affinityInput = createMetalNumberInput("affinity", metal, "affinity", function (id) {
@@ -74,6 +91,28 @@ function appendMetalTableRow(metal, table) {
     resultCell.classList.add("result");
     resultCell.id = "result_" + metal.idSuffix;
 }
+function toggleMetal(willTurnOff, metal) {
+    document.getElementById("affinity_" + metal.idSuffix).disabled = willTurnOff;
+    document.getElementById("bmc_" + metal.idSuffix).disabled = willTurnOff;
+    if (willTurnOff) {
+        metal.switchOffMetal();
+    }
+    else {
+        metal.resetValues();
+    }
+    updateRow(metal);
+}
+function updateRow(metal) {
+    var id = metal.idSuffix;
+    document.getElementById("affinity_" + id).value =
+        metal.affinity.toString();
+    document.getElementById("metalation_delta_g_" + id).innerText =
+        metal.metalationDeltaG.toFixed(1).toString();
+    document.getElementById("bmc_" + id).value =
+        metal.bufferedMetalConcentration.toString();
+    document.getElementById("ia_delta_g_" + id).innerText =
+        metal.intracellularAvailableDeltaG.toFixed(1).toString();
+}
 function calculate() {
     var results = metalDataSet.calculateOccupancy();
     for (var id in metalDataSet.metals) {
@@ -92,15 +131,11 @@ function clearCalculation() {
     document.getElementById("download-btn").disabled = true;
 }
 function reset() {
-    metalDataSet = new metals.MetalDataSet();
     for (var id in metalDataSet.metals) {
         var m = metalDataSet.metals[id];
-        document.getElementById("affinity_" + id).value =
-            m.affinity.toString();
-        (document.getElementById("metalation_delta_g_" + id)).innerText = m.metalationDeltaG.toFixed(1).toString();
-        document.getElementById("bmc_" + id).value =
-            m.bufferedMetalConcentration.toString();
-        (document.getElementById("ia_delta_g_" + id)).innerText = m.intracellularAvailableDeltaG.toFixed(1).toString();
+        document.getElementById("toggle_" + m.idSuffix).checked = false;
+        m.resetValues();
+        toggleMetal(false, m);
     }
     calculate();
 }
@@ -189,6 +224,8 @@ var Metal = /** @class */ (function () {
         this.affinity = affinity;
         this.bufferedMetalConcentration = concentration;
         this.idSuffix = symbol.toLowerCase();
+        this._defaultAffinity = affinity;
+        this._defaultMetalConcentration = concentration;
     }
     Metal.prototype.calculateDeltaG = function (moleValue) {
         return (8.314 * 298.15 * Math.log(moleValue)) / 1000;
@@ -245,6 +282,14 @@ var Metal = /** @class */ (function () {
     });
     Metal.prototype.getProperty = function (key) {
         return this[key];
+    };
+    Metal.prototype.switchOffMetal = function () {
+        this.affinity = 1000;
+        this.bufferedMetalConcentration = this._defaultMetalConcentration;
+    };
+    Metal.prototype.resetValues = function () {
+        this.affinity = this._defaultAffinity;
+        this.bufferedMetalConcentration = this._defaultMetalConcentration;
     };
     return Metal;
 }());

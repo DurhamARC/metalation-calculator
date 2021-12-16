@@ -1,6 +1,6 @@
 import * as metals from "./metals";
 
-let metalDataSet = new metals.MetalDataSet();
+const metalDataSet = new metals.MetalDataSet();
 
 function createMetalNumberInput(
   prefix: string,
@@ -45,7 +45,26 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
     .getElementsByTagName("tbody")[0]
     .insertRow();
 
-  row.insertCell(-1).outerHTML = "<th>" + metal.symbol + "</th>";
+  const toggleButton = <HTMLInputElement>document.createElement("input");
+  const label = <HTMLLabelElement>document.createElement("label");
+  toggleButton.type = "checkbox";
+  toggleButton.classList.add("toggle");
+  toggleButton.id = "toggle_" + metal.idSuffix;
+  label.htmlFor = "toggle_" + metal.idSuffix;
+  const metalCell = <HTMLTableCellElement>document.createElement("th");
+
+  toggleButton.addEventListener("change", function () {
+    toggleMetal(this.checked, metal);
+    calculate();
+  });
+
+  metalCell.appendChild(toggleButton);
+  metalCell.appendChild(label);
+  const metalID = <HTMLSpanElement>document.createElement("span");
+  metalID.innerHTML = metal.symbol;
+  metalID.classList.add("metal-symbol");
+  metalCell.appendChild(metalID);
+  row.appendChild(metalCell);
 
   const affinityCell: HTMLTableCellElement = row.insertCell(-1);
   affinityCell.classList.add("affinity", "grouped");
@@ -94,6 +113,32 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   resultCell.classList.add("result");
   resultCell.id = "result_" + metal.idSuffix;
 }
+function toggleMetal(willTurnOff: boolean, metal: metals.Metal) {
+  (
+    document.getElementById("affinity_" + metal.idSuffix) as HTMLInputElement
+  ).disabled = willTurnOff;
+  (
+    document.getElementById("bmc_" + metal.idSuffix) as HTMLInputElement
+  ).disabled = willTurnOff;
+  if (willTurnOff) {
+    metal.switchOffMetal();
+  } else {
+    metal.resetValues();
+  }
+  updateRow(metal);
+}
+
+function updateRow(metal: metals.Metal) {
+  const id = metal.idSuffix;
+  (<HTMLInputElement>document.getElementById("affinity_" + id)).value =
+    metal.affinity.toString();
+  document.getElementById("metalation_delta_g_" + id).innerText =
+    metal.metalationDeltaG.toFixed(1).toString();
+  (<HTMLInputElement>document.getElementById("bmc_" + id)).value =
+    metal.bufferedMetalConcentration.toString();
+  document.getElementById("ia_delta_g_" + id).innerText =
+    metal.intracellularAvailableDeltaG.toFixed(1).toString();
+}
 
 function calculate() {
   const results = metalDataSet.calculateOccupancy();
@@ -122,19 +167,13 @@ function clearCalculation() {
 }
 
 function reset() {
-  metalDataSet = new metals.MetalDataSet();
   for (const id in metalDataSet.metals) {
     const m = metalDataSet.metals[id];
-    (<HTMLInputElement>document.getElementById("affinity_" + id)).value =
-      m.affinity.toString();
-    (<HTMLTableCellElement>(
-      document.getElementById("metalation_delta_g_" + id)
-    )).innerText = m.metalationDeltaG.toFixed(1).toString();
-    (<HTMLInputElement>document.getElementById("bmc_" + id)).value =
-      m.bufferedMetalConcentration.toString();
-    (<HTMLTableCellElement>(
-      document.getElementById("ia_delta_g_" + id)
-    )).innerText = m.intracellularAvailableDeltaG.toFixed(1).toString();
+    (
+      document.getElementById("toggle_" + m.idSuffix) as HTMLInputElement
+    ).checked = false;
+    m.resetValues();
+    toggleMetal(false, m);
   }
   calculate();
 }

@@ -20,6 +20,8 @@ var Metal = /** @class */ (function () {
         this.affinity = affinity;
         this.bufferedMetalConcentration = concentration;
         this.idSuffix = symbol.toLowerCase();
+        this._defaultAffinity = affinity;
+        this._defaultMetalConcentration = concentration;
     }
     Metal.prototype.calculateDeltaG = function (moleValue) {
         return (8.314 * 298.15 * Math.log(moleValue)) / 1000;
@@ -76,6 +78,14 @@ var Metal = /** @class */ (function () {
     });
     Metal.prototype.getProperty = function (key) {
         return this[key];
+    };
+    Metal.prototype.switchOffMetal = function () {
+        this.affinity = 1000;
+        this.bufferedMetalConcentration = this._defaultMetalConcentration;
+    };
+    Metal.prototype.resetValues = function () {
+        this.affinity = this._defaultAffinity;
+        this.bufferedMetalConcentration = this._defaultMetalConcentration;
     };
     return Metal;
 }());
