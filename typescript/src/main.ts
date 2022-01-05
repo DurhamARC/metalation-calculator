@@ -178,6 +178,13 @@ function reset() {
   calculate();
 }
 
+function cleanData(data: string) {
+  data = data.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
+  data = data.replace(/"/g, '""');
+  data = data.replace(/\u2206/g, "Delta ");
+  return data;
+}
+
 // Quick and simple export target #tableId into a csv
 function downloadTableAsCsv(tableId: string, separator = ",") {
   // Select rows from tableId
@@ -199,13 +206,12 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
         data = cols[j].innerText;
       }
       // Remove line breaks and escape double-quote with double-double-quote
-      data = data.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
-      data = data.replace(/"/g, '""');
-      data = data.replace(/\u2206/g, "Delta ");
+      data = cleanData(data);
       // Push escaped string
       row.push('"' + data + '"');
     }
     csv.push(row.join(separator));
+
   }
   const csvString = csv.join("\n");
   // Download it
