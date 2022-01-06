@@ -211,7 +211,6 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
       row.push('"' + data + '"');
     }
     csv.push(row.join(separator));
-
   }
   const csvString = csv.join("\n");
   // Download it
