@@ -184,6 +184,14 @@ function cleanData(data: string) {
   data = data.replace(/\u2206/g, "Delta ");
   return data;
 }
+function convertToPlainText(html: string) {
+  // Create a new div element
+  const tempDivElement = document.createElement("div");
+  // Set the HTML content with the given value
+  tempDivElement.innerHTML = html;
+  // Retrieve the text property of the element
+  return tempDivElement.textContent || tempDivElement.innerText || "";
+}
 
 // Quick and simple export target #tableId into a csv
 function downloadTableAsCsv(tableId: string, separator = ",") {
@@ -210,6 +218,21 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
     }
     csv.push(row.join(separator));
   }
+  const explanation = [];
+  const headings = rows[0].cells;
+  for (let k = 0; k < headings.length; k++) {
+    const spans = headings[k].getElementsByTagName("span");
+    if (spans.length > 0) {
+      let span = spans[0].innerHTML;
+      let header = headings[k].innerText;
+      header = cleanData(header);
+      span = cleanData(span);
+      span = convertToPlainText(span);
+      explanation.push('"# ' + header + " = " + span + '"');
+    }
+  }
+  csv.push(explanation.join("\n"));
+
   const csvString = csv.join("\n");
   // Download it
   const filename =
