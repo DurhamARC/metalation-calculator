@@ -41,6 +41,11 @@ export default function Edit() {
 	return (
 		<div {...useBlockProps()}>
 			<div className="metalation-calculator">
+				<p>
+					To predict the metalation state of a protein or molecule,
+					fill in values in the table for as many determined metal
+					affinities (and availabilities if known) as possible.
+				</p>
 				<table id="metalation-table">
 					<thead>
 						<tr>

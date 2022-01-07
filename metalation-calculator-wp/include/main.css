@@ -4,6 +4,7 @@
   border-collapse: separate;
   margin: 20px 0;
   border-spacing: 0;
+  font-size: 16px;
   /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
 }
 .metalation-calculator #metalation-table td,
