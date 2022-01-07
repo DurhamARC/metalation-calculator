@@ -180,11 +180,15 @@ function downloadTableAsCsv(tableId, separator) {
     link.click();
     document.body.removeChild(link);
 }
-function setupCalculator(tableId) {
+function setupCalculator(tableId, bmcVals) {
     var metalTable = document.getElementById(tableId);
     if (metalTable !== null) {
         for (var id in metalDataSet.metals) {
             var m = metalDataSet.metals[id];
+            // TODO: ensure this sets the default value for bmc too
+            if (bmcVals && bmcVals[id]) {
+                m.bufferedMetalConcentration = bmcVals[id];
+            }
             appendMetalTableRow(m, metalTable);
         }
         document.getElementById("download-btn").onclick = function () {
@@ -198,7 +202,10 @@ function setupCalculator(tableId) {
 }
 exports.setupCalculator = setupCalculator;
 window.addEventListener("DOMContentLoaded", function () {
-    setupCalculator("metalation-table");
+    if (window.bmcVals === undefined) {
+        window.bmcVals = {};
+    }
+    setupCalculator("metalation-table", window.bmcVals["metalation-table"]);
 });
 
 },{"./metals":2}],2:[function(require,module,exports){
