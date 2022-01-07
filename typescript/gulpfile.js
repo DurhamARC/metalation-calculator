@@ -1,4 +1,6 @@
 const gulp = require("gulp");
+const ts = require('gulp-typescript');
+const tsProject = ts.createProject("tsconfig.json");
 const browserify = require("browserify");
 const fileinclude = require('gulp-file-include');
 const source = require("vinyl-source-stream");
@@ -15,7 +17,8 @@ const paths = {
   pages: ["src/*.html", "src/includes/*.html"],
   styles: ["src/scss/*.scss"],
   tests: ["src/?(*.)+(spec|test).+(ts|tsx|js)"],
-  wppages: ["dist/calculator.html", "dist/bundle.js", "dist/main.css"]
+  tsWpEdit: ["src/metals.ts"],
+  wpPages: ["dist/calculator.html", "dist/bundle.js", "dist/main.css"]
 };
 
 function style() {
@@ -37,7 +40,7 @@ function copyHtml() {
 function bundle() {
   return browserify({
     basedir: ".",
-    debug: true,
+    debug: false,
     entries: paths.ts,
     cache: {},
     packageCache: {},
@@ -48,8 +51,15 @@ function bundle() {
     .pipe(gulp.dest("dist"));
 }
 
+function wpJs() {
+  return gulp.src(paths.tsWpEdit)
+    .pipe(tsProject())
+    .pipe(gulp.dest("../metalation-calculator-wp/include"))
+}
+
 function wpCopy() {
-  return gulp.src(paths.wppages).pipe(gulp.dest("../metalation-calculator-wp/include"));
+  return gulp.src(paths.wpPages)
+    .pipe(gulp.dest("../metalation-calculator-wp/include"));
 }
 
 function watch() {
@@ -93,6 +103,6 @@ gulp.task('jest', function () {
 
 gulp.task("default", gulp.series(lint, lintScss, style, copyHtml, bundle));
 
-gulp.task("wp", gulp.series(lint, lintScss, style, copyHtml, bundle, wpCopy));
+gulp.task("wp", gulp.series(lint, lintScss, style, copyHtml, wpJs, bundle, wpCopy));
 
 exports.watch = watch
