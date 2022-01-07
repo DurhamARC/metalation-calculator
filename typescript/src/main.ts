@@ -187,15 +187,13 @@ function cleanData(data: string) {
 
 // Quick and simple export target #tableId into a csv
 function downloadTableAsCsv(tableId: string, separator = ",") {
-  // Select rows from tableId
-  const rows = document.querySelectorAll("table#" + tableId + " tr");
+  const table = <HTMLTableElement>document.getElementById(tableId);
+  const rows = table.rows;
   // Construct csv
   const csv = [];
   for (let i = 0; i < rows.length; i++) {
     const row = [];
-    const cols = <NodeListOf<HTMLTableCellElement>>(
-      rows[i].querySelectorAll("td, th")
-    );
+    const cols = rows[i].cells;
     for (let j = 0; j < cols.length; j++) {
       // Clean innertext to remove multiple spaces and jumpline (break csv)
       let data;
