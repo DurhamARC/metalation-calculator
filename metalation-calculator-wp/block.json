@@ -13,12 +13,18 @@
 	"editorScript": "file:./build/index.js",
 	"editorStyle": "file:./build/index.css",
 	"style": "file:./build/style-index.css",
-  "attributes": {
-    "message": {
-        "type": "string",
-        "source": "text",
-        "selector": "div",
-        "default": ""
-    }
-  }
+	"attributes": {
+		"bmcVals": {
+				"type": "object",
+				"default": {
+					"mg": 2.7e-3,
+					"mn": 2.6e-6,
+					"fe": 4.8e-8,
+					"co": 2.5e-9,
+					"ni": 1.8e-13,
+					"cu": 1.2e-18,
+					"zn": 1.19e-12
+				}
+		}
+	}
 }

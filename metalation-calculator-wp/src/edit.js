@@ -5,6 +5,7 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
 import { useBlockProps } from '@wordpress/block-editor';
+import { TextControl } from '@wordpress/components';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -23,16 +24,26 @@ import '../include/main.css';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
+export default function Edit( { attributes, setAttributes } ) {
 	const metals = require('../include/metals');
 	const metalDataSet = new metals.MetalDataSet();
+
+	var onChangeValue = function(value, key) {
+		var newBmcVals = {...attributes.bmcVals};
+		newBmcVals[key] = value;
+		setAttributes({ bmcVals: newBmcVals });
+	}
 
 	const tableRows = Object.keys(metalDataSet.metals).map((key) => (
 		<tr key={key}>
 			<th>{metalDataSet.metals[key].symbol}</th>
 			<td>{metalDataSet.metals[key].affinity}</td>
 			<td>-</td>
-			<td>{metalDataSet.metals[key].bufferedMetalConcentration}</td>
+			<td>
+				<TextControl
+					value={attributes.bmcVals[key]}
+					onChange={ (val) => onChangeValue(val, key)}/>
+			</td>
 			<td>-</td>
 			<td>-</td>
 		</tr>
