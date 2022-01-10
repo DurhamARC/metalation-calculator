@@ -14,15 +14,7 @@
  */
 
 function metalation_calculator_wp_render_callback( $block_attributes, $content ) {
-  $js = file_get_contents( plugin_dir_path( __FILE__ ) . 'include/bundle.js' );
-  $css = file_get_contents( plugin_dir_path( __FILE__ ) . 'include/main.css' );
-  $html = file_get_contents( plugin_dir_path( __FILE__ ) . 'include/calculator.html' );
-
-  return <<<END
-<script type="text/javascript">$js</script>
-<style>$css</style>
-$html
-END;
+  return file_get_contents( plugin_dir_path( __FILE__ ) . 'include/calculator.html' );
 }
 
 /**
@@ -47,3 +39,12 @@ function create_block_metalation_calculator_wp_block_init() {
   ));
 }
 add_action( 'init', 'create_block_metalation_calculator_wp_block_init' );
+
+function metalation_calculator_assets_load(){
+    $metalation_css = plugins_url('/include/main.css', __FILE__);
+    wp_enqueue_style('metalation_css', $metalation_css);
+    $metalation_js = plugins_url('/include/bundle.js', __FILE__);
+    wp_enqueue_script('metalation_js', $metalation_js);
+}
+
+add_action('enqueue_block_assets', 'metalation_calculator_assets_load');
