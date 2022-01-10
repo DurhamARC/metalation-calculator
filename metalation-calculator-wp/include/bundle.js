@@ -166,7 +166,16 @@ function downloadTableAsCsv(tableId, separator) {
         for (var j = 0; j < cols.length; j++) {
             // Clean innertext to remove multiple spaces and jumpline (break csv)
             var data = void 0;
-            var inputs = cols[j].getElementsByTagName("input");
+            var unfilteredInputs = cols[j].getElementsByTagName("input");
+            var inputs = [];
+            if (unfilteredInputs.length > 0) {
+                for (var l = 0; l < unfilteredInputs.length; l++) {
+                    var input = unfilteredInputs[l];
+                    if (input.type == "number") {
+                        inputs.push(input);
+                    }
+                }
+            }
             if (inputs.length > 0) {
                 data = inputs[0].value;
             }
