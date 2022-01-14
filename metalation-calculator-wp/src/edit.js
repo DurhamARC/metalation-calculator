@@ -17,22 +17,39 @@ import './editor.scss';
 import '../include/main.css';
 
 /**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
+ * Displays a mockup of the calculator and allows the user to edit the
+ * availability column.
  *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
+ * @param {Object}   props
+ * @param {Object}   props.attributes    Block attributes
+ * @param {Function} props.setAttributes Block attributes setter
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( { attributes, setAttributes } ) {
+export default function Edit({ attributes, setAttributes }) {
 	const metals = require('../include/metals');
 	const metalDataSet = new metals.MetalDataSet();
 
-	var onChangeValue = function(value, key) {
-		var newBmcVals = {...attributes.bmcVals};
+	const onChangeValue = function (value, key) {
+		const errorMsgElement = document.getElementById('msg_' + key);
+
+		try {
+			metalDataSet.metals[key].bufferedMetalConcentration = value;
+			errorMsgElement.style.display = 'none';
+		} catch (e) {
+			let msg;
+			if (e instanceof RangeError) {
+				msg = e.message;
+			} else {
+				msg = 'Invalid value ' + value;
+			}
+			errorMsgElement.innerHTML = msg;
+			errorMsgElement.style.display = 'block';
+		}
+		const newBmcVals = { ...attributes.bmcVals };
 		newBmcVals[key] = value;
 		setAttributes({ bmcVals: newBmcVals });
-	}
+	};
 
 	const tableRows = Object.keys(metalDataSet.metals).map((key) => (
 		<tr key={key}>
@@ -42,7 +59,13 @@ export default function Edit( { attributes, setAttributes } ) {
 			<td>
 				<TextControl
 					value={attributes.bmcVals[key]}
-					onChange={ (val) => onChangeValue(val, key)}/>
+					onChange={(val) => onChangeValue(val, key)}
+				/>
+				<p
+					className="error-msg"
+					id={'msg_' + key}
+					style={{ display: 'none' }}
+				/>
 			</td>
 			<td>-</td>
 			<td>-</td>

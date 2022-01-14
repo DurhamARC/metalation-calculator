@@ -234,7 +234,11 @@ export function setupCalculator(
       const m = metalDataSet.metals[id];
       // TODO: ensure this sets the default value for bmc too
       if (bmcVals && bmcVals[id]) {
-        m.bufferedMetalConcentration = bmcVals[id];
+        try {
+          m.bufferedMetalConcentration = bmcVals[id];
+        } catch {
+          // Ignore: will use default value
+        }
       }
       appendMetalTableRow(m, metalTable);
     }

@@ -187,7 +187,12 @@ function setupCalculator(tableId, bmcVals) {
             var m = metalDataSet.metals[id];
             // TODO: ensure this sets the default value for bmc too
             if (bmcVals && bmcVals[id]) {
-                m.bufferedMetalConcentration = bmcVals[id];
+                try {
+                    m.bufferedMetalConcentration = bmcVals[id];
+                }
+                catch (_a) {
+                    // Ignore: will use default value
+                }
             }
             appendMetalTableRow(m, metalTable);
         }
@@ -239,7 +244,7 @@ var Metal = /** @class */ (function () {
     };
     Metal.prototype.checkRange = function (val, fieldName) {
         if (isNaN(val))
-            throw new RangeError(fieldName + " must be set");
+            throw new RangeError(fieldName + " must be a valid number");
         if (val < 1e-30 || val > 1000) {
             throw new RangeError(fieldName + " must be between 1e-30 and 1000");
         }

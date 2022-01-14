@@ -28,7 +28,7 @@ var Metal = /** @class */ (function () {
     };
     Metal.prototype.checkRange = function (val, fieldName) {
         if (isNaN(val))
-            throw new RangeError(fieldName + " must be set");
+            throw new RangeError(fieldName + " must be a valid number");
         if (val < 1e-30 || val > 1000) {
             throw new RangeError(fieldName + " must be between 1e-30 and 1000");
         }
