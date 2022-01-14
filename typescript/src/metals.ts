@@ -65,6 +65,11 @@ export class Metal {
     );
   }
 
+  set defaultMetalConcentration(val: number) {
+    this.checkRange(val, "Default buffered metal concentration");
+    this._defaultMetalConcentration = val;
+  }
+
   get intracellularAvailableDeltaG(): number {
     return this._intracellularAvailableDeltaG;
   }

@@ -235,6 +235,7 @@ export function setupCalculator(
       // TODO: ensure this sets the default value for bmc too
       if (bmcVals && bmcVals[id]) {
         try {
+          m.defaultMetalConcentration = bmcVals[id];
           m.bufferedMetalConcentration = bmcVals[id];
         } catch {
           // Ignore: will use default value

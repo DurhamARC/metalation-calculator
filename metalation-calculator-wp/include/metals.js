@@ -64,6 +64,14 @@ var Metal = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Metal.prototype, "defaultMetalConcentration", {
+        set: function (val) {
+            this.checkRange(val, "Default buffered metal concentration");
+            this._defaultMetalConcentration = val;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(Metal.prototype, "intracellularAvailableDeltaG", {
         get: function () {
             return this._intracellularAvailableDeltaG;
