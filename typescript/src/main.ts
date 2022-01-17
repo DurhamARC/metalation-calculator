@@ -178,6 +178,11 @@ function reset() {
   calculate();
 }
 
+/**
+Text is "cleaned up" to be more readable
+and the delta symbol is replaced with the word "Delta"
+as excel does not display unicode symbols correctly.
+**/
 function cleanData(data: string) {
   data = data.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
   data = data.replace(/"/g, '""');
@@ -219,11 +224,6 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
       } else {
         data = cols[j].innerText;
       }
-      /**
-      Text is "cleaned up" to be more readable
-      and the delta symbol is replaced with the word "Delta"
-      as excel does not display unicode symbols correctly.
-      **/
       data = cleanData(data);
       // Push escaped string
       row.push('"' + data + '"');
