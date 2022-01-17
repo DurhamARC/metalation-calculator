@@ -223,7 +223,11 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
       } else {
         data = cols[j].innerText;
       }
-      // Remove line breaks and escape double-quote with double-double-quote
+      /**
+      Text is "cleaned up" to be more readable
+      and the delta symbol is replaced with the word "Delta"
+      as excel does not display unicode symbols correctly.
+      **/
       data = cleanData(data);
       // Push escaped string
       row.push('"' + data + '"');
