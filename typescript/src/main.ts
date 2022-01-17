@@ -185,6 +185,11 @@ function cleanData(data: string) {
   return data;
 }
 
+/**
+This method was required to access the inner text within the tooltips as
+the innerText method cannot access the header span's inner text due to their
+visibility being hidden by default.
+**/
 function convertToPlainText(html: string) {
   // Create a new div element
   const tempDivElement = document.createElement("div");
