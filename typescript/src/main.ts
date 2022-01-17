@@ -244,12 +244,12 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
   for (let k = 0; k < headings.length; k++) {
     const spans = headings[k].getElementsByTagName("span");
     if (spans.length > 0) {
-      let span = spans[0].innerHTML;
-      let header = headings[k].innerText;
-      header = cleanData(header);
-      span = cleanData(span);
-      span = convertToPlainText(span);
-      explanation.push('"# ' + header + " = " + span + '"');
+      let detailText = spans[0].innerHTML;
+      let detailTextTitle = headings[k].innerText;
+      detailTextTitle = cleanData(detailTextTitle);
+      detailText = cleanData(detailText);
+      detailText = convertToPlainText(detailText);
+      explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
     }
   }
   csv.push(explanation.join("\n"));
