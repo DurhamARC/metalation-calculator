@@ -184,6 +184,7 @@ function cleanData(data: string) {
   data = data.replace(/\u2206/g, "Delta ");
   return data;
 }
+
 function convertToPlainText(html: string) {
   // Create a new div element
   const tempDivElement = document.createElement("div");
