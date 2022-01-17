@@ -212,17 +212,10 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
       // Clean innertext to remove multiple spaces and jumpline (break csv)
       let data;
 
-      const unfilteredInputs = cols[j].getElementsByTagName("input");
-      const inputs = [];
-      if (unfilteredInputs.length > 0) {
-        for (let l = 0; l < unfilteredInputs.length; l++) {
-          const input = unfilteredInputs[l];
-          if (input.type == "number") {
-            inputs.push(input);
-          }
-        }
-      }
-
+      //const unfilteredInputs = cols[j].getElementsByTagName("input");
+      const inputs = Array.from(cols[j].getElementsByTagName("input")).filter(
+        (e) => e.type == "number"
+      );
       if (inputs.length > 0) {
         data = inputs[0].value;
       } else {
