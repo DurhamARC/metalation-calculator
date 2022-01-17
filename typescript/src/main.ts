@@ -211,8 +211,6 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
     for (let j = 0; j < cols.length; j++) {
       // Clean innertext to remove multiple spaces and jumpline (break csv)
       let data;
-
-      //const unfilteredInputs = cols[j].getElementsByTagName("input");
       const inputs = Array.from(cols[j].getElementsByTagName("input")).filter(
         (e) => e.type == "number"
       );
