@@ -145,6 +145,11 @@ function cleanData(data) {
     data = data.replace(/\u2206/g, "Delta ");
     return data;
 }
+/**
+This method was required to access the inner text within the tooltips as
+the innerText method cannot access the header span's inner text due to their
+visibility being hidden by default.
+**/
 function convertToPlainText(html) {
     // Create a new div element
     var tempDivElement = document.createElement("div");
@@ -182,7 +187,11 @@ function downloadTableAsCsv(tableId, separator) {
             else {
                 data = cols[j].innerText;
             }
-            // Remove line breaks and escape double-quote with double-double-quote
+            /**
+            Text is "cleaned up" to be more readable
+            and the delta symbol is replaced with the word "Delta"
+            as excel does not display unicode symbols correctly.
+            **/
             data = cleanData(data);
             // Push escaped string
             row.push('"' + data + '"');
@@ -194,12 +203,12 @@ function downloadTableAsCsv(tableId, separator) {
     for (var k = 0; k < headings.length; k++) {
         var spans = headings[k].getElementsByTagName("span");
         if (spans.length > 0) {
-            var span = spans[0].innerHTML;
-            var header = headings[k].innerText;
-            header = cleanData(header);
-            span = cleanData(span);
-            span = convertToPlainText(span);
-            explanation.push('"# ' + header + " = " + span + '"');
+            var detailText = spans[0].innerHTML;
+            var detailTextTitle = headings[k].innerText;
+            detailTextTitle = cleanData(detailTextTitle);
+            detailText = cleanData(detailText);
+            detailText = convertToPlainText(detailText);
+            explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
         }
     }
     csv.push(explanation.join("\n"));
