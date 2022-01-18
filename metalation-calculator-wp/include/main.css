@@ -145,10 +145,10 @@
   display: inline;
   float: right;
   margin-right: 2px;
+  padding: 5px 4px;
 }
 .metalation-calculator .footnote {
   font-size: smaller;
-  margin: 70px 0;
 }
 .metalation-calculator .footnote a {
   font-weight: bold;
