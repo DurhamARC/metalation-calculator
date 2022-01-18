@@ -180,6 +180,15 @@ function downloadTableAsCsv(tableId, separator) {
     link.click();
     document.body.removeChild(link);
 }
+function hideParagraphCopies() {
+    var paragraphs = Array.from(document.getElementsByTagName("p")).filter(function (e) { return e.className === "intro"; });
+    if (paragraphs.length > 1) {
+        paragraphs.shift();
+        for (var x = 0; x < paragraphs.length; x++) {
+            paragraphs[x].style.display = "none";
+        }
+    }
+}
 function setupCalculator(tableId) {
     var metalTable = document.getElementById(tableId);
     if (metalTable !== null) {
@@ -199,6 +208,7 @@ function setupCalculator(tableId) {
 exports.setupCalculator = setupCalculator;
 window.addEventListener("DOMContentLoaded", function () {
     setupCalculator("metalation-table");
+    hideParagraphCopies();
 });
 
 },{"./metals":2}],2:[function(require,module,exports){

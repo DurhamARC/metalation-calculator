@@ -224,6 +224,18 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
   document.body.removeChild(link);
 }
 
+function hideParagraphCopies() {
+  const paragraphs = Array.from(document.getElementsByTagName("p")).filter(
+    (e) => e.className === "intro"
+  );
+  if (paragraphs.length > 1) {
+    paragraphs.shift();
+    for (let x = 0; x < paragraphs.length; x++) {
+      paragraphs[x].style.display = "none";
+    }
+  }
+}
+
 export function setupCalculator(tableId: string) {
   const metalTable = <HTMLTableElement>document.getElementById(tableId);
   if (metalTable !== null) {
@@ -246,4 +258,5 @@ export function setupCalculator(tableId: string) {
 
 window.addEventListener("DOMContentLoaded", () => {
   setupCalculator("metalation-table");
+  hideParagraphCopies();
 });
