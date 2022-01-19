@@ -140,6 +140,14 @@
 .metalation-calculator #metalation-table input[type=checkbox]:checked + label::after {
   left: 14px;
 }
+.metalation-calculator .title {
+  font-weight: bold;
+  color: #88cede;
+}
+.metalation-calculator #metalation-table-title {
+  margin-top: 10px;
+  font-size: 150%;
+}
 .metalation-calculator #download-btn,
 .metalation-calculator #reset-btn {
   display: inline;
