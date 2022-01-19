@@ -215,11 +215,15 @@ function downloadTableAsCsv(tableId, separator) {
     link.click();
     document.body.removeChild(link);
 }
+/**
+This method is used to hide the instuctions paragraph for more than one
+instances of the calculator.
+**/
 function hideParagraphCopies() {
-    var paragraphs = Array.from(document.getElementsByTagName("p")).filter(function (e) { return e.className === "intro"; });
+    var paragraphs = Array.from(document.getElementsByTagName("p")).filter(function (e) { return e.className === "metalation-calculator-intro"; });
     if (paragraphs.length > 1) {
-        paragraphs.shift();
-        for (var x = 0; x < paragraphs.length; x++) {
+        // set the display of the into paragrapghs to none except the first one
+        for (var x = 1; x < paragraphs.length; x++) {
             paragraphs[x].style.display = "none";
         }
     }
