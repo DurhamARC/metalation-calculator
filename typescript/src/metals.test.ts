@@ -61,7 +61,7 @@ test("metalValueRanges", () => {
   // Create a new metal
   const m = new Metal("MyNewlyDiscoveredMetal", "My", 1, 1);
 
-  // Set affinity and bmc to extreme ends of valid values
+  // Set affinity, bmc, defaultBmc to extreme ends of valid values
   m.affinity = 1000;
   expect(m.affinity).toEqual(1000);
   m.affinity = 1e-30;
@@ -77,6 +77,27 @@ test("metalValueRanges", () => {
   expect(m.affinity).toBeCloseTo(1e-30, 32);
   expect(() => (m.affinity = 0)).toThrow(RangeError);
   expect(m.affinity).toBeCloseTo(1e-30, 32);
+
+  // Set affinity to a non-numeric value
+  expect(() => (m.affinity = null)).toThrow(Error);
+  expect(m.affinity).toBeCloseTo(1e-30, 32);
+
+  // Set bmc outside of range
+  expect(() => (m.bufferedMetalConcentration = 1001)).toThrow(RangeError);
+  expect(m.bufferedMetalConcentration).toBeCloseTo(1e-30, 32);
+  expect(() => (m.bufferedMetalConcentration = 0)).toThrow(RangeError);
+  expect(m.bufferedMetalConcentration).toBeCloseTo(1e-30, 32);
+
+  // Set bmc to a non-numeric value
+  expect(() => (m.bufferedMetalConcentration = null)).toThrow(Error);
+  expect(m.bufferedMetalConcentration).toBeCloseTo(1e-30, 32);
+
+  // Set default bmc outside of range
+  expect(() => (m.defaultMetalConcentration = 1001)).toThrow(RangeError);
+  expect(() => (m.defaultMetalConcentration = 0)).toThrow(RangeError);
+
+  // Set bmc to a non-numeric value
+  expect(() => (m.defaultMetalConcentration = null)).toThrow(Error);
 });
 
 test("deltaGCalculation", () => {
@@ -124,4 +145,10 @@ test("disableEnableMetal", () => {
   m.resetValues();
   expect(m.affinity).toEqual(1);
   expect(m.bufferedMetalConcentration).toEqual(1);
+
+  // Update default BMC and check reset sets bmc to new value
+  m.defaultMetalConcentration = 3;
+  m.resetValues();
+  expect(m.affinity).toEqual(1);
+  expect(m.bufferedMetalConcentration).toEqual(3);
 });

@@ -14,7 +14,11 @@
  */
 
 function metalation_calculator_wp_render_callback( $block_attributes, $content ) {
-  return file_get_contents( plugin_dir_path( __FILE__ ) . 'include/calculator.html' );
+  $data = file_get_contents( plugin_dir_path( __FILE__ ) . 'include/calculator.html' );
+  $data .= '<script type="text/javascript">';
+  $data .= 'window.bmcVals = { "metalation-table": ' . json_encode($block_attributes['bmcVals']) . ' };';
+  $data .= "</script>";
+  return $data;
 }
 
 /**

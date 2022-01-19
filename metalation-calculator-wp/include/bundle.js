@@ -215,11 +215,21 @@ function downloadTableAsCsv(tableId, separator) {
     link.click();
     document.body.removeChild(link);
 }
-function setupCalculator(tableId) {
+function setupCalculator(tableId, bmcVals) {
     var metalTable = document.getElementById(tableId);
     if (metalTable !== null) {
         for (var id in metalDataSet.metals) {
             var m = metalDataSet.metals[id];
+            // TODO: ensure this sets the default value for bmc too
+            if (bmcVals && bmcVals[id]) {
+                try {
+                    m.defaultMetalConcentration = bmcVals[id];
+                    m.bufferedMetalConcentration = bmcVals[id];
+                }
+                catch (_a) {
+                    // Ignore: will use default value
+                }
+            }
             appendMetalTableRow(m, metalTable);
         }
         document.getElementById("download-btn").onclick = function () {
@@ -233,7 +243,10 @@ function setupCalculator(tableId) {
 }
 exports.setupCalculator = setupCalculator;
 window.addEventListener("DOMContentLoaded", function () {
-    setupCalculator("metalation-table");
+    if (window.bmcVals === undefined) {
+        window.bmcVals = {};
+    }
+    setupCalculator("metalation-table", window.bmcVals["metalation-table"]);
 });
 
 },{"./metals":2}],2:[function(require,module,exports){
@@ -267,7 +280,7 @@ var Metal = /** @class */ (function () {
     };
     Metal.prototype.checkRange = function (val, fieldName) {
         if (isNaN(val))
-            throw new RangeError(fieldName + " must be set");
+            throw new RangeError(fieldName + " must be a valid number");
         if (val < 1e-30 || val > 1000) {
             throw new RangeError(fieldName + " must be between 1e-30 and 1000");
         }
@@ -299,6 +312,14 @@ var Metal = /** @class */ (function () {
             this.checkRange(val, "Buffered metal concentration");
             this._bufferedMetalConcentration = val;
             this._intracellularAvailableDeltaG = this.calculateDeltaG(this._bufferedMetalConcentration);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Metal.prototype, "defaultMetalConcentration", {
+        set: function (val) {
+            this.checkRange(val, "Default buffered metal concentration");
+            this._defaultMetalConcentration = val;
         },
         enumerable: false,
         configurable: true
