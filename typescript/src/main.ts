@@ -262,6 +262,10 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
   document.body.removeChild(link);
 }
 
+/**
+This method is used to hide the instuctions paragraph for more than one
+instances of the calculator.
+**/
 function hideParagraphCopies() {
   const paragraphs = Array.from(document.getElementsByTagName("p")).filter(
     (e) => e.className === "intro"
