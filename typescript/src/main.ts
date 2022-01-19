@@ -278,11 +278,23 @@ function hideParagraphCopies() {
   }
 }
 
-export function setupCalculator(tableId: string) {
+export function setupCalculator(
+  tableId: string,
+  bmcVals: { [id: string]: number }
+) {
   const metalTable = <HTMLTableElement>document.getElementById(tableId);
   if (metalTable !== null) {
     for (const id in metalDataSet.metals) {
       const m = metalDataSet.metals[id];
+      // TODO: ensure this sets the default value for bmc too
+      if (bmcVals && bmcVals[id]) {
+        try {
+          m.defaultMetalConcentration = bmcVals[id];
+          m.bufferedMetalConcentration = bmcVals[id];
+        } catch {
+          // Ignore: will use default value
+        }
+      }
       appendMetalTableRow(m, metalTable);
     }
 
@@ -298,7 +310,17 @@ export function setupCalculator(tableId: string) {
   }
 }
 
+/* global window */
+declare global {
+  interface Window {
+    bmcVals: { [id: string]: { [id: string]: number } };
+  }
+}
+
 window.addEventListener("DOMContentLoaded", () => {
-  setupCalculator("metalation-table");
+  if (window.bmcVals === undefined) {
+    window.bmcVals = {};
+  }
+  setupCalculator("metalation-table", window.bmcVals["metalation-table"]);
   hideParagraphCopies();
 });
