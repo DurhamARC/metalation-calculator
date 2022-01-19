@@ -268,7 +268,7 @@ instances of the calculator.
 **/
 function hideParagraphCopies() {
   const paragraphs = Array.from(document.getElementsByTagName("p")).filter(
-    (e) => e.className === "intro"
+    (e) => e.className === "metalation-calculator-intro"
   );
   if (paragraphs.length > 1) {
     paragraphs.shift();
