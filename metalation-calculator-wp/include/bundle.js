@@ -228,7 +228,6 @@ function hideParagraphCopies() {
         }
     }
 }
-
 function setupCalculator(tableId, bmcVals) {
     var metalTable = document.getElementById(tableId);
     if (metalTable !== null) {
