@@ -143,9 +143,14 @@
 .metalation-calculator .title {
   font-weight: bold;
   color: #88cede;
+  justify-content: center;
+}
+.metalation-calculator #flask-image {
+  max-width: 150px;
+  float: left;
 }
 .metalation-calculator #metalation-table-title {
-  margin-top: 10px;
+  margin-top: 25px;
   font-size: 150%;
 }
 .metalation-calculator #download-btn,
