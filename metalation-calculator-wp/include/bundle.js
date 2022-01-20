@@ -228,7 +228,8 @@ function hideParagraphCopies() {
         }
     }
 }
-function setupCalculator(tableId, bmcVals) {
+function setupCalculator(tableId, titleId, bmcVals, htmlString) {
+    document.getElementById(titleId).innerHTML = htmlString;
     var metalTable = document.getElementById(tableId);
     if (metalTable !== null) {
         for (var id in metalDataSet.metals) {
@@ -259,7 +260,7 @@ window.addEventListener("DOMContentLoaded", function () {
     if (window.bmcVals === undefined) {
         window.bmcVals = {};
     }
-    setupCalculator("metalation-table", window.bmcVals["metalation-table"]);
+    setupCalculator("metalation-table", "metalation-table-title", window.bmcVals["metalation-table"], "Idealised <em>Salmonella</em>");
     hideParagraphCopies();
 });
 
