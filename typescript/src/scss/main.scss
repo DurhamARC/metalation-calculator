@@ -10,7 +10,7 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
     table-layout: fixed;
     width: 100%;
     border-collapse: separate;
-    margin: 20px 0;
+    margin: 15px 0 20px;
     border-spacing: 0;
     font-size: 16px;
 
@@ -179,16 +179,17 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
   .title {
     font-weight: bold;
     color: $light-blue;
-    justify-content: center;
+    margin-left: 130px;
   }
 
   #flask-image {
-    max-width: 150px;
+    max-width: 120px;
+    margin-top: 25px;
     float: left;
   }
 
   #metalation-table-title {
-    margin-top: 25px;
+    margin-top: 30px;
     font-size: 150%;
   }
 

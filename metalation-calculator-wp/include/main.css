@@ -2,7 +2,7 @@
   table-layout: fixed;
   width: 100%;
   border-collapse: separate;
-  margin: 20px 0;
+  margin: 15px 0 20px;
   border-spacing: 0;
   font-size: 16px;
   /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
@@ -143,14 +143,15 @@
 .metalation-calculator .title {
   font-weight: bold;
   color: #88cede;
-  justify-content: center;
+  margin-left: 130px;
 }
 .metalation-calculator #flask-image {
-  max-width: 150px;
+  max-width: 120px;
+  margin-top: 25px;
   float: left;
 }
 .metalation-calculator #metalation-table-title {
-  margin-top: 25px;
+  margin-top: 30px;
   font-size: 150%;
 }
 .metalation-calculator #download-btn,
