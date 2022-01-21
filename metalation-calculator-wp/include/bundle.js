@@ -139,35 +139,70 @@ function reset() {
     }
     calculate();
 }
+/**
+Text is "cleaned up" to be more readable
+and the delta symbol is replaced with the word "Delta"
+as excel does not display unicode symbols correctly.
+**/
+function cleanData(data) {
+    data = data.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
+    data = data.replace(/"/g, '""');
+    data = data.replace(/\u2206/g, "Delta ");
+    return data;
+}
+/**
+This method was required to access the inner text within the tooltips as
+the innerText method cannot access the header span's inner text due to their
+visibility being hidden by default.
+**/
+function convertToPlainText(html) {
+    // Create a new div element
+    var tempDivElement = document.createElement("div");
+    // Set the HTML content with the given value
+    tempDivElement.innerHTML = html;
+    // Retrieve the text property of the element
+    return tempDivElement.textContent || tempDivElement.innerText || "";
+}
 // Quick and simple export target #tableId into a csv
 function downloadTableAsCsv(tableId, separator) {
     if (separator === void 0) { separator = ","; }
-    // Select rows from tableId
-    var rows = document.querySelectorAll("table#" + tableId + " tr");
+    var table = document.getElementById(tableId);
+    var rows = table.rows;
     // Construct csv
     var csv = [];
     for (var i = 0; i < rows.length; i++) {
         var row = [];
-        var cols = (rows[i].querySelectorAll("td, th"));
+        var cols = rows[i].cells;
         for (var j = 0; j < cols.length; j++) {
             // Clean innertext to remove multiple spaces and jumpline (break csv)
             var data = void 0;
-            var inputs = cols[j].getElementsByTagName("input");
+            var inputs = Array.from(cols[j].getElementsByTagName("input")).filter(function (e) { return e.type == "number"; });
             if (inputs.length > 0) {
                 data = inputs[0].value;
             }
             else {
                 data = cols[j].innerText;
             }
-            // Remove line breaks and escape double-quote with double-double-quote
-            data = data.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
-            data = data.replace(/"/g, '""');
-            data = data.replace(/\u2206/g, "Delta ");
+            data = cleanData(data);
             // Push escaped string
             row.push('"' + data + '"');
         }
         csv.push(row.join(separator));
     }
+    var explanation = [];
+    var headings = rows[0].cells;
+    for (var k = 0; k < headings.length; k++) {
+        var spans = headings[k].getElementsByTagName("span");
+        if (spans.length > 0) {
+            var detailText = spans[0].innerHTML;
+            var detailTextTitle = headings[k].innerText;
+            detailTextTitle = cleanData(detailTextTitle);
+            detailText = cleanData(detailText);
+            detailText = convertToPlainText(detailText);
+            explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
+        }
+    }
+    csv.push(explanation.join("\n"));
     var csvString = csv.join("\n");
     // Download it
     var filename = "export_" + tableId + "_" + new Date().toLocaleDateString() + ".csv";
@@ -180,11 +215,34 @@ function downloadTableAsCsv(tableId, separator) {
     link.click();
     document.body.removeChild(link);
 }
-function setupCalculator(tableId) {
+/**
+This method is used to hide the instuctions paragraph for more than one
+instances of the calculator.
+**/
+function hideParagraphCopies() {
+    var paragraphs = Array.from(document.getElementsByTagName("p")).filter(function (e) { return e.className === "metalation-calculator-intro"; });
+    if (paragraphs.length > 1) {
+        // set the display of the into paragrapghs to none except the first one
+        for (var x = 1; x < paragraphs.length; x++) {
+            paragraphs[x].style.display = "none";
+        }
+    }
+}
+function setupCalculator(tableId, bmcVals) {
     var metalTable = document.getElementById(tableId);
     if (metalTable !== null) {
         for (var id in metalDataSet.metals) {
             var m = metalDataSet.metals[id];
+            // TODO: ensure this sets the default value for bmc too
+            if (bmcVals && bmcVals[id]) {
+                try {
+                    m.defaultMetalConcentration = bmcVals[id];
+                    m.bufferedMetalConcentration = bmcVals[id];
+                }
+                catch (_a) {
+                    // Ignore: will use default value
+                }
+            }
             appendMetalTableRow(m, metalTable);
         }
         document.getElementById("download-btn").onclick = function () {
@@ -198,7 +256,11 @@ function setupCalculator(tableId) {
 }
 exports.setupCalculator = setupCalculator;
 window.addEventListener("DOMContentLoaded", function () {
-    setupCalculator("metalation-table");
+    if (window.bmcVals === undefined) {
+        window.bmcVals = {};
+    }
+    setupCalculator("metalation-table", window.bmcVals["metalation-table"]);
+    hideParagraphCopies();
 });
 
 },{"./metals":2}],2:[function(require,module,exports){
@@ -232,7 +294,7 @@ var Metal = /** @class */ (function () {
     };
     Metal.prototype.checkRange = function (val, fieldName) {
         if (isNaN(val))
-            throw new RangeError(fieldName + " must be set");
+            throw new RangeError(fieldName + " must be a valid number");
         if (val < 1e-30 || val > 1000) {
             throw new RangeError(fieldName + " must be between 1e-30 and 1000");
         }
@@ -264,6 +326,14 @@ var Metal = /** @class */ (function () {
             this.checkRange(val, "Buffered metal concentration");
             this._bufferedMetalConcentration = val;
             this._intracellularAvailableDeltaG = this.calculateDeltaG(this._bufferedMetalConcentration);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Metal.prototype, "defaultMetalConcentration", {
+        set: function (val) {
+            this.checkRange(val, "Default buffered metal concentration");
+            this._defaultMetalConcentration = val;
         },
         enumerable: false,
         configurable: true

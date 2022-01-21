@@ -33,7 +33,7 @@ export class Metal {
   }
 
   checkRange(val: number, fieldName: string) {
-    if (isNaN(val)) throw new RangeError(fieldName + " must be set");
+    if (isNaN(val)) throw new RangeError(fieldName + " must be a valid number");
     if (val < 1e-30 || val > 1000) {
       throw new RangeError(fieldName + " must be between 1e-30 and 1000");
     }
@@ -63,6 +63,11 @@ export class Metal {
     this._intracellularAvailableDeltaG = this.calculateDeltaG(
       this._bufferedMetalConcentration
     );
+  }
+
+  set defaultMetalConcentration(val: number) {
+    this.checkRange(val, "Default buffered metal concentration");
+    this._defaultMetalConcentration = val;
   }
 
   get intracellularAvailableDeltaG(): number {

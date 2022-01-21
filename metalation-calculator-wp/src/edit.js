@@ -5,6 +5,7 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
 import { useBlockProps } from '@wordpress/block-editor';
+import { TextControl } from '@wordpress/components';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -16,23 +17,56 @@ import './editor.scss';
 import '../include/main.css';
 
 /**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
+ * Displays a mockup of the calculator and allows the user to edit the
+ * availability column.
  *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
+ * @param {Object}   props
+ * @param {Object}   props.attributes    Block attributes
+ * @param {Function} props.setAttributes Block attributes setter
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
+export default function Edit({ attributes, setAttributes }) {
 	const metals = require('../include/metals');
 	const metalDataSet = new metals.MetalDataSet();
+
+	const onChangeValue = function (value, key) {
+		const errorMsgElement = document.getElementById('msg_' + key);
+
+		try {
+			metalDataSet.metals[key].bufferedMetalConcentration = value;
+			errorMsgElement.style.display = 'none';
+		} catch (e) {
+			let msg;
+			if (e instanceof RangeError) {
+				msg = e.message;
+			} else {
+				msg = 'Invalid value ' + value;
+			}
+			errorMsgElement.innerHTML = msg;
+			errorMsgElement.style.display = 'block';
+		}
+		const newBmcVals = { ...attributes.bmcVals };
+		newBmcVals[key] = value;
+		setAttributes({ bmcVals: newBmcVals });
+	};
 
 	const tableRows = Object.keys(metalDataSet.metals).map((key) => (
 		<tr key={key}>
 			<th>{metalDataSet.metals[key].symbol}</th>
 			<td>{metalDataSet.metals[key].affinity}</td>
 			<td>-</td>
-			<td>{metalDataSet.metals[key].bufferedMetalConcentration}</td>
+			<td>
+				<TextControl
+					value={attributes.bmcVals[key]}
+					onChange={(val) => onChangeValue(val, key)}
+				/>
+				<p
+					className="error-msg"
+					id={'msg_' + key}
+					style={{ display: 'none' }}
+				/>
+			</td>
 			<td>-</td>
 			<td>-</td>
 		</tr>

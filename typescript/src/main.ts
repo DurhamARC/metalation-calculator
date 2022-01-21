@@ -178,35 +178,73 @@ function reset() {
   calculate();
 }
 
+/**
+Text is "cleaned up" to be more readable
+and the delta symbol is replaced with the word "Delta"
+as excel does not display unicode symbols correctly.
+**/
+function cleanData(data: string) {
+  data = data.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
+  data = data.replace(/"/g, '""');
+  data = data.replace(/\u2206/g, "Delta ");
+  return data;
+}
+
+/**
+This method was required to access the inner text within the tooltips as
+the innerText method cannot access the header span's inner text due to their
+visibility being hidden by default.
+**/
+function convertToPlainText(html: string) {
+  // Create a new div element
+  const tempDivElement = document.createElement("div");
+  // Set the HTML content with the given value
+  tempDivElement.innerHTML = html;
+  // Retrieve the text property of the element
+  return tempDivElement.textContent || tempDivElement.innerText || "";
+}
+
 // Quick and simple export target #tableId into a csv
 function downloadTableAsCsv(tableId: string, separator = ",") {
-  // Select rows from tableId
-  const rows = document.querySelectorAll("table#" + tableId + " tr");
+  const table = <HTMLTableElement>document.getElementById(tableId);
+  const rows = table.rows;
   // Construct csv
   const csv = [];
   for (let i = 0; i < rows.length; i++) {
     const row = [];
-    const cols = <NodeListOf<HTMLTableCellElement>>(
-      rows[i].querySelectorAll("td, th")
-    );
+    const cols = rows[i].cells;
     for (let j = 0; j < cols.length; j++) {
       // Clean innertext to remove multiple spaces and jumpline (break csv)
       let data;
-      const inputs = cols[j].getElementsByTagName("input");
+      const inputs = Array.from(cols[j].getElementsByTagName("input")).filter(
+        (e) => e.type == "number"
+      );
       if (inputs.length > 0) {
         data = inputs[0].value;
       } else {
         data = cols[j].innerText;
       }
-      // Remove line breaks and escape double-quote with double-double-quote
-      data = data.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
-      data = data.replace(/"/g, '""');
-      data = data.replace(/\u2206/g, "Delta ");
+      data = cleanData(data);
       // Push escaped string
       row.push('"' + data + '"');
     }
     csv.push(row.join(separator));
   }
+  const explanation = [];
+  const headings = rows[0].cells;
+  for (let k = 0; k < headings.length; k++) {
+    const spans = headings[k].getElementsByTagName("span");
+    if (spans.length > 0) {
+      let detailText = spans[0].innerHTML;
+      let detailTextTitle = headings[k].innerText;
+      detailTextTitle = cleanData(detailTextTitle);
+      detailText = cleanData(detailText);
+      detailText = convertToPlainText(detailText);
+      explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
+    }
+  }
+  csv.push(explanation.join("\n"));
+
   const csvString = csv.join("\n");
   // Download it
   const filename =
@@ -224,11 +262,39 @@ function downloadTableAsCsv(tableId: string, separator = ",") {
   document.body.removeChild(link);
 }
 
-export function setupCalculator(tableId: string) {
+/**
+This method is used to hide the instuctions paragraph for more than one
+instances of the calculator.
+**/
+function hideParagraphCopies() {
+  const paragraphs = Array.from(document.getElementsByTagName("p")).filter(
+    (e) => e.className === "metalation-calculator-intro"
+  );
+  if (paragraphs.length > 1) {
+    // set the display of the into paragrapghs to none except the first one
+    for (let x = 1; x < paragraphs.length; x++) {
+      paragraphs[x].style.display = "none";
+    }
+  }
+}
+
+export function setupCalculator(
+  tableId: string,
+  bmcVals: { [id: string]: number }
+) {
   const metalTable = <HTMLTableElement>document.getElementById(tableId);
   if (metalTable !== null) {
     for (const id in metalDataSet.metals) {
       const m = metalDataSet.metals[id];
+      // TODO: ensure this sets the default value for bmc too
+      if (bmcVals && bmcVals[id]) {
+        try {
+          m.defaultMetalConcentration = bmcVals[id];
+          m.bufferedMetalConcentration = bmcVals[id];
+        } catch {
+          // Ignore: will use default value
+        }
+      }
       appendMetalTableRow(m, metalTable);
     }
 
@@ -244,6 +310,17 @@ export function setupCalculator(tableId: string) {
   }
 }
 
+/* global window */
+declare global {
+  interface Window {
+    bmcVals: { [id: string]: { [id: string]: number } };
+  }
+}
+
 window.addEventListener("DOMContentLoaded", () => {
-  setupCalculator("metalation-table");
+  if (window.bmcVals === undefined) {
+    window.bmcVals = {};
+  }
+  setupCalculator("metalation-table", window.bmcVals["metalation-table"]);
+  hideParagraphCopies();
 });
