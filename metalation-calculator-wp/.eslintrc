@@ -2,7 +2,11 @@
     "extends": [ "plugin:@wordpress/eslint-plugin/recommended" ],
     "ignorePatterns": ["include/*.js"],
     "parserOptions": {
+      "babelOptions": {
+        "presets": ["@babel/preset-react"]
+      },
       "ecmaVersion": 7,
+      "requireConfigFile": false,
       "sourceType": "module"
     },
 }
