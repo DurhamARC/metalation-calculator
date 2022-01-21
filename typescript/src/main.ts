@@ -279,13 +279,16 @@ function hideParagraphCopies() {
 }
 
 export function setupCalculator(
-  tableId: string,
-  titleId: string,
+  calculatorID: string,
   bmcVals: { [id: string]: number },
   htmlString: string
 ) {
-  document.getElementById(titleId).innerHTML = htmlString;
-  const metalTable = <HTMLTableElement>document.getElementById(tableId);
+  document
+    .getElementById(calculatorID)
+    .getElementsByTagName("h3")[0].innerHTML = htmlString;
+  const metalTable = <HTMLTableElement>(
+    document.getElementById(calculatorID).getElementsByTagName("table")[0]
+  );
   if (metalTable !== null) {
     for (const id in metalDataSet.metals) {
       const m = metalDataSet.metals[id];
@@ -325,8 +328,7 @@ window.addEventListener("DOMContentLoaded", () => {
     window.bmcVals = {};
   }
   setupCalculator(
-    "metalation-table",
-    "metalation-table-title",
+    "metalation-calculator",
     window.bmcVals["metalation-table"],
     "Idealised <em>Salmonella</em>"
   );

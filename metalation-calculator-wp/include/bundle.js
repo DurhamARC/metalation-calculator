@@ -228,9 +228,11 @@ function hideParagraphCopies() {
         }
     }
 }
-function setupCalculator(tableId, titleId, bmcVals, htmlString) {
-    document.getElementById(titleId).innerHTML = htmlString;
-    var metalTable = document.getElementById(tableId);
+function setupCalculator(calculatorID, bmcVals, htmlString) {
+    document
+        .getElementById(calculatorID)
+        .getElementsByTagName("h3")[0].innerHTML = htmlString;
+    var metalTable = (document.getElementById(calculatorID).getElementsByTagName("table")[0]);
     if (metalTable !== null) {
         for (var id in metalDataSet.metals) {
             var m = metalDataSet.metals[id];
@@ -260,7 +262,7 @@ window.addEventListener("DOMContentLoaded", function () {
     if (window.bmcVals === undefined) {
         window.bmcVals = {};
     }
-    setupCalculator("metalation-table", "metalation-table-title", window.bmcVals["metalation-table"], "Idealised <em>Salmonella</em>");
+    setupCalculator("metalation-calculator", window.bmcVals["metalation-table"], "Idealised <em>Salmonella</em>");
     hideParagraphCopies();
 });
 
