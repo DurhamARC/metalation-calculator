@@ -29,11 +29,13 @@ import '../include/main.css';
 export default function Edit({ attributes, setAttributes }) {
 	const metals = require('../include/metals');
 	const metalDataSet = new metals.MetalDataSet();
+	const validPartialNumber = /^\d+\.?\d*((e|E)-?\d*)?$/;
 
 	const onChangeValue = function (value, key) {
 		const errorMsgElement = document.getElementById('msg_' + key);
-
+		let shouldUpdateValue = true;
 		try {
+			// Use the Metal object to determine whether value is valid
 			metalDataSet.metals[key].bufferedMetalConcentration = value;
 			errorMsgElement.style.display = 'none';
 		} catch (e) {
@@ -45,10 +47,18 @@ export default function Edit({ attributes, setAttributes }) {
 			}
 			errorMsgElement.innerHTML = msg;
 			errorMsgElement.style.display = 'block';
+			// If value is invalid but looks like the start of a valid
+			// expression, we save it to allow the user to continue typing
+			// Otherwise we reset the value
+			if (!validPartialNumber.test(value)) {
+				shouldUpdateValue = false;
+			}
 		}
-		const newBmcVals = { ...attributes.bmcVals };
-		newBmcVals[key] = value;
-		setAttributes({ bmcVals: newBmcVals });
+		if (shouldUpdateValue) {
+			const newBmcVals = { ...attributes.bmcVals };
+			newBmcVals[key] = value;
+			setAttributes({ bmcVals: newBmcVals });
+		}
 	};
 
 	const tableRows = Object.keys(metalDataSet.metals).map((key) => (
