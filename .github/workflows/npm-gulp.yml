@@ -4,6 +4,8 @@ on:
   push:
   pull_request:
     branches: [ main ]
+  schedule:
+    - cron:  '45 2 * * 1'
 
 jobs:
   build:
@@ -49,6 +51,25 @@ jobs:
           echo "Wordpress plugin files are not up to date:"
           git status --porcelain metalation-calculator-wp
           echo "Run 'gulp wp' in 'typescript', and 'npm run build'/'npm run format' in 'metalation-calculator-wp' and commit the changes."
+          exit 1
+        fi
+
+    - name: Check for npm audit issues in production dependencies
+      if: startsWith(matrix.node-version, '16.')
+      run: |
+        cd typescript && npm audit --production
+        cd ../metalation-calculator-wp && npm audit --production
+
+    - name: Check for updates in Wordpress dependencies
+      if: startsWith(matrix.node-version, '16.')
+      working-directory: metalation-calculator-wp
+      run: |
+        npm run packages-update
+        npm audit fix
+        if [[ `git status --porcelain metalation-calculator-wp` ]]; then
+          echo "Wordpress packages are not up to date:"
+          git status --porcelain metalation-calculator-wp
+          echo "Run 'npm run packages-update' and 'npm audit fix' and commit the changes."
           exit 1
         fi
 
