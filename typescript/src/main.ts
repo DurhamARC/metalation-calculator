@@ -298,10 +298,17 @@ export function setupCalculator(
   calculatorDiv.getElementsByTagName("h3")[0].innerHTML = metalDataSet.title;
 
   if (imageDir) {
-    const imageElement = <HTMLImageElement>(
-      calculatorDiv.getElementsByClassName("flask-image")[0]
-    );
-    imageElement.src = imageDir + "/flask-logo.png";
+    // Only set image src if it's on the current domain
+    const imageDirURL = new URL(imageDir);
+    if (
+      imageDirURL.protocol == window.location.protocol &&
+      imageDirURL.hostname == window.location.hostname
+    ) {
+      const imageElement = <HTMLImageElement>(
+        calculatorDiv.getElementsByClassName("flask-image")[0]
+      );
+      imageElement.src = imageDir + "/flask-logo.png";
+    }
   }
 
   const metalTable = <HTMLTableElement>(

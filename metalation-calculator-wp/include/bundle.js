@@ -240,8 +240,13 @@ function setupCalculator(calculatorID, bmcVals, titleHtmlString, imageDir) {
     }
     calculatorDiv.getElementsByTagName("h3")[0].innerHTML = metalDataSet.title;
     if (imageDir) {
-        var imageElement = (calculatorDiv.getElementsByClassName("flask-image")[0]);
-        imageElement.src = imageDir + "/flask-logo.png";
+        // Only set image src if it's on the current domain
+        var imageDirURL = new URL(imageDir);
+        if (imageDirURL.protocol == window.location.protocol &&
+            imageDirURL.hostname == window.location.hostname) {
+            var imageElement = (calculatorDiv.getElementsByClassName("flask-image")[0]);
+            imageElement.src = imageDir + "/flask-logo.png";
+        }
     }
     var metalTable = (calculatorDiv.getElementsByTagName("table")[0]);
     if (metalTable !== null) {
