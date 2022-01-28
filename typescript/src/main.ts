@@ -1,6 +1,6 @@
 import * as metals from "./metals";
 
-const metalDataSet = new metals.MetalDataSet();
+const metalDataSet = new metals.MetalDataSet("Idealised <em>Salmonella</em>");
 
 function createMetalNumberInput(
   prefix: string,
@@ -40,6 +40,7 @@ function createMetalNumberInput(
   div.append(msgP);
   return div;
 }
+
 function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   const row: HTMLTableRowElement = table
     .getElementsByTagName("tbody")[0]
@@ -113,6 +114,7 @@ function appendMetalTableRow(metal: metals.Metal, table: HTMLTableElement) {
   resultCell.classList.add("result");
   resultCell.id = "result_" + metal.idSuffix;
 }
+
 function toggleMetal(willTurnOff: boolean, metal: metals.Metal) {
   (
     document.getElementById("affinity_" + metal.idSuffix) as HTMLInputElement
@@ -281,24 +283,34 @@ function hideParagraphCopies() {
 export function setupCalculator(
   calculatorID: string,
   bmcVals: { [id: string]: number },
-  htmlString: string,
+  titleHtmlString: string,
   imageDir: string
 ) {
   const calculatorDiv = <HTMLDivElement>document.getElementById(calculatorID);
-  calculatorDiv.getElementsByTagName("h3")[0].innerHTML = htmlString;
+
+  if (titleHtmlString) {
+    try {
+      metalDataSet.title = titleHtmlString;
+    } catch {
+      // Ignore error - MetalDataSet won't be updated
+    }
+  }
+  calculatorDiv.getElementsByTagName("h3")[0].innerHTML = metalDataSet.title;
+
   if (imageDir) {
     const imageElement = <HTMLImageElement>(
       calculatorDiv.getElementsByClassName("flask-image")[0]
     );
     imageElement.src = imageDir + "/flask-logo.png";
   }
+
   const metalTable = <HTMLTableElement>(
-    document.getElementById(calculatorID).getElementsByTagName("table")[0]
+    calculatorDiv.getElementsByTagName("table")[0]
   );
+
   if (metalTable !== null) {
     for (const id in metalDataSet.metals) {
       const m = metalDataSet.metals[id];
-      // TODO: ensure this sets the default value for bmc too
       if (bmcVals && bmcVals[id]) {
         try {
           m.defaultMetalConcentration = bmcVals[id];
@@ -325,25 +337,23 @@ export function setupCalculator(
 /* global window */
 declare global {
   interface Window {
-    bmcVals: { [id: string]: { [id: string]: number } };
-    metalationTitle: { [id: string]: string };
+    metalationBmcVals: { [id: string]: { [id: string]: number } };
+    metalationTitles: { [id: string]: string };
     metalationImageDir: string;
   }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  if (window.bmcVals === undefined) {
-    window.bmcVals = {};
+  if (window.metalationBmcVals === undefined) {
+    window.metalationBmcVals = {};
   }
-  if (window.metalationTitle === undefined) {
-    window.metalationTitle = {
-      "metalation-table": "Idealised <em>Salmonella</em>",
-    };
+  if (window.metalationTitles === undefined) {
+    window.metalationTitles = {};
   }
   setupCalculator(
     "metalation-calculator",
-    window.bmcVals["metalation-table"],
-    window.metalationTitle["metalation-table"],
+    window.metalationBmcVals["metalation-table"],
+    window.metalationTitles["metalation-table"],
     window.metalationImageDir
   );
   hideParagraphCopies();

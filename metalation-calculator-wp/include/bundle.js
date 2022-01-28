@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setupCalculator = void 0;
 var metals = require("./metals");
-var metalDataSet = new metals.MetalDataSet();
+var metalDataSet = new metals.MetalDataSet("Idealised <em>Salmonella</em>");
 function createMetalNumberInput(prefix, metal, metalPropertyName, additionalOnChange) {
     var div = document.createElement("div");
     var input = document.createElement("input");
@@ -228,24 +228,31 @@ function hideParagraphCopies() {
         }
     }
 }
-function setupCalculator(calculatorID, bmcVals, htmlString, imageDir) {
+function setupCalculator(calculatorID, bmcVals, titleHtmlString, imageDir) {
     var calculatorDiv = document.getElementById(calculatorID);
-    calculatorDiv.getElementsByTagName("h3")[0].innerHTML = htmlString;
+    if (titleHtmlString) {
+        try {
+            metalDataSet.title = titleHtmlString;
+        }
+        catch (_a) {
+            // Ignore error - MetalDataSet won't be updated
+        }
+    }
+    calculatorDiv.getElementsByTagName("h3")[0].innerHTML = metalDataSet.title;
     if (imageDir) {
         var imageElement = (calculatorDiv.getElementsByClassName("flask-image")[0]);
         imageElement.src = imageDir + "/flask-logo.png";
     }
-    var metalTable = (document.getElementById(calculatorID).getElementsByTagName("table")[0]);
+    var metalTable = (calculatorDiv.getElementsByTagName("table")[0]);
     if (metalTable !== null) {
         for (var id in metalDataSet.metals) {
             var m = metalDataSet.metals[id];
-            // TODO: ensure this sets the default value for bmc too
             if (bmcVals && bmcVals[id]) {
                 try {
                     m.defaultMetalConcentration = bmcVals[id];
                     m.bufferedMetalConcentration = bmcVals[id];
                 }
-                catch (_a) {
+                catch (_b) {
                     // Ignore: will use default value
                 }
             }
@@ -262,15 +269,13 @@ function setupCalculator(calculatorID, bmcVals, htmlString, imageDir) {
 }
 exports.setupCalculator = setupCalculator;
 window.addEventListener("DOMContentLoaded", function () {
-    if (window.bmcVals === undefined) {
-        window.bmcVals = {};
+    if (window.metalationBmcVals === undefined) {
+        window.metalationBmcVals = {};
     }
-    if (window.metalationTitle === undefined) {
-        window.metalationTitle = {
-            "metalation-table": "Idealised <em>Salmonella</em>",
-        };
+    if (window.metalationTitles === undefined) {
+        window.metalationTitles = {};
     }
-    setupCalculator("metalation-calculator", window.bmcVals["metalation-table"], window.metalationTitle["metalation-table"], window.metalationImageDir);
+    setupCalculator("metalation-calculator", window.metalationBmcVals["metalation-table"], window.metalationTitles["metalation-table"], window.metalationImageDir);
     hideParagraphCopies();
 });
 
@@ -385,13 +390,35 @@ var METAL_VALS = [
     ["Zinc", "Zn", 1.9e-13, 1.19e-12],
 ];
 var MetalDataSet = /** @class */ (function () {
-    function MetalDataSet() {
+    function MetalDataSet(title) {
+        this.title = title;
         this.metals = {};
         for (var _i = 0, METAL_VALS_1 = METAL_VALS; _i < METAL_VALS_1.length; _i++) {
             var m = METAL_VALS_1[_i];
             this.metals[m[1].toLowerCase()] = new (Metal.bind.apply(Metal, __spreadArray([void 0], m, false)))();
         }
     }
+    Object.defineProperty(MetalDataSet.prototype, "title", {
+        get: function () {
+            return this._title;
+        },
+        set: function (val) {
+            // Check title doesn't contain any HTML tags apart from <em>
+            var tempElement = document.createElement("div");
+            tempElement.innerHTML = val;
+            if (tempElement.innerText != val) {
+                // There are HTML tags in provided title, so check for <em>
+                Array.from(tempElement.children).forEach(function (element) {
+                    if (element.tagName != "EM") {
+                        throw new Error("Invalid HTML string " + val);
+                    }
+                });
+            }
+            this._title = val;
+        },
+        enumerable: false,
+        configurable: true
+    });
     MetalDataSet.prototype.calculateOccupancy = function () {
         var expScaledDifferences = {};
         var totalDiffs = 0;
