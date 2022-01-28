@@ -142,19 +142,24 @@
 .metalation-calculator #metalation-table input[type=checkbox]:checked + label::after {
   left: 14px;
 }
-.metalation-calculator .title {
+.metalation-calculator .metalation-table-header {
+  margin-top: 30px;
+}
+.metalation-calculator .metalation-table-header > * {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: calc(100% - 120px);
+}
+.metalation-calculator .metalation-table-header .metalation-table-title {
   font-weight: bold;
   color: #88cede;
-  margin-left: 130px;
 }
-.metalation-calculator #flask-image {
-  max-width: 120px;
-  margin-top: 25px;
-  float: left;
-}
-.metalation-calculator #metalation-table-title {
-  margin-top: 30px;
+.metalation-calculator .metalation-table-header .metalation-table-title.main-title {
   font-size: 150%;
+}
+.metalation-calculator .metalation-table-header .flask-image {
+  max-width: 120px;
+  margin-right: 10px;
 }
 .metalation-calculator #download-btn,
 .metalation-calculator #reset-btn {

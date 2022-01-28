@@ -25,6 +25,11 @@
 					"cu": 1.2e-18,
 					"zn": 1.19e-12
 				}
+		},
+		"title": {
+				"type": "string",
+				"default": "Idealised <em>Salmonella</em>",
+				"selector": "h3"
 		}
 	}
 }

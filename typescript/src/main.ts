@@ -281,11 +281,17 @@ function hideParagraphCopies() {
 export function setupCalculator(
   calculatorID: string,
   bmcVals: { [id: string]: number },
-  htmlString: string
+  htmlString: string,
+  imageDir: string
 ) {
-  document
-    .getElementById(calculatorID)
-    .getElementsByTagName("h3")[0].innerHTML = htmlString;
+  const calculatorDiv = <HTMLDivElement>document.getElementById(calculatorID);
+  calculatorDiv.getElementsByTagName("h3")[0].innerHTML = htmlString;
+  if (imageDir) {
+    const imageElement = <HTMLImageElement>(
+      calculatorDiv.getElementsByClassName("flask-image")[0]
+    );
+    imageElement.src = imageDir + "/flask-logo.png";
+  }
   const metalTable = <HTMLTableElement>(
     document.getElementById(calculatorID).getElementsByTagName("table")[0]
   );
@@ -320,6 +326,8 @@ export function setupCalculator(
 declare global {
   interface Window {
     bmcVals: { [id: string]: { [id: string]: number } };
+    metalationTitle: { [id: string]: string };
+    metalationImageDir: string;
   }
 }
 
@@ -327,10 +335,16 @@ window.addEventListener("DOMContentLoaded", () => {
   if (window.bmcVals === undefined) {
     window.bmcVals = {};
   }
+  if (window.metalationTitle === undefined) {
+    window.metalationTitle = {
+      "metalation-table": "Idealised <em>Salmonella</em>",
+    };
+  }
   setupCalculator(
     "metalation-calculator",
     window.bmcVals["metalation-table"],
-    "Idealised <em>Salmonella</em>"
+    window.metalationTitle["metalation-table"],
+    window.metalationImageDir
   );
   hideParagraphCopies();
 });

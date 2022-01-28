@@ -17,6 +17,8 @@ function metalation_calculator_wp_render_callback( $block_attributes, $content )
   $data = file_get_contents( plugin_dir_path( __FILE__ ) . 'include/calculator.html' );
   $data .= '<script type="text/javascript">';
   $data .= 'window.bmcVals = { "metalation-table": ' . json_encode($block_attributes['bmcVals']) . ' };';
+  $data .= 'window.metalationTitle = { "metalation-table": "' . $block_attributes['title'] . '" };';
+  $data .= 'window.metalationImageDir = "' . plugins_url('/include', __FILE__) . '";';
   $data .= "</script>";
   return $data;
 }

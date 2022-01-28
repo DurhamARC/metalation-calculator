@@ -228,10 +228,13 @@ function hideParagraphCopies() {
         }
     }
 }
-function setupCalculator(calculatorID, bmcVals, htmlString) {
-    document
-        .getElementById(calculatorID)
-        .getElementsByTagName("h3")[0].innerHTML = htmlString;
+function setupCalculator(calculatorID, bmcVals, htmlString, imageDir) {
+    var calculatorDiv = document.getElementById(calculatorID);
+    calculatorDiv.getElementsByTagName("h3")[0].innerHTML = htmlString;
+    if (imageDir) {
+        var imageElement = (calculatorDiv.getElementsByClassName("flask-image")[0]);
+        imageElement.src = imageDir + "/flask-logo.png";
+    }
     var metalTable = (document.getElementById(calculatorID).getElementsByTagName("table")[0]);
     if (metalTable !== null) {
         for (var id in metalDataSet.metals) {
@@ -262,7 +265,12 @@ window.addEventListener("DOMContentLoaded", function () {
     if (window.bmcVals === undefined) {
         window.bmcVals = {};
     }
-    setupCalculator("metalation-calculator", window.bmcVals["metalation-table"], "Idealised <em>Salmonella</em>");
+    if (window.metalationTitle === undefined) {
+        window.metalationTitle = {
+            "metalation-table": "Idealised <em>Salmonella</em>",
+        };
+    }
+    setupCalculator("metalation-calculator", window.bmcVals["metalation-table"], window.metalationTitle["metalation-table"], window.metalationImageDir);
     hideParagraphCopies();
 });
 
