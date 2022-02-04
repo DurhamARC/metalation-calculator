@@ -6,7 +6,7 @@ $white: rgb(255 255 255);
 $low-opacity-gray: rgb(96 96 96 / 20%);
 
 .metalation-calculator {
-  #metalation-table {
+  .metalation-table {
     table-layout: fixed;
     width: 100%;
     border-collapse: separate;
@@ -202,8 +202,8 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
     }
   }
 
-  #download-btn,
-  #reset-btn {
+  .download-btn,
+  .reset-btn {
     display: inline;
     float: right;
     margin-right: 2px;
