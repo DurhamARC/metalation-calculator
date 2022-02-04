@@ -1,7 +1,8 @@
 import * as metals from "./metals";
 
 /**
-Text is "cleaned up" to be more readable
+Clean up text to display more reliably in CSVs
+by removing newlines, quotes and delta symbols
 and the delta symbol is replaced with the word "Delta"
 as excel does not display unicode symbols correctly.
 **/
@@ -13,6 +14,7 @@ function cleanData(data: string) {
 }
 
 /**
+Convert an HTML string to plain text
 This method was required to access the inner text within the tooltips as
 the innerText method cannot access the header span's inner text due to their
 visibility being hidden by default.
@@ -26,8 +28,11 @@ function convertToPlainText(html: string) {
   return tempDivElement.textContent || tempDivElement.innerText || "";
 }
 
+/**
+ * An object to create and manipulate a metalation calculator.
+ * It should be created with an id for a div that contains the basic HTML layout from calculator.html
+ */
 export class MetalationCalculator {
-  //_title: string;
   calculatorID: string;
   metalDataSet: metals.MetalDataSet;
   _calculatorDiv: HTMLDivElement;
@@ -95,6 +100,12 @@ export class MetalationCalculator {
     this.calculate();
   }
 
+  /**
+   * Creates a number input tied to a property of metals.Metal
+   * Updates the Metal property when the input value is changed, and displays an error
+   * if the new value is invalid.
+   * Can also call an additional callback with the metal's idSuffix.
+   */
   createMetalNumberInput(
     prefix: string,
     metal: metals.Metal,
@@ -134,6 +145,9 @@ export class MetalationCalculator {
     return div;
   }
 
+  /**
+   * Adds a row to this._calculatorTable for the given metal.
+   */
   appendMetalTableRow(metal: metals.Metal) {
     const row: HTMLTableRowElement = this._calculatorTable
       .getElementsByTagName("tbody")[0]
@@ -208,6 +222,10 @@ export class MetalationCalculator {
     resultCell.id = this.calculatorID + "_result_" + metal.idSuffix;
   }
 
+  /**
+   * Clears the current calculation values and disables the download button.
+   * To be called when a value is invalid.
+   */
   clearCalculation() {
     Array.from(this._calculatorTable.getElementsByClassName("result")).forEach((cell) => {
       cell.innerHTML = "N/A";
@@ -215,6 +233,9 @@ export class MetalationCalculator {
     this._downloadButton.disabled = true;
   }
 
+  /**
+   * Calculates the metalation values and updates the results column
+   */
   calculate() {
     const results = this.metalDataSet.calculateOccupancy();
 
@@ -234,6 +255,9 @@ export class MetalationCalculator {
     this._downloadButton.disabled = false;
   }
 
+  /**
+   * Resets the calculator to its initial state
+   */
   reset() {
     for (const id in this.metalDataSet.metals) {
       const m = this.metalDataSet.metals[id];
@@ -246,6 +270,9 @@ export class MetalationCalculator {
     this.calculate();
   }
 
+  /**
+   * Toggles a metal row on or off to disable/enable that metal
+   */
   toggleMetal(willTurnOff: boolean, metal: metals.Metal) {
     (
       document.getElementById(this.calculatorID + "_affinity_" + metal.idSuffix) as HTMLInputElement
@@ -261,6 +288,9 @@ export class MetalationCalculator {
     this.updateRow(metal);
   }
 
+  /**
+   * Updates a row with the current values of the given metal
+   */
   updateRow(metal: metals.Metal) {
     const id = metal.idSuffix;
     (<HTMLInputElement>document.getElementById(this.calculatorID + "_affinity_" + id)).value =
@@ -273,6 +303,9 @@ export class MetalationCalculator {
       metal.intracellularAvailableDeltaG.toFixed(1).toString();
   }
 
+  /**
+   * Downloads the table as a CSV
+   */
   downloadTableAsCsv(separator = ",") {
     const rows = this._calculatorTable.rows;
     // Construct csv

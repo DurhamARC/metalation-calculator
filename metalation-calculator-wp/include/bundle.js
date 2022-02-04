@@ -4,7 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MetalationCalculator = void 0;
 var metals = require("./metals");
 /**
-Text is "cleaned up" to be more readable
+Clean up text to display more reliably in CSVs
+by removing newlines, quotes and delta symbols
 and the delta symbol is replaced with the word "Delta"
 as excel does not display unicode symbols correctly.
 **/
@@ -15,6 +16,7 @@ function cleanData(data) {
     return data;
 }
 /**
+Convert an HTML string to plain text
 This method was required to access the inner text within the tooltips as
 the innerText method cannot access the header span's inner text due to their
 visibility being hidden by default.
@@ -27,6 +29,10 @@ function convertToPlainText(html) {
     // Retrieve the text property of the element
     return tempDivElement.textContent || tempDivElement.innerText || "";
 }
+/**
+ * An object to create and manipulate a metalation calculator.
+ * It should be created with an id for a div that contains the basic HTML layout from calculator.html
+ */
 var MetalationCalculator = /** @class */ (function () {
     function MetalationCalculator(calculatorID, titleHtmlString, bmcVals, imageDir) {
         var _this = this;
@@ -77,6 +83,12 @@ var MetalationCalculator = /** @class */ (function () {
         };
         this.calculate();
     }
+    /**
+     * Creates a number input tied to a property of metals.Metal
+     * Updates the Metal property when the input value is changed, and displays an error
+     * if the new value is invalid.
+     * Can also call an additional callback with the metal's idSuffix.
+     */
     MetalationCalculator.prototype.createMetalNumberInput = function (prefix, metal, metalPropertyName, additionalOnChange) {
         var _this = this;
         var div = document.createElement("div");
@@ -115,6 +127,9 @@ var MetalationCalculator = /** @class */ (function () {
         div.append(msgP);
         return div;
     };
+    /**
+     * Adds a row to this._calculatorTable for the given metal.
+     */
     MetalationCalculator.prototype.appendMetalTableRow = function (metal) {
         var _this = this;
         var row = this._calculatorTable
@@ -166,12 +181,19 @@ var MetalationCalculator = /** @class */ (function () {
         resultCell.classList.add("result");
         resultCell.id = this.calculatorID + "_result_" + metal.idSuffix;
     };
+    /**
+     * Clears the current calculation values and disables the download button.
+     * To be called when a value is invalid.
+     */
     MetalationCalculator.prototype.clearCalculation = function () {
         Array.from(this._calculatorTable.getElementsByClassName("result")).forEach(function (cell) {
             cell.innerHTML = "N/A";
         });
         this._downloadButton.disabled = true;
     };
+    /**
+     * Calculates the metalation values and updates the results column
+     */
     MetalationCalculator.prototype.calculate = function () {
         var results = this.metalDataSet.calculateOccupancy();
         for (var id in this.metalDataSet.metals) {
@@ -183,6 +205,9 @@ var MetalationCalculator = /** @class */ (function () {
         totalCell.innerHTML = (results["total"] * 100).toFixed(2).toString() + "%";
         this._downloadButton.disabled = false;
     };
+    /**
+     * Resets the calculator to its initial state
+     */
     MetalationCalculator.prototype.reset = function () {
         for (var id in this.metalDataSet.metals) {
             var m = this.metalDataSet.metals[id];
@@ -192,6 +217,9 @@ var MetalationCalculator = /** @class */ (function () {
         }
         this.calculate();
     };
+    /**
+     * Toggles a metal row on or off to disable/enable that metal
+     */
     MetalationCalculator.prototype.toggleMetal = function (willTurnOff, metal) {
         document.getElementById(this.calculatorID + "_affinity_" + metal.idSuffix).disabled = willTurnOff;
         document.getElementById(this.calculatorID + "_bmc_" + metal.idSuffix).disabled = willTurnOff;
@@ -203,6 +231,9 @@ var MetalationCalculator = /** @class */ (function () {
         }
         this.updateRow(metal);
     };
+    /**
+     * Updates a row with the current values of the given metal
+     */
     MetalationCalculator.prototype.updateRow = function (metal) {
         var id = metal.idSuffix;
         document.getElementById(this.calculatorID + "_affinity_" + id).value =
@@ -214,6 +245,9 @@ var MetalationCalculator = /** @class */ (function () {
         document.getElementById(this.calculatorID + "_ia_delta_g_" + id).innerText =
             metal.intracellularAvailableDeltaG.toFixed(1).toString();
     };
+    /**
+     * Downloads the table as a CSV
+     */
     MetalationCalculator.prototype.downloadTableAsCsv = function (separator) {
         if (separator === void 0) { separator = ","; }
         var rows = this._calculatorTable.rows;
