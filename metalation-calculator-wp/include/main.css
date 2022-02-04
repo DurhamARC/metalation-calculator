@@ -153,6 +153,7 @@
 .metalation-calculator .metalation-table-header .metalation-table-title {
   font-weight: bold;
   color: #88cede;
+  margin: 0;
 }
 .metalation-calculator .metalation-table-header .metalation-table-title.main-title {
   font-size: 150%;

@@ -98,14 +98,24 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					fill in values in the table for as many determined metal
 					affinities (and availabilities if known) as possible.
 				</p>
-				<RichText
-					tagName="h3" // The tag here is the element output and editable in the admin
-					value={attributes.title} // Any existing content, either from the database or an attribute default
-					allowedFormats={['core/italic']} // Allow the content to be made italic, but do not allow other formatting options
-					onChange={(val) => setAttributes({ title: val })} // Store updated content as a block attribute
-					placeholder={'Enter title here, e.g. Idealised Salmonella'} // Display this text before any content has been added by the user
-				/>
-				<table id="metalation-table">
+				<div className="metalation-table-header">
+					<div>
+						<RichText
+							tagName="h3" // The tag here is the element output and editable in the admin
+							value={attributes.title} // Any existing content, either from the database or an attribute default
+							allowedFormats={['core/italic']} // Allow the content to be made italic, but do not allow other formatting options
+							onChange={(val) => setAttributes({ title: val })} // Store updated content as a block attribute
+							placeholder={
+								'Enter title here, e.g. Idealised Salmonella'
+							} // Display this text before any content has been added by the user
+							className="metalation-table-title main-title"
+						/>
+						<h4 className="metalation-table-title">
+							(Default Settings for Metal Availability)
+						</h4>
+					</div>
+				</div>
+				<table className="metalation-table">
 					<thead>
 						<tr>
 							<td></td>
