@@ -69,7 +69,7 @@ var MetalationCalculator = /** @class */ (function () {
         }
         this._downloadButton = this._calculatorDiv.getElementsByClassName("download-btn")[0];
         this._downloadButton.onclick = function () {
-            _this.downloadTableAsCsv("metalation-table");
+            _this.downloadTableAsCsv();
         };
         this._resetButton = this._calculatorDiv.getElementsByClassName("reset-btn")[0];
         this._resetButton.onclick = function () {
@@ -214,7 +214,6 @@ var MetalationCalculator = /** @class */ (function () {
         document.getElementById(this.calculatorID + "_ia_delta_g_" + id).innerText =
             metal.intracellularAvailableDeltaG.toFixed(1).toString();
     };
-    // Quick and simple export target #tableId into a csv
     MetalationCalculator.prototype.downloadTableAsCsv = function (separator) {
         if (separator === void 0) { separator = ","; }
         var rows = this._calculatorTable.rows;

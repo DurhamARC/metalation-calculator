@@ -84,7 +84,7 @@ export class MetalationCalculator {
 
     this._downloadButton = <HTMLButtonElement> this._calculatorDiv.getElementsByClassName("download-btn")[0];
     this._downloadButton.onclick = () => {
-      this.downloadTableAsCsv("metalation-table");
+      this.downloadTableAsCsv();
     };
 
     this._resetButton = <HTMLButtonElement> this._calculatorDiv.getElementsByClassName("reset-btn")[0];
@@ -273,7 +273,6 @@ export class MetalationCalculator {
       metal.intracellularAvailableDeltaG.toFixed(1).toString();
   }
 
-  // Quick and simple export target #tableId into a csv
   downloadTableAsCsv(separator = ",") {
     const rows = this._calculatorTable.rows;
     // Construct csv
