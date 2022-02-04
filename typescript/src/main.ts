@@ -19,9 +19,6 @@ function hideParagraphCopies() {
 /* global window */
 declare global {
   interface Window {
-    metalationBmcVals: { [id: string]: { [id: string]: number } };
-    metalationTitles: { [id: string]: string };
-    metalationImageDir: string;
     setupCalculator: (
       calculatorID: string,
       titleHtmlString: string,

@@ -6,6 +6,7 @@
  */
 import { useBlockProps, RichText } from '@wordpress/block-editor';
 import { TextControl } from '@wordpress/components';
+import React from 'react';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -23,10 +24,17 @@ import '../include/main.css';
  * @param {Object}   props
  * @param {Object}   props.attributes    Block attributes
  * @param {Function} props.setAttributes Block attributes setter
+ * @param {string}   props.clientId      Unique ID for block
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({ attributes, setAttributes, clientId }) {
+	React.useEffect(() => {
+		if (!attributes.id) {
+			setAttributes({ id: 'mc_' + clientId });
+		}
+	}, []);
+
 	const metals = require('../include/metals');
 	const metalDataSet = new metals.MetalDataSet();
 	const validPartialNumber = /^\d+\.?\d*((e|E)-?\d*)?$/;
