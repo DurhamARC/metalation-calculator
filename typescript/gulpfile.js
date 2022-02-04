@@ -18,7 +18,7 @@ const paths = {
   styles: ["src/scss/*.scss"],
   tests: ["src/?(*.)+(spec|test).+(ts|tsx|js)"],
   tsWpEdit: ["src/metals.ts"],
-  wpPages: ["dist/calculator.html", "dist/bundle.js", "dist/main.css"]
+  wpFiles: ["dist/calculator.html", "dist/bundle.js", "dist/main.css", "dist/*.png"]
 };
 
 function style() {
@@ -35,6 +35,11 @@ function copyHtml() {
     prefix: '@@',
     basepath: '@file'
   })).pipe(gulp.dest("dist"));
+}
+
+function copyImages() {
+  return gulp.src('./src/includes/*.png')
+   .pipe(gulp.dest('./dist'));
 }
 
 function bundle() {
@@ -58,7 +63,7 @@ function wpJs() {
 }
 
 function wpCopy() {
-  return gulp.src(paths.wpPages)
+  return gulp.src(paths.wpFiles)
     .pipe(gulp.dest("../metalation-calculator-wp/include"));
 }
 
@@ -92,6 +97,8 @@ gulp.task('lint', lint);
 
 gulp.task('lint-scss', lintScss);
 
+gulp.task('copy-images', copyImages);
+
 gulp.task('jest', function () {
   return gulp.src(paths.tests).pipe(jest({
     "preprocessorIgnorePatterns": [
@@ -101,8 +108,8 @@ gulp.task('jest', function () {
   }));
 });
 
-gulp.task("default", gulp.series(lint, lintScss, style, copyHtml, bundle));
+gulp.task("default", gulp.series(lint, lintScss, style, copyHtml, copyImages, bundle));
 
-gulp.task("wp", gulp.series(lint, lintScss, style, copyHtml, wpJs, bundle, wpCopy));
+gulp.task("wp", gulp.series(lint, lintScss, style, copyHtml, copyImages, wpJs, bundle, wpCopy));
 
 exports.watch = watch

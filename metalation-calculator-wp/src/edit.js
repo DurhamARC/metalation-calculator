@@ -4,7 +4,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 import { TextControl } from '@wordpress/components';
 
 /**
@@ -90,6 +90,13 @@ export default function Edit({ attributes, setAttributes }) {
 					fill in values in the table for as many determined metal
 					affinities (and availabilities if known) as possible.
 				</p>
+				<RichText
+					tagName="h3" // The tag here is the element output and editable in the admin
+					value={attributes.title} // Any existing content, either from the database or an attribute default
+					allowedFormats={['core/italic']} // Allow the content to be made italic, but do not allow other formatting options
+					onChange={(val) => setAttributes({ title: val })} // Store updated content as a block attribute
+					placeholder={'Enter title here, e.g. Idealised Salmonella'} // Display this text before any content has been added by the user
+				/>
 				<table id="metalation-table">
 					<thead>
 						<tr>

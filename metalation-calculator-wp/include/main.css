@@ -2,7 +2,7 @@
   table-layout: fixed;
   width: 100%;
   border-collapse: separate;
-  margin: 20px 0;
+  margin: 15px 0 20px;
   border-spacing: 0;
   font-size: 16px;
   /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
@@ -142,15 +142,34 @@
 .metalation-calculator #metalation-table input[type=checkbox]:checked + label::after {
   left: 14px;
 }
+.metalation-calculator .metalation-table-header {
+  margin-top: 30px;
+}
+.metalation-calculator .metalation-table-header > * {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: calc(100% - 120px);
+}
+.metalation-calculator .metalation-table-header .metalation-table-title {
+  font-weight: bold;
+  color: #88cede;
+}
+.metalation-calculator .metalation-table-header .metalation-table-title.main-title {
+  font-size: 150%;
+}
+.metalation-calculator .metalation-table-header .flask-image {
+  max-width: 120px;
+  margin-right: 10px;
+}
 .metalation-calculator #download-btn,
 .metalation-calculator #reset-btn {
   display: inline;
   float: right;
   margin-right: 2px;
+  padding: 5px 4px;
 }
 .metalation-calculator .footnote {
   font-size: smaller;
-  margin: 70px 0;
 }
 .metalation-calculator .footnote a {
   font-weight: bold;

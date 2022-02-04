@@ -106,13 +106,34 @@ const METAL_VALS: Array<[string, string, number, number]> = [
 ];
 
 export class MetalDataSet {
+  _title: string;
   metals: { [id: string]: Metal };
 
-  constructor() {
+  constructor(title: string) {
+    this.title = title;
     this.metals = {};
     for (const m of METAL_VALS) {
       this.metals[m[1].toLowerCase()] = new Metal(...m);
     }
+  }
+
+  get title(): string {
+    return this._title;
+  }
+
+  set title(val: string) {
+    // Check title doesn't contain any HTML tags apart from <em>
+    const tempElement = document.createElement("div");
+    tempElement.innerHTML = val;
+    if (tempElement.innerText != val) {
+      // There are HTML tags in provided title, so check for <em>
+      Array.from(tempElement.children).forEach((element) => {
+        if (element.tagName != "EM") {
+          throw new Error("Invalid HTML string " + val);
+        }
+      });
+    }
+    this._title = val;
   }
 
   calculateOccupancy(): { [id: string]: number } {

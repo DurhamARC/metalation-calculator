@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { MetalDataSet, Metal } from "./metals";
 
 function checkIsCloseTo(value: number, expectedValue: number) {
@@ -11,7 +15,7 @@ function checkIsCloseTo(value: number, expectedValue: number) {
 }
 
 test("calculateOccupancy", () => {
-  const metalDataSet = new MetalDataSet();
+  const metalDataSet = new MetalDataSet("Test");
   let occupancies = metalDataSet.calculateOccupancy();
   // Expected values are copied from original spreadsheet
   let expectedOccupancies: { [id: string]: number } = {
@@ -151,4 +155,37 @@ test("disableEnableMetal", () => {
   m.resetValues();
   expect(m.affinity).toEqual(1);
   expect(m.bufferedMetalConcentration).toEqual(3);
+});
+
+test("metalDataSet titles", () => {
+  const metalDataSet = new MetalDataSet("test");
+
+  expect(
+    () => (metalDataSet.title = "<div>Div elements are not allowed</div>")
+  ).toThrow(Error);
+  expect(metalDataSet.title).toEqual("test");
+
+  expect(
+    () => (metalDataSet.title = "<p>Neither are <b>Nested</b> elements</p>")
+  ).toThrow(Error);
+  expect(metalDataSet.title).toEqual("test");
+
+  expect(() => (metalDataSet.title = "<p>Or incomplete HTML snippets")).toThrow(
+    Error
+  );
+  expect(metalDataSet.title).toEqual("test");
+
+  metalDataSet.title = "<em>Italic text</em> is allowed <em>though</em>";
+  expect(metalDataSet.title).toEqual(
+    "<em>Italic text</em> is allowed <em>though</em>"
+  );
+
+  expect(
+    () =>
+      (metalDataSet.title =
+        "But <em>not</em> if you try to use <b>bold text</b> too.")
+  ).toThrow(Error);
+  expect(metalDataSet.title).toEqual(
+    "<em>Italic text</em> is allowed <em>though</em>"
+  );
 });
