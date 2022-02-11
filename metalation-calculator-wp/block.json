@@ -14,6 +14,9 @@
 	"editorStyle": "file:./build/index.css",
 	"style": "file:./build/style-index.css",
 	"attributes": {
+		"id": {
+			"type": "string"
+		},
 		"bmcVals": {
 				"type": "object",
 				"default": {
