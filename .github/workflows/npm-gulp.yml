@@ -14,17 +14,13 @@ jobs:
       run:
         shell: bash
 
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-
     steps:
     - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 16.x
 
     - name: Build and test typescript
       working-directory: typescript
@@ -35,7 +31,6 @@ jobs:
         gulp wp
 
     - name: Build and lint wordpress plugin
-      if: startsWith(matrix.node-version, '16.')
       working-directory: metalation-calculator-wp
       run: |
         npm install
@@ -45,7 +40,6 @@ jobs:
         npm run lint:css
 
     - name: Check plugin files are up-to-date
-      if: startsWith(matrix.node-version, '16.')
       run: |
         if [[ `git status --porcelain metalation-calculator-wp` ]]; then
           echo "Wordpress plugin files are not up to date:"
@@ -55,12 +49,10 @@ jobs:
         fi
 
     - name: Check for npm audit issues in typescript production dependencies
-      if: startsWith(matrix.node-version, '16.')
       run: |
         cd typescript && npm audit --production
 
     - name: Check for updates in Wordpress dependencies
-      if: startsWith(matrix.node-version, '16.')
       working-directory: metalation-calculator-wp
       run: |
         npm run packages-update
@@ -73,7 +65,7 @@ jobs:
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
-      if: startsWith(matrix.node-version, '16.') && (contains(github.ref, 'main') || github.event_name == 'release')
+      if: contains(github.ref, 'main') || github.event_name == 'release'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./typescript/dist

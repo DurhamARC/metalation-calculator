@@ -13,7 +13,7 @@ This is a work in progress, currently using TypeScript with gulp to generate a s
 
 ### TypeScript Calculator
 
-Ensure you have [Node.js](https://nodejs.org/en/) and npm installed.
+Ensure you have [Node.js](https://nodejs.org/en/) v16 and npm installed.
 
 Run:
 
