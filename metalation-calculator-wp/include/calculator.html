@@ -1,11 +1,19 @@
 <div class="metalation-calculator">
+  <p class="metalation-calculator-intro">
+    To predict the metalation state of a protein or molecule, fill in values in the table for
+    as many determined metal affinities (and availabilities if known) as possible.
+    Where affinities are unknown, use the toggle buttons to exclude that metal.
+  </p>
 
-<p class="metalation-calculator-intro">
-  To predict the metalation state of a protein or molecule, fill in values in the table for
-  as many determined metal affinities (and availabilities if known) as possible.
-</p>
+  <div class="metalation-table-header">
+    <img src="flask-logo.png" class="flask-image" alt="Oval Picture of Flasks">
+    <div>
+      <h3 class="metalation-table-title main-title">Idealised Salmonella</h3>
+      <h4 class="metalation-table-title">(Default Settings for Metal Availability)</h4>
+    </div>
+  </div>
 
-<table id="metalation-table">
+<table class="metalation-table">
   <thead>
     <tr>
       <td></td>
@@ -25,11 +33,11 @@
     <td></td>
     <td></td>
     <td></td>
-    <th id="total-metalation" class="result"></th>
+    <th class="result total-metalation"></th>
   </tfoot>
 </table>
-<input type="button" disabled value="Download Results" id="download-btn"/>
-<input type="button" value="Reset" id="reset-btn"/>
+<input type="button" disabled value="Download Results" class="download-btn"/>
+<input type="button" value="Reset" class="reset-btn"/>
 
 <p class="footnote">The calculator is based on <a href="https://doi.org/10.1038/s41467-021-21479-8">Nature Communications 12 1195- (2021)</a>.
 Supported by grant <strong>BB/V006002/1</strong> from the Biotechnology and Biological Sciences Research Council.</p>

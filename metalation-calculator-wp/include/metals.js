@@ -108,13 +108,35 @@ var METAL_VALS = [
     ["Zinc", "Zn", 1.9e-13, 1.19e-12],
 ];
 var MetalDataSet = /** @class */ (function () {
-    function MetalDataSet() {
+    function MetalDataSet(title) {
+        this.title = title;
         this.metals = {};
         for (var _i = 0, METAL_VALS_1 = METAL_VALS; _i < METAL_VALS_1.length; _i++) {
             var m = METAL_VALS_1[_i];
             this.metals[m[1].toLowerCase()] = new (Metal.bind.apply(Metal, __spreadArray([void 0], m, false)))();
         }
     }
+    Object.defineProperty(MetalDataSet.prototype, "title", {
+        get: function () {
+            return this._title;
+        },
+        set: function (val) {
+            // Check title doesn't contain any HTML tags apart from <em>
+            var tempElement = document.createElement("div");
+            tempElement.innerHTML = val;
+            if (tempElement.innerText != val) {
+                // There are HTML tags in provided title, so check for <em>
+                Array.from(tempElement.children).forEach(function (element) {
+                    if (element.tagName != "EM") {
+                        throw new Error("Invalid HTML string " + val);
+                    }
+                });
+            }
+            this._title = val;
+        },
+        enumerable: false,
+        configurable: true
+    });
     MetalDataSet.prototype.calculateOccupancy = function () {
         var expScaledDifferences = {};
         var totalDiffs = 0;

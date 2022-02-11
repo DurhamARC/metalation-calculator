@@ -14,6 +14,9 @@
 	"editorStyle": "file:./build/index.css",
 	"style": "file:./build/style-index.css",
 	"attributes": {
+		"id": {
+			"type": "string"
+		},
 		"bmcVals": {
 				"type": "object",
 				"default": {
@@ -25,6 +28,11 @@
 					"cu": 1.2e-18,
 					"zn": 1.19e-12
 				}
+		},
+		"title": {
+				"type": "string",
+				"default": "Idealised <em>Salmonella</em>",
+				"selector": "h3"
 		}
 	}
 }

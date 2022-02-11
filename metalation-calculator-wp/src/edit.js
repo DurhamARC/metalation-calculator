@@ -4,8 +4,9 @@
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 import { TextControl } from '@wordpress/components';
+import React from 'react';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -23,17 +24,26 @@ import '../include/main.css';
  * @param {Object}   props
  * @param {Object}   props.attributes    Block attributes
  * @param {Function} props.setAttributes Block attributes setter
+ * @param {string}   props.clientId      Unique ID for block
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({ attributes, setAttributes, clientId }) {
+	React.useEffect(() => {
+		if (!attributes.id) {
+			setAttributes({ id: 'mc_' + clientId });
+		}
+	}, []);
+
 	const metals = require('../include/metals');
 	const metalDataSet = new metals.MetalDataSet();
+	const validPartialNumber = /^\d+\.?\d*((e|E)-?\d*)?$/;
 
 	const onChangeValue = function (value, key) {
 		const errorMsgElement = document.getElementById('msg_' + key);
-
+		let shouldUpdateValue = true;
 		try {
+			// Use the Metal object to determine whether value is valid
 			metalDataSet.metals[key].bufferedMetalConcentration = value;
 			errorMsgElement.style.display = 'none';
 		} catch (e) {
@@ -45,10 +55,18 @@ export default function Edit({ attributes, setAttributes }) {
 			}
 			errorMsgElement.innerHTML = msg;
 			errorMsgElement.style.display = 'block';
+			// If value is invalid but looks like the start of a valid
+			// expression, we save it to allow the user to continue typing
+			// Otherwise we reset the value
+			if (!validPartialNumber.test(value)) {
+				shouldUpdateValue = false;
+			}
 		}
-		const newBmcVals = { ...attributes.bmcVals };
-		newBmcVals[key] = value;
-		setAttributes({ bmcVals: newBmcVals });
+		if (shouldUpdateValue) {
+			const newBmcVals = { ...attributes.bmcVals };
+			newBmcVals[key] = value;
+			setAttributes({ bmcVals: newBmcVals });
+		}
 	};
 
 	const tableRows = Object.keys(metalDataSet.metals).map((key) => (
@@ -80,7 +98,24 @@ export default function Edit({ attributes, setAttributes }) {
 					fill in values in the table for as many determined metal
 					affinities (and availabilities if known) as possible.
 				</p>
-				<table id="metalation-table">
+				<div className="metalation-table-header">
+					<div>
+						<RichText
+							tagName="h3" // The tag here is the element output and editable in the admin
+							value={attributes.title} // Any existing content, either from the database or an attribute default
+							allowedFormats={['core/italic']} // Allow the content to be made italic, but do not allow other formatting options
+							onChange={(val) => setAttributes({ title: val })} // Store updated content as a block attribute
+							placeholder={
+								'Enter title here, e.g. Idealised Salmonella'
+							} // Display this text before any content has been added by the user
+							className="metalation-table-title main-title"
+						/>
+						<h4 className="metalation-table-title">
+							(Default Settings for Metal Availability)
+						</h4>
+					</div>
+				</div>
+				<table className="metalation-table">
 					<thead>
 						<tr>
 							<td></td>
