@@ -65,11 +65,10 @@ jobs:
       working-directory: metalation-calculator-wp
       run: |
         npm run packages-update
-        npm audit fix
         if [[ `git status --porcelain metalation-calculator-wp` ]]; then
           echo "Wordpress packages are not up to date:"
           git status --porcelain metalation-calculator-wp
-          echo "Run 'npm run packages-update' and 'npm audit fix' and commit the changes."
+          echo "Run 'npm run packages-update' and commit the changes."
           exit 1
         fi
 

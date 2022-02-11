@@ -14,13 +14,13 @@
 		"packages-update": "wp-scripts packages-update"
 	},
 	"dependencies": {
-		"@wordpress/block-editor": "^8.0.13",
-		"@wordpress/blocks": "^11.1.5",
-		"@wordpress/components": "^19.2.0",
-		"@wordpress/i18n": "^4.2.4"
+		"@wordpress/block-editor": "^8.1.1",
+		"@wordpress/blocks": "^11.2.1",
+		"@wordpress/components": "^19.4.0",
+		"@wordpress/i18n": "^4.3.1"
 	},
 	"devDependencies": {
-    "@babel/preset-react": "^7.16.7",
-		"@wordpress/scripts": "^19.2.3"
+		"@babel/preset-react": "^7.16.7",
+		"@wordpress/scripts": "^21.0.0"
 	}
 }
