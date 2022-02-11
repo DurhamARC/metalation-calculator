@@ -54,11 +54,10 @@ jobs:
           exit 1
         fi
 
-    - name: Check for npm audit issues in production dependencies
+    - name: Check for npm audit issues in typescript production dependencies
       if: startsWith(matrix.node-version, '16.')
       run: |
         cd typescript && npm audit --production
-        cd ../metalation-calculator-wp && npm audit --production
 
     - name: Check for updates in Wordpress dependencies
       if: startsWith(matrix.node-version, '16.')
