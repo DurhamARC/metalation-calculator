@@ -6,9 +6,14 @@ The calculator is available at https://durhamarc.github.io/metalation-calculator
 
 If you spot any problems with the calculator, please [log an issue](https://github.com/DurhamARC/metalation-calculator/issues/new/choose) to help us improve it.
 
+Notes on security can be found in [security.md](security.md).
+
 ## Development
 
-This is a work in progress, currently using TypeScript with gulp to generate a static website. GitHub Actions builds the `main` branch from the `typescript` directory and pushes the compiled site to GitHub Pages (on the `gh-pages` branch).
+The code for the calculator is in two parts:
+
+ * The `typescript` directory contains code for a static web app. It uses TypeScript with gulp to generate the static website. GitHub Actions builds the `main` branch from the `typescript` directory and pushes the compiled site to GitHub Pages (on the `gh-pages` branch).
+ * The `metalation-calculator-wp` directory contains a Wordpress block plugin, which
 
 
 ### TypeScript Calculator
@@ -53,8 +58,8 @@ the modified files in `metalation-calculator-wp/include`.
 
 ### Wordpress Plugin
 
-The Wordpress Plugin (currently a work in progress) allows Wordpress authors to add a calculator as a new block in a
-Wordpress page. The aim is to allow authors to customise the default values.
+The Wordpress Plugin allows Wordpress authors to add a calculator as a new block in a Wordpress page, allowing Wordpress
+authors to customise the default values for availability.
 
 To work on/test the plugin, follow the development instructions at https://developer.wordpress.org/block-editor/getting-started/devenv/ to set up a Wordpress development environment.
 
