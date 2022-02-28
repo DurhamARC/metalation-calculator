@@ -5,14 +5,14 @@
 	"title": "Metalation Calculator",
 	"category": "widgets",
 	"icon": "calculator",
-	"description": "Calculator to predict metal occupancies in vivo",
+	"description": "Calculator to predict metal occupancies in vivo. Fill in the title, and enter the default values to use for availability.",
 	"supports": {
 		"html": false
 	},
 	"textdomain": "metalation-calculator-wp",
 	"editorScript": "file:./build/index.js",
 	"editorStyle": "file:./build/index.css",
-	"style": "file:./build/style-index.css",
+	"style": "file:./include/main.css",
 	"attributes": {
 		"id": {
 			"type": "string"
