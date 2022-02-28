@@ -14,10 +14,10 @@
  */
 
 function metalation_calculator_wp_render_callback( $block_attributes, $content ) {
-  $id = $block_attributes['id'];
+  $id = esc_js($block_attributes['id']);
   $calculator_html = file_get_contents( plugin_dir_path( __FILE__ ) . 'include/calculator.html' );
   $json_bmc_vals = json_encode($block_attributes['bmcVals']);
-  $title = $block_attributes['title'];
+  $title = apply_filters('js_escape', $block_attributes['title']);
   $imageDir = plugins_url('/include', __FILE__);
   $data = <<<EOD
 <div id="$id">

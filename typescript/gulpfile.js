@@ -11,14 +11,15 @@ const sass = require('gulp-sass')(require('sass'));
 const eslint = require('gulp-eslint-new');
 const jest = require('gulp-jest').default;
 const debug = require('gulp-debug');
-const gulpStylelint = require('gulp-stylelint');
+const gulpStylelint = require('@ronilaukkarinen/gulp-stylelint');
+const terser = require("gulp-terser");
 const paths = {
   ts: ["src/main.ts", "src/metals.ts"],
   pages: ["src/*.html", "src/includes/*.html"],
   styles: ["src/scss/*.scss"],
   tests: ["src/?(*.)+(spec|test).+(ts|tsx|js)"],
   tsWpEdit: ["src/metals.ts"],
-  wpFiles: ["dist/calculator.html", "dist/bundle.js", "dist/main.css", "dist/*.png"]
+  wpFiles: ["dist/calculator.html", "dist/main.css", "dist/*.png"]
 };
 
 function style() {
@@ -59,7 +60,13 @@ function bundle() {
 function wpJs() {
   return gulp.src(paths.tsWpEdit)
     .pipe(tsProject())
-    .pipe(gulp.dest("../metalation-calculator-wp/include"))
+    .pipe(gulp.dest("../metalation-calculator-wp/include"));
+}
+
+function wpMinify() {
+  return gulp.src('dist/bundle.js')
+    .pipe(terser())
+    .pipe(gulp.dest("../metalation-calculator-wp/include"));
 }
 
 function wpCopy() {
@@ -110,6 +117,6 @@ gulp.task('jest', function () {
 
 gulp.task("default", gulp.series(lint, lintScss, style, copyHtml, copyImages, bundle));
 
-gulp.task("wp", gulp.series(lint, lintScss, style, copyHtml, copyImages, wpJs, bundle, wpCopy));
+gulp.task("wp", gulp.series(lint, lintScss, style, copyHtml, copyImages, wpJs, bundle, wpMinify, wpCopy));
 
 exports.watch = watch
