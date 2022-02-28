@@ -1,6 +1,6 @@
 {
 	"apiVersion": 2,
-	"name": "create-block/metalation-calculator-wp",
+	"name": "metalation-calculator-wp/calculator",
 	"version": "0.1.0",
 	"title": "Metalation Calculator",
 	"category": "widgets",
