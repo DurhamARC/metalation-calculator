@@ -63,9 +63,21 @@ jobs:
           exit 1
         fi
 
-    - name: Deploy
+    - name: Deploy to GitHub pages
       uses: peaceiris/actions-gh-pages@v3
       if: contains(github.ref, 'main') || github.event_name == 'release'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./typescript/dist
+
+    - name: Create Wordpress plugin zip
+      working-directory: metalation-calculator-wp
+      uses: montudor/action-zip@v1.0.0
+      with:
+        args: zip -X -r ../metalation-calculator-plugin.zip . -x *.git* node_modules/\* .* "*/\.*"
+
+    - name: Upload Wordpress plugin zip as artifact
+      uses: actions/upload-artifact@v2
+      with:
+          name: metalation-calculator-wp
+          path: metalation-calculator-plugin.zip
