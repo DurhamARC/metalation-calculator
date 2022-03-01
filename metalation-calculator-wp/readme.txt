@@ -1,7 +1,7 @@
 === Metalation Calculator ===
 Contributors:      Alison Clarke
 Tags:              block
-Tested up to:      5.8.0
+Tested up to:      5.9.1
 Stable tag:        0.1.0
 License:           MIT
 License URI:       http://opensource.org/licenses/MIT
