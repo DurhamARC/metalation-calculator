@@ -14,6 +14,7 @@
   border: 0;
   justify-content: center;
   white-space: normal;
+  word-break: normal;
 }
 .metalation-calculator .metalation-table tr th {
   text-align: center;
@@ -57,6 +58,9 @@
 }
 .metalation-calculator .metalation-table .tooltip {
   position: relative;
+}
+.metalation-calculator .metalation-table .tooltip .metalation-unit {
+  white-space: nowrap;
 }
 .metalation-calculator .metalation-table .tooltip .tooltiptext {
   visibility: hidden;

@@ -22,6 +22,7 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
         border: 0;
         justify-content: center;
         white-space: normal;
+        word-break: normal;
       }
 
       th {
@@ -80,6 +81,10 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
 
     .tooltip {
       position: relative;
+
+      .metalation-unit {
+        white-space: nowrap;
+      }
 
       .tooltiptext {
         visibility: hidden;
