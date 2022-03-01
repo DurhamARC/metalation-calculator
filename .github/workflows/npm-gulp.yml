@@ -77,8 +77,15 @@ jobs:
       working-directory: metalation-calculator-wp
       run: zip -X -r ../metalation-calculator-wp.zip . -x *.git* node_modules/\* .* "*/\.*"
 
-    - name: Upload Wordpress plugin zip as artifact
+    - name: Upload Wordpress plugin zip as artifact (zipped again)
       uses: actions/upload-artifact@v2
       with:
-        name: metalation-calculator-wp
+        name: metalation-calculator-archive
         path: metalation-calculator-wp.zip
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        prerelease: true
+        files: metalation-calculator-wp.zip
