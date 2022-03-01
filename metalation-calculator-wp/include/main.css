@@ -5,6 +5,7 @@
   margin: 15px 0 20px;
   border-spacing: 0;
   font-size: 16px;
+  overflow: visible;
   /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
 }
 .metalation-calculator .metalation-table tr td,
@@ -12,6 +13,7 @@
   padding: 2px 5px;
   border: 0;
   justify-content: center;
+  white-space: normal;
 }
 .metalation-calculator .metalation-table tr th {
   text-align: center;
@@ -68,6 +70,7 @@
   z-index: 1;
   display: block;
   bottom: 100%;
+  left: calc(50% - 60px);
 }
 .metalation-calculator .metalation-table .tooltip .tooltiptext::after {
   content: " ";

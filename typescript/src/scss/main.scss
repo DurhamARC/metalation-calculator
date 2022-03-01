@@ -13,6 +13,7 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
     margin: 15px 0 20px;
     border-spacing: 0;
     font-size: 16px;
+    overflow: visible;
 
     tr {
       td,
@@ -20,6 +21,7 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
         padding: 2px 5px;
         border: 0;
         justify-content: center;
+        white-space: normal;
       }
 
       th {
@@ -91,6 +93,7 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
         z-index: 1;
         display: block;
         bottom: 100%;
+        left: calc(50% - 60px);
 
         &::after {
           content: " ";
