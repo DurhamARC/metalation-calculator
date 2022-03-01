@@ -5,6 +5,7 @@
   margin: 15px 0 20px;
   border-spacing: 0;
   font-size: 16px;
+  overflow: visible;
   /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
 }
 .metalation-calculator .metalation-table tr td,
@@ -12,6 +13,8 @@
   padding: 2px 5px;
   border: 0;
   justify-content: center;
+  white-space: normal;
+  word-break: normal;
 }
 .metalation-calculator .metalation-table tr th {
   text-align: center;
@@ -56,6 +59,9 @@
 .metalation-calculator .metalation-table .tooltip {
   position: relative;
 }
+.metalation-calculator .metalation-table .tooltip .metalation-unit {
+  white-space: nowrap;
+}
 .metalation-calculator .metalation-table .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
@@ -68,6 +74,7 @@
   z-index: 1;
   display: block;
   bottom: 100%;
+  left: calc(50% - 60px);
 }
 .metalation-calculator .metalation-table .tooltip .tooltiptext::after {
   content: " ";
@@ -148,9 +155,10 @@
 .metalation-calculator .metalation-table-header > * {
   display: inline-block;
   vertical-align: middle;
-  max-width: calc(100% - 120px);
+  max-width: calc(100% - 140px);
 }
 .metalation-calculator .metalation-table-header .metalation-table-title {
+  font-size: 110%;
   font-weight: bold;
   color: #88cede;
   margin: 0;
@@ -162,16 +170,19 @@
   max-width: 120px;
   margin-right: 10px;
 }
-.metalation-calculator .download-btn,
-.metalation-calculator .reset-btn {
-  display: inline;
-  float: right;
+.metalation-calculator .metalation-table-footer {
+  display: flex;
+  align-items: flex-start;
+}
+.metalation-calculator .metalation-table-footer .download-btn,
+.metalation-calculator .metalation-table-footer .reset-btn {
   margin-right: 2px;
   padding: 5px 4px;
 }
-.metalation-calculator .footnote {
+.metalation-calculator .metalation-table-footer .footnote {
   font-size: smaller;
+  margin: 0 10px 0 0;
 }
-.metalation-calculator .footnote a {
+.metalation-calculator .metalation-table-footer .footnote a {
   font-weight: bold;
 }
