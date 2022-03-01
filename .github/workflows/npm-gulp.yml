@@ -75,10 +75,10 @@ jobs:
 
     - name: Create Wordpress plugin zip
       working-directory: metalation-calculator-wp
-      run: zip -X -r ../metalation-calculator-plugin.zip . -x *.git* node_modules/\* .* "*/\.*"
+      run: zip -X -r ../metalation-calculator-wp.zip . -x *.git* node_modules/\* .* "*/\.*"
 
     - name: Upload Wordpress plugin zip as artifact
       uses: actions/upload-artifact@v2
       with:
         name: metalation-calculator-wp
-        path: metalation-calculator-plugin.zip
+        path: metalation-calculator-wp.zip
