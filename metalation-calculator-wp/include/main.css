@@ -174,7 +174,7 @@
 }
 .metalation-calculator .metalation-table-footer .footnote {
   font-size: smaller;
-  margin-right: 10px;
+  margin: 0 10px 0 0;
 }
 .metalation-calculator .metalation-table-footer .footnote a {
   font-weight: bold;
