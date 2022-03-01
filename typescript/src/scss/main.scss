@@ -13,6 +13,7 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
     margin: 15px 0 20px;
     border-spacing: 0;
     font-size: 16px;
+    overflow: visible;
 
     tr {
       td,
@@ -20,6 +21,8 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
         padding: 2px 5px;
         border: 0;
         justify-content: center;
+        white-space: normal;
+        word-break: normal;
       }
 
       th {
@@ -79,6 +82,10 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
     .tooltip {
       position: relative;
 
+      .metalation-unit {
+        white-space: nowrap;
+      }
+
       .tooltiptext {
         visibility: hidden;
         width: 120px;
@@ -91,6 +98,7 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
         z-index: 1;
         display: block;
         bottom: 100%;
+        left: calc(50% - 60px);
 
         &::after {
           content: " ";
@@ -186,10 +194,11 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
     > * {
       display: inline-block;
       vertical-align: middle;
-      max-width: calc(100% - 120px);
+      max-width: calc(100% - 140px);
     }
 
     .metalation-table-title {
+      font-size: 110%;
       font-weight: bold;
       color: $light-blue;
       margin: 0;
@@ -205,19 +214,23 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
     }
   }
 
-  .download-btn,
-  .reset-btn {
-    display: inline;
-    float: right;
-    margin-right: 2px;
-    padding: 5px 4px;
-  }
+  .metalation-table-footer {
+    display: flex;
+    align-items: flex-start;
 
-  .footnote {
-    font-size: smaller;
+    .download-btn,
+    .reset-btn {
+      margin-right: 2px;
+      padding: 5px 4px;
+    }
 
-    a {
-      font-weight: bold;
+    .footnote {
+      font-size: smaller;
+      margin: 0 10px 0 0;
+
+      a {
+        font-weight: bold;
+      }
     }
   }
 }

@@ -17,11 +17,26 @@
   <thead>
     <tr>
       <td></td>
-      <th class="tooltip">Metal Affinity (M)<span class="tooltiptext">Metal affinities of molecule (M) (dissociation constants, K<sub>D</sub>)</span></th>
-      <th class="tooltip">∆G (kJ mol<sup>-1</sup>)<span class="tooltiptext">∆G for complexation with the molecule (kJ&nbsp;mol<sup>-1</sup>)</span></th>
-      <th class="tooltip">Metal Availability (M)<span class="tooltiptext">Buffered available metal concentration (M)</span></th>
-      <th class="tooltip">Available ∆G (kJ&nbsp;mol<sup>-1</sup>)<span class="tooltiptext">Buffered available free energy of metal (kJ&nbsp;mol<sup>-1</sup>)</span></th>
-      <th class="tooltip">Occupancy<span class="tooltiptext">Molecule occupancy with metal under these availabilities</span></th>
+      <th class="tooltip">
+        Metal Affinity (M)
+        <span class="tooltiptext">Metal affinities of molecule (M) (dissociation constants, <span class="metalation-unit">K<sub>D</sub></span>)</span>
+      </th>
+      <th class="tooltip">
+        <span class="metalation-unit">∆G</span> <span class="metalation-unit">(kJ mol<sup>-1</sup>)</span>
+        <span class="tooltiptext">∆G for complexation with the molecule <span class="metalation-unit">(kJ mol<sup>-1</sup>)</span></span>
+      </th>
+      <th class="tooltip">
+        Metal Availability (M)
+        <span class="tooltiptext">Buffered available metal concentration (M)</span>
+      </th>
+      <th class="tooltip">
+        Available <span class="metalation-unit">∆G</span> <span class="metalation-unit">(kJ mol<sup>-1</sup>)</span>
+        <span class="tooltiptext">Buffered available free energy of metal <span class="metalation-unit">(kJ mol<sup>-1</sup>)</span></span>
+      </th>
+      <th class="tooltip">
+        Occupancy
+        <span class="tooltiptext">Molecule occupancy with metal under these availabilities</span>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -36,10 +51,12 @@
     <th class="result total-metalation"></th>
   </tfoot>
 </table>
-<input type="button" disabled value="Download Results" class="download-btn"/>
-<input type="button" value="Reset" class="reset-btn"/>
 
-<p class="footnote">The calculator is based on <a href="https://doi.org/10.1038/s41467-021-21479-8">Nature Communications 12 1195- (2021)</a>.
-Supported by grant <strong>BB/V006002/1</strong> from the Biotechnology and Biological Sciences Research Council.</p>
+<div class="metalation-table-footer">
+  <p class="footnote">The calculator is based on <a href="https://doi.org/10.1038/s41467-021-21479-8">Nature Communications 12 1195- (2021)</a>.
+  Supported by grant <strong>BB/V006002/1</strong> from the Biotechnology and Biological Sciences Research Council.</p>
+  <input type="button" value="Reset" class="reset-btn"/>
+  <input type="button" disabled value="Download Results" class="download-btn"/>
+</div>
 
 </div>
