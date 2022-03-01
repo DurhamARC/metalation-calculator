@@ -15,7 +15,7 @@ import Edit from './edit';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType('create-block/metalation-calculator-wp', {
+registerBlockType('metalation-calculator-wp/calculator', {
 	/**
 	 * @see ./edit.js
 	 */
