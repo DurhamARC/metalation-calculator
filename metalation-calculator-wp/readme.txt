@@ -2,7 +2,7 @@
 Contributors:      Alison Clarke
 Tags:              block
 Tested up to:      5.9.1
-Stable tag:        0.1.0
+Stable tag:        1.0.0
 License:           MIT
 License URI:       http://opensource.org/licenses/MIT
 
@@ -29,5 +29,5 @@ Sciences Research Council.
 
 == Changelog ==
 
-= 0.1.0 =
+= 1.0.0 =
 * Initial release
