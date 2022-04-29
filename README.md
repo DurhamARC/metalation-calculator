@@ -8,6 +8,10 @@ If you spot any problems with the calculator, please [log an issue](https://gith
 
 Notes on security can be found in [security.md](security.md).
 
+## Wordpress Plugin
+
+The calculator can be installed as a Wordpress block plugin, allowing admin users can add a calculator to any page. The plugin can be installed by downloading the **metalation-calculator-wp.zip** file from the latest [release](https://github.com/DurhamARC/metalation-calculator/releases), and uploading the file to the Wordpress admin interface.
+
 ## Development
 
 The code for the calculator is in two parts:
