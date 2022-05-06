@@ -2,7 +2,7 @@
 
 This calculator is based on [Nature Communications 12 1195- (2021)](https://doi.org/10.1038/s41467-021-21479-8) and is supported by grant **BB/V006002/1** from the Biotechnology and Biological Sciences Research Council.
 
-The calculator is available at https://durhamarc.github.io/metalation-calculator/.
+A single rendered calculator is available at https://durhamarc.github.io/metalation-calculator/, and a set of calculators for *E. coli* is available on the [MiB Elements of Bioremediation, Biomanufacturing and Bioenergy site](https://mib-nibb.webspace.durham.ac.uk/metalation-calculators/).
 
 If you spot any problems with the calculator, please [log an issue](https://github.com/DurhamARC/metalation-calculator/issues/new/choose) to help us improve it.
 
