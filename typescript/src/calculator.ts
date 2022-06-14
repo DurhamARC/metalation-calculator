@@ -157,12 +157,27 @@ export class MetalationCalculator {
   }
 
   /**
+   * Adds a label to the given element with a class that will be hidden
+   * on large screens (to allow labels to be diplayed when tables are
+   * collapsed)
+   */
+  addSmallScreenLabel(element: HTMLElement, innerHTML: string) {
+    const label = <HTMLParagraphElement>document.createElement("p");
+    label.innerHTML = innerHTML + ":";
+    label.classList.add("small-screen-label");
+    element.appendChild(label);
+  }
+
+  /**
    * Adds a row to this._calculatorTable for the given metal.
    */
   appendMetalTableRow(metal: metals.Metal) {
     const row: HTMLTableRowElement = this._calculatorTable
       .getElementsByTagName("tbody")[0]
       .insertRow();
+    const rowHeaders = this._calculatorTable
+      .getElementsByTagName("thead")[0]
+      .getElementsByTagName("th");
 
     const toggleButton = <HTMLInputElement>document.createElement("input");
     const label = <HTMLLabelElement>document.createElement("label");
@@ -187,6 +202,8 @@ export class MetalationCalculator {
 
     const affinityCell: HTMLTableCellElement = row.insertCell(-1);
     affinityCell.classList.add("affinity", "grouped");
+    this.addSmallScreenLabel(affinityCell, rowHeaders[0].innerHTML);
+
     const affinityInput = this.createMetalNumberInput(
       "affinity",
       metal,
@@ -204,12 +221,17 @@ export class MetalationCalculator {
 
     const mDeltaGCell: HTMLTableCellElement = row.insertCell(-1);
     mDeltaGCell.classList.add("grouped", "right-spacing");
-    mDeltaGCell.id =
+    this.addSmallScreenLabel(mDeltaGCell, rowHeaders[1].innerHTML);
+
+    const mDeltaGSpan = <HTMLSpanElement>document.createElement("span");
+    mDeltaGSpan.id =
       this.calculatorID + "_metalation_delta_g_" + metal.idSuffix;
-    mDeltaGCell.innerText = metal.metalationDeltaG.toFixed(1).toString();
+    mDeltaGSpan.innerText = metal.metalationDeltaG.toFixed(1).toString();
+    mDeltaGCell.append(mDeltaGSpan);
 
     const bmcCell: HTMLTableCellElement = row.insertCell(-1);
     bmcCell.classList.add("bmc", "grouped");
+    this.addSmallScreenLabel(bmcCell, rowHeaders[2].innerHTML);
     const bmcInput = this.createMetalNumberInput(
       "bmc",
       metal,
@@ -226,14 +248,20 @@ export class MetalationCalculator {
 
     const iaDeltaGCell: HTMLTableCellElement = row.insertCell(-1);
     iaDeltaGCell.classList.add("grouped");
-    iaDeltaGCell.id = this.calculatorID + "_ia_delta_g_" + metal.idSuffix;
-    iaDeltaGCell.innerText = metal.intracellularAvailableDeltaG
+    this.addSmallScreenLabel(iaDeltaGCell, rowHeaders[3].innerHTML);
+    const iaDeltaGSpan = <HTMLSpanElement>document.createElement("span");
+    iaDeltaGSpan.id = this.calculatorID + "_ia_delta_g_" + metal.idSuffix;
+    iaDeltaGSpan.innerText = metal.intracellularAvailableDeltaG
       .toFixed(1)
       .toString();
+    iaDeltaGCell.append(iaDeltaGSpan);
 
     const resultCell: HTMLTableCellElement = row.insertCell(-1);
-    resultCell.classList.add("result");
-    resultCell.id = this.calculatorID + "_result_" + metal.idSuffix;
+    this.addSmallScreenLabel(resultCell, rowHeaders[4].innerHTML);
+    const resultSpan = <HTMLSpanElement>document.createElement("span");
+    resultSpan.classList.add("result");
+    resultSpan.id = this.calculatorID + "_result_" + metal.idSuffix;
+    resultCell.append(resultSpan);
   }
 
   /**
