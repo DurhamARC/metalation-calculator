@@ -79,3 +79,18 @@ You should then be able to access your local Wordpress instance at http://localh
 http://localhost:8888/wp-admin.
 
 Enable the **Metalation Calculator** plugin, then add a 'metalation calculator' block to a post or page to test it out.
+
+## Releases
+
+To create a new release:
+
+1. Update the version number in the following files in metalation-calculator-wp, e.g. if the previous version was 1.0.2 then use 1.0.3.
+   - **block.json**
+   - **metalation-calculator-wp.php**
+   Commit and push the changes to main.
+2. Create a new git tag from main, following the vX.Y.Z formatting (e.g. v1.0.3).
+3. Push the tag to GitHub.
+4. GitHub Actions should run on the tag push, including the jobs to create/upload/release the Wordpress plugin.
+5. Go to the [releases](https://github.com/DurhamARC/metalation-calculator/releases) page and check that the release, including a file **metalation-calculator-wp.zip**, has been created.
+
+To publish the updated plugin to https://mib-nibb.webspace.durham.ac.uk, contact the web team at Durham University CIS and give them the details of the new release.
