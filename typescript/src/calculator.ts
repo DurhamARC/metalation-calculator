@@ -40,7 +40,12 @@ export class MetalationCalculator {
   _downloadButton: HTMLButtonElement;
   _resetButton: HTMLButtonElement;
 
-  constructor(calculatorID: string, titleHtmlString: string, bmcVals: { [id: string]: number }, imageDir: string) {
+  constructor(
+    calculatorID: string,
+    titleHtmlString: string,
+    bmcVals: { [id: string]: number },
+    imageDir: string
+  ) {
     this.calculatorID = calculatorID;
     this.metalDataSet = new metals.MetalDataSet("");
     if (titleHtmlString) {
@@ -52,9 +57,11 @@ export class MetalationCalculator {
     }
 
     this._calculatorDiv = <HTMLDivElement>document.getElementById(calculatorID);
-    this._calculatorTable = this._calculatorDiv.getElementsByTagName("table")[0]
+    this._calculatorTable =
+      this._calculatorDiv.getElementsByTagName("table")[0];
 
-    this._calculatorDiv.getElementsByTagName("h3")[0].innerHTML = this.metalDataSet.title;
+    this._calculatorDiv.getElementsByTagName("h3")[0].innerHTML =
+      this.metalDataSet.title;
 
     if (imageDir) {
       // Only set image src if it's on the current domain
@@ -87,12 +94,16 @@ export class MetalationCalculator {
       this.appendMetalTableRow(m);
     }
 
-    this._downloadButton = <HTMLButtonElement> this._calculatorDiv.getElementsByClassName("download-btn")[0];
+    this._downloadButton = <HTMLButtonElement>(
+      this._calculatorDiv.getElementsByClassName("download-btn")[0]
+    );
     this._downloadButton.onclick = () => {
       this.downloadTableAsCsv();
     };
 
-    this._resetButton = <HTMLButtonElement> this._calculatorDiv.getElementsByClassName("reset-btn")[0];
+    this._resetButton = <HTMLButtonElement>(
+      this._calculatorDiv.getElementsByClassName("reset-btn")[0]
+    );
     this._resetButton.onclick = () => {
       this.reset();
     };
@@ -183,7 +194,9 @@ export class MetalationCalculator {
       (id) => {
         const m = this.metalDataSet.metals[id];
         (<HTMLTableCellElement>(
-          document.getElementById(this.calculatorID + "_metalation_delta_g_" + id)
+          document.getElementById(
+            this.calculatorID + "_metalation_delta_g_" + id
+          )
         )).innerText = m.metalationDeltaG.toFixed(1).toString();
       }
     );
@@ -191,7 +204,8 @@ export class MetalationCalculator {
 
     const mDeltaGCell: HTMLTableCellElement = row.insertCell(-1);
     mDeltaGCell.classList.add("grouped", "right-spacing");
-    mDeltaGCell.id = this.calculatorID + "_metalation_delta_g_" + metal.idSuffix;
+    mDeltaGCell.id =
+      this.calculatorID + "_metalation_delta_g_" + metal.idSuffix;
     mDeltaGCell.innerText = metal.metalationDeltaG.toFixed(1).toString();
 
     const bmcCell: HTMLTableCellElement = row.insertCell(-1);
@@ -227,9 +241,11 @@ export class MetalationCalculator {
    * To be called when a value is invalid.
    */
   clearCalculation() {
-    Array.from(this._calculatorTable.getElementsByClassName("result")).forEach((cell) => {
-      cell.innerHTML = "N/A";
-    });
+    Array.from(this._calculatorTable.getElementsByClassName("result")).forEach(
+      (cell) => {
+        cell.innerHTML = "N/A";
+      }
+    );
     this._downloadButton.disabled = true;
   }
 
@@ -262,7 +278,9 @@ export class MetalationCalculator {
     for (const id in this.metalDataSet.metals) {
       const m = this.metalDataSet.metals[id];
       (
-        document.getElementById(this.calculatorID + "_toggle_" + m.idSuffix) as HTMLInputElement
+        document.getElementById(
+          this.calculatorID + "_toggle_" + m.idSuffix
+        ) as HTMLInputElement
       ).checked = false;
       m.resetValues();
       this.toggleMetal(false, m);
@@ -275,10 +293,14 @@ export class MetalationCalculator {
    */
   toggleMetal(willTurnOff: boolean, metal: metals.Metal) {
     (
-      document.getElementById(this.calculatorID + "_affinity_" + metal.idSuffix) as HTMLInputElement
+      document.getElementById(
+        this.calculatorID + "_affinity_" + metal.idSuffix
+      ) as HTMLInputElement
     ).disabled = willTurnOff;
     (
-      document.getElementById(this.calculatorID + "_bmc_" + metal.idSuffix) as HTMLInputElement
+      document.getElementById(
+        this.calculatorID + "_bmc_" + metal.idSuffix
+      ) as HTMLInputElement
     ).disabled = willTurnOff;
     if (willTurnOff) {
       metal.switchOffMetal();
@@ -293,12 +315,15 @@ export class MetalationCalculator {
    */
   updateRow(metal: metals.Metal) {
     const id = metal.idSuffix;
-    (<HTMLInputElement>document.getElementById(this.calculatorID + "_affinity_" + id)).value =
-      metal.affinity.toString();
-    document.getElementById(this.calculatorID + "_metalation_delta_g_" + id).innerText =
-      metal.metalationDeltaG.toFixed(1).toString();
-    (<HTMLInputElement>document.getElementById(this.calculatorID + "_bmc_" + id)).value =
-      metal.bufferedMetalConcentration.toString();
+    (<HTMLInputElement>(
+      document.getElementById(this.calculatorID + "_affinity_" + id)
+    )).value = metal.affinity.toString();
+    document.getElementById(
+      this.calculatorID + "_metalation_delta_g_" + id
+    ).innerText = metal.metalationDeltaG.toFixed(1).toString();
+    (<HTMLInputElement>(
+      document.getElementById(this.calculatorID + "_bmc_" + id)
+    )).value = metal.bufferedMetalConcentration.toString();
     document.getElementById(this.calculatorID + "_ia_delta_g_" + id).innerText =
       metal.intracellularAvailableDeltaG.toFixed(1).toString();
   }
@@ -348,7 +373,11 @@ export class MetalationCalculator {
     const csvString = csv.join("\n");
     // Download it
     const filename =
-      "export_" + convertToPlainText(this.metalDataSet.title).replaceAll(' ', '_') + "_" + new Date().toLocaleDateString() + ".csv";
+      "export_" +
+      convertToPlainText(this.metalDataSet.title).replaceAll(" ", "_") +
+      "_" +
+      new Date().toLocaleDateString() +
+      ".csv";
     const link = document.createElement("a");
     link.style.display = "none";
     link.setAttribute("target", "_blank");
@@ -361,5 +390,4 @@ export class MetalationCalculator {
     link.click();
     document.body.removeChild(link);
   }
-
 }
