@@ -360,42 +360,49 @@ export class MetalationCalculator {
    * Downloads the table as a CSV
    */
   downloadTableAsCsv(separator = ",") {
-    const rows = this._calculatorTable.rows;
-    // Construct csv
+    // Construct csv from metal data
     const csv = [];
-    for (let i = 0; i < rows.length; i++) {
-      const row = [];
-      const cols = rows[i].cells;
-      for (let j = 0; j < cols.length; j++) {
-        // Clean innertext to remove multiple spaces and jumpline (break csv)
-        let data;
-        const inputs = Array.from(cols[j].getElementsByTagName("input")).filter(
-          (e) => e.type == "number"
-        );
-        if (inputs.length > 0) {
-          data = inputs[0].value;
-        } else {
-          data = cols[j].innerText;
-        }
-        data = cleanData(data);
-        // Push escaped string
-        row.push('"' + data + '"');
-      }
-      csv.push(row.join(separator));
+    const occupancies = this.metalDataSet.calculateOccupancy();
+    for (const id in this.metalDataSet.metals) {
+      const m = this.metalDataSet.metals[id];
+      const data = [
+        m.symbol,
+        m.affinity,
+        m.metalationDeltaG.toFixed(1),
+        m.bufferedMetalConcentration,
+        m.intracellularAvailableDeltaG.toFixed(1),
+        (occupancies[id] * 100).toFixed(2).toString() + "%",
+      ];
+      csv.push(data.join(separator));
     }
+    csv.push([
+      "Total Metalation",
+      "",
+      "",
+      "",
+      "",
+      (occupancies["total"] * 100).toFixed(2).toString() + "%",
+    ]);
+
+    // Extract user-friendly headings and explanations from table
+    const rows = this._calculatorTable.rows;
     const explanation = [];
     const headings = rows[0].cells;
+    const csvHeaders = [""];
     for (let k = 0; k < headings.length; k++) {
       const spans = headings[k].getElementsByTagName("span");
       if (spans.length > 0) {
         let detailText = spans[0].innerHTML;
         let detailTextTitle = headings[k].innerText;
+        csvHeaders.push(detailTextTitle);
         detailTextTitle = cleanData(detailTextTitle);
         detailText = cleanData(detailText);
         detailText = convertToPlainText(detailText);
         explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
       }
     }
+    // Add main headings to top, explanations to bottom
+    csv.unshift(csvHeaders.join(separator));
     csv.push(explanation.join("\n"));
 
     const csvString = csv.join("\n");
