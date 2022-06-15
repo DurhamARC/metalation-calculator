@@ -304,12 +304,12 @@ var MetalationCalculator = /** @class */ (function () {
         var headings = rows[0].cells;
         var csvHeaders = [""];
         for (var k = 0; k < headings.length; k++) {
-            var spans = headings[k].getElementsByTagName("span");
-            if (spans.length > 0) {
-                var detailText = spans[0].innerHTML;
+            var tooltips = headings[k].getElementsByClassName("tooltiptext");
+            if (tooltips.length > 0) {
+                var detailText = tooltips[0].innerHTML;
                 var detailTextTitle = headings[k].innerText;
-                csvHeaders.push(detailTextTitle);
                 detailTextTitle = cleanData(detailTextTitle);
+                csvHeaders.push(detailTextTitle);
                 detailText = cleanData(detailText);
                 detailText = convertToPlainText(detailText);
                 explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
