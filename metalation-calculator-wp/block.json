@@ -1,7 +1,7 @@
 {
 	"apiVersion": 2,
 	"name": "metalation-calculator-wp/calculator",
-	"version": "1.0.0",
+	"version": "1.0.3",
 	"title": "Metalation Calculator",
 	"category": "widgets",
 	"icon": "calculator",
