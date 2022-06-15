@@ -390,9 +390,9 @@ export class MetalationCalculator {
     const headings = rows[0].cells;
     const csvHeaders = [""];
     for (let k = 0; k < headings.length; k++) {
-      const spans = headings[k].getElementsByTagName("span");
-      if (spans.length > 0) {
-        let detailText = spans[0].innerHTML;
+      const tooltips = headings[k].getElementsByClassName("tooltiptext");
+      if (tooltips.length > 0) {
+        let detailText = tooltips[0].innerHTML;
         let detailTextTitle = headings[k].innerText;
         detailTextTitle = cleanData(detailTextTitle);
         csvHeaders.push(detailTextTitle);
