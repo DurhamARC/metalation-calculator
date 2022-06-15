@@ -395,7 +395,7 @@ export class MetalationCalculator {
         let detailText = tooltips[0].innerHTML;
         let detailTextTitle = headings[k].innerText;
         detailTextTitle = cleanData(detailTextTitle);
-        csvHeaders.push(detailTextTitle);
+        csvHeaders.push('"' + detailTextTitle + '"');
         detailText = cleanData(detailText);
         detailText = convertToPlainText(detailText);
         explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
