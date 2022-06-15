@@ -394,8 +394,8 @@ export class MetalationCalculator {
       if (spans.length > 0) {
         let detailText = spans[0].innerHTML;
         let detailTextTitle = headings[k].innerText;
-        csvHeaders.push(detailTextTitle);
         detailTextTitle = cleanData(detailTextTitle);
+        csvHeaders.push(detailTextTitle);
         detailText = cleanData(detailText);
         detailText = convertToPlainText(detailText);
         explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
