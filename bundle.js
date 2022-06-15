@@ -47,8 +47,10 @@ var MetalationCalculator = /** @class */ (function () {
             }
         }
         this._calculatorDiv = document.getElementById(calculatorID);
-        this._calculatorTable = this._calculatorDiv.getElementsByTagName("table")[0];
-        this._calculatorDiv.getElementsByTagName("h3")[0].innerHTML = this.metalDataSet.title;
+        this._calculatorTable =
+            this._calculatorDiv.getElementsByTagName("table")[0];
+        this._calculatorDiv.getElementsByTagName("h3")[0].innerHTML =
+            this.metalDataSet.title;
         if (imageDir) {
             // Only set image src if it's on the current domain
             var imageDirURL = new URL(imageDir);
@@ -73,11 +75,11 @@ var MetalationCalculator = /** @class */ (function () {
             }
             this.appendMetalTableRow(m);
         }
-        this._downloadButton = this._calculatorDiv.getElementsByClassName("download-btn")[0];
+        this._downloadButton = (this._calculatorDiv.getElementsByClassName("download-btn")[0]);
         this._downloadButton.onclick = function () {
             _this.downloadTableAsCsv();
         };
-        this._resetButton = this._calculatorDiv.getElementsByClassName("reset-btn")[0];
+        this._resetButton = (this._calculatorDiv.getElementsByClassName("reset-btn")[0]);
         this._resetButton.onclick = function () {
             _this.reset();
         };
@@ -128,6 +130,17 @@ var MetalationCalculator = /** @class */ (function () {
         return div;
     };
     /**
+     * Adds a label to the given element with a class that will be hidden
+     * on large screens (to allow labels to be diplayed when tables are
+     * collapsed)
+     */
+    MetalationCalculator.prototype.addSmallScreenLabel = function (element, innerHTML) {
+        var label = document.createElement("p");
+        label.innerHTML = innerHTML + ":";
+        label.classList.add("small-screen-label");
+        element.appendChild(label);
+    };
+    /**
      * Adds a row to this._calculatorTable for the given metal.
      */
     MetalationCalculator.prototype.appendMetalTableRow = function (metal) {
@@ -135,6 +148,9 @@ var MetalationCalculator = /** @class */ (function () {
         var row = this._calculatorTable
             .getElementsByTagName("tbody")[0]
             .insertRow();
+        var rowHeaders = this._calculatorTable
+            .getElementsByTagName("thead")[0]
+            .getElementsByTagName("th");
         var toggleButton = document.createElement("input");
         var label = document.createElement("label");
         toggleButton.type = "checkbox";
@@ -155,6 +171,7 @@ var MetalationCalculator = /** @class */ (function () {
         row.appendChild(metalCell);
         var affinityCell = row.insertCell(-1);
         affinityCell.classList.add("affinity", "grouped");
+        this.addSmallScreenLabel(affinityCell, rowHeaders[0].innerHTML);
         var affinityInput = this.createMetalNumberInput("affinity", metal, "affinity", function (id) {
             var m = _this.metalDataSet.metals[id];
             (document.getElementById(_this.calculatorID + "_metalation_delta_g_" + id)).innerText = m.metalationDeltaG.toFixed(1).toString();
@@ -162,10 +179,15 @@ var MetalationCalculator = /** @class */ (function () {
         affinityCell.appendChild(affinityInput);
         var mDeltaGCell = row.insertCell(-1);
         mDeltaGCell.classList.add("grouped", "right-spacing");
-        mDeltaGCell.id = this.calculatorID + "_metalation_delta_g_" + metal.idSuffix;
-        mDeltaGCell.innerText = metal.metalationDeltaG.toFixed(1).toString();
+        this.addSmallScreenLabel(mDeltaGCell, rowHeaders[1].innerHTML);
+        var mDeltaGSpan = document.createElement("span");
+        mDeltaGSpan.id =
+            this.calculatorID + "_metalation_delta_g_" + metal.idSuffix;
+        mDeltaGSpan.innerText = metal.metalationDeltaG.toFixed(1).toString();
+        mDeltaGCell.append(mDeltaGSpan);
         var bmcCell = row.insertCell(-1);
         bmcCell.classList.add("bmc", "grouped");
+        this.addSmallScreenLabel(bmcCell, rowHeaders[2].innerHTML);
         var bmcInput = this.createMetalNumberInput("bmc", metal, "bufferedMetalConcentration", function (id) {
             var m = _this.metalDataSet.metals[id];
             (document.getElementById(_this.calculatorID + "_ia_delta_g_" + id)).innerText = m.intracellularAvailableDeltaG.toFixed(1).toString();
@@ -173,13 +195,19 @@ var MetalationCalculator = /** @class */ (function () {
         bmcCell.appendChild(bmcInput);
         var iaDeltaGCell = row.insertCell(-1);
         iaDeltaGCell.classList.add("grouped");
-        iaDeltaGCell.id = this.calculatorID + "_ia_delta_g_" + metal.idSuffix;
-        iaDeltaGCell.innerText = metal.intracellularAvailableDeltaG
+        this.addSmallScreenLabel(iaDeltaGCell, rowHeaders[3].innerHTML);
+        var iaDeltaGSpan = document.createElement("span");
+        iaDeltaGSpan.id = this.calculatorID + "_ia_delta_g_" + metal.idSuffix;
+        iaDeltaGSpan.innerText = metal.intracellularAvailableDeltaG
             .toFixed(1)
             .toString();
+        iaDeltaGCell.append(iaDeltaGSpan);
         var resultCell = row.insertCell(-1);
-        resultCell.classList.add("result");
-        resultCell.id = this.calculatorID + "_result_" + metal.idSuffix;
+        this.addSmallScreenLabel(resultCell, rowHeaders[4].innerHTML);
+        var resultSpan = document.createElement("span");
+        resultSpan.classList.add("result");
+        resultSpan.id = this.calculatorID + "_result_" + metal.idSuffix;
+        resultCell.append(resultSpan);
     };
     /**
      * Clears the current calculation values and disables the download button.
@@ -236,12 +264,9 @@ var MetalationCalculator = /** @class */ (function () {
      */
     MetalationCalculator.prototype.updateRow = function (metal) {
         var id = metal.idSuffix;
-        document.getElementById(this.calculatorID + "_affinity_" + id).value =
-            metal.affinity.toString();
-        document.getElementById(this.calculatorID + "_metalation_delta_g_" + id).innerText =
-            metal.metalationDeltaG.toFixed(1).toString();
-        document.getElementById(this.calculatorID + "_bmc_" + id).value =
-            metal.bufferedMetalConcentration.toString();
+        (document.getElementById(this.calculatorID + "_affinity_" + id)).value = metal.affinity.toString();
+        document.getElementById(this.calculatorID + "_metalation_delta_g_" + id).innerText = metal.metalationDeltaG.toFixed(1).toString();
+        (document.getElementById(this.calculatorID + "_bmc_" + id)).value = metal.bufferedMetalConcentration.toString();
         document.getElementById(this.calculatorID + "_ia_delta_g_" + id).innerText =
             metal.intracellularAvailableDeltaG.toFixed(1).toString();
     };
@@ -250,45 +275,56 @@ var MetalationCalculator = /** @class */ (function () {
      */
     MetalationCalculator.prototype.downloadTableAsCsv = function (separator) {
         if (separator === void 0) { separator = ","; }
-        var rows = this._calculatorTable.rows;
-        // Construct csv
+        // Construct csv from metal data
         var csv = [];
-        for (var i = 0; i < rows.length; i++) {
-            var row = [];
-            var cols = rows[i].cells;
-            for (var j = 0; j < cols.length; j++) {
-                // Clean innertext to remove multiple spaces and jumpline (break csv)
-                var data = void 0;
-                var inputs = Array.from(cols[j].getElementsByTagName("input")).filter(function (e) { return e.type == "number"; });
-                if (inputs.length > 0) {
-                    data = inputs[0].value;
-                }
-                else {
-                    data = cols[j].innerText;
-                }
-                data = cleanData(data);
-                // Push escaped string
-                row.push('"' + data + '"');
-            }
-            csv.push(row.join(separator));
+        var occupancies = this.metalDataSet.calculateOccupancy();
+        for (var id in this.metalDataSet.metals) {
+            var m = this.metalDataSet.metals[id];
+            var data = [
+                m.symbol,
+                m.affinity,
+                m.metalationDeltaG.toFixed(1),
+                m.bufferedMetalConcentration,
+                m.intracellularAvailableDeltaG.toFixed(1),
+                (occupancies[id] * 100).toFixed(2).toString() + "%",
+            ];
+            csv.push(data.join(separator));
         }
+        csv.push([
+            "Total Metalation",
+            "",
+            "",
+            "",
+            "",
+            (occupancies["total"] * 100).toFixed(2).toString() + "%",
+        ]);
+        // Extract user-friendly headings and explanations from table
+        var rows = this._calculatorTable.rows;
         var explanation = [];
         var headings = rows[0].cells;
+        var csvHeaders = [""];
         for (var k = 0; k < headings.length; k++) {
             var spans = headings[k].getElementsByTagName("span");
             if (spans.length > 0) {
                 var detailText = spans[0].innerHTML;
                 var detailTextTitle = headings[k].innerText;
+                csvHeaders.push(detailTextTitle);
                 detailTextTitle = cleanData(detailTextTitle);
                 detailText = cleanData(detailText);
                 detailText = convertToPlainText(detailText);
                 explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
             }
         }
+        // Add main headings to top, explanations to bottom
+        csv.unshift(csvHeaders.join(separator));
         csv.push(explanation.join("\n"));
         var csvString = csv.join("\n");
         // Download it
-        var filename = "export_" + convertToPlainText(this.metalDataSet.title).replaceAll(' ', '_') + "_" + new Date().toLocaleDateString() + ".csv";
+        var filename = "export_" +
+            convertToPlainText(this.metalDataSet.title).replaceAll(" ", "_") +
+            "_" +
+            new Date().toLocaleDateString() +
+            ".csv";
         var link = document.createElement("a");
         link.style.display = "none";
         link.setAttribute("target", "_blank");
@@ -488,4 +524,4 @@ var MetalDataSet = /** @class */ (function () {
 }());
 exports.MetalDataSet = MetalDataSet;
 
-},{}]},{},[2,3]);
+},{}]},{},[2,3,1]);
