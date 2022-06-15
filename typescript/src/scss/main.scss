@@ -15,6 +15,10 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
     font-size: 16px;
     overflow: visible;
 
+    @media (max-width: 767px) {
+      margin-bottom: 50px;
+    }
+
     tr {
       td,
       th {
@@ -23,6 +27,10 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
         justify-content: center;
         white-space: normal;
         word-break: normal;
+
+        @media (max-width: 767px) {
+          display: block;
+        }
       }
 
       th {
@@ -34,6 +42,7 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
       .result {
         text-align: right;
         padding-right: 20px;
+        padding-left: 5px;
       }
     }
 
@@ -43,43 +52,58 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
       padding: 1.2%;
     }
 
+    thead {
+      @media (max-width: 767px) {
+        td,
+        th {
+          display: none;
+        }
+      }
+    }
+
+    tfoot {
+      td,
+      th {
+        height: 100%;
+      }
+
+      th.result {
+        padding-right: 38px;
+      }
+
+      @media (max-width: 767px) {
+        width: calc(100% - 95px);
+        height: auto;
+        overflow-y: auto;
+        clip: auto;
+
+        tr {
+          display: block;
+          text-align: right;
+
+          th {
+            display: inline-block;
+            width: 45%;
+            text-align: right;
+
+            &.result {
+              padding-right: 20px;
+            }
+          }
+
+          td {
+            display: none;
+          }
+        }
+      }
+    }
+
     sup {
       white-space: nowrap;
     }
 
-    tbody {
-      .grouped {
-        background-color: $low-opacity-gray;
-      }
-
-      th {
-        text-align: left;
-        justify-content: center;
-
-        .metal-symbol {
-          display: inline-block;
-          margin-left: 15px;
-        }
-      }
-
-      tr:nth-child(odd) {
-        background-color: $white;
-
-        td.right-spacing {
-          border-right: 15px solid $white;
-        }
-      }
-
-      tr:nth-child(even) {
-        background-color: $medium-gray;
-
-        td.right-spacing {
-          border-right: 15px solid $medium-gray;
-        }
-      }
-    }
-
-    .tooltip {
+    .tooltip,
+    .small-screen-label {
       position: relative;
 
       .metalation-unit {
@@ -117,6 +141,80 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
       }
     }
 
+    tbody {
+      .grouped {
+        background-color: $low-opacity-gray;
+      }
+
+      th {
+        text-align: left;
+        justify-content: center;
+
+        @media (max-width: 767px) {
+          position: relative;
+          display: block;
+          border-top: solid $dark-medium-gray 2px;
+        }
+
+        .metal-symbol {
+          display: inline-block;
+          margin-left: 15px;
+        }
+      }
+
+      tr:nth-child(odd) {
+        background-color: $white;
+
+        td.right-spacing {
+          border-right: 15px solid $white;
+
+          @media (max-width: 767px) {
+            border-right: none;
+            border-bottom: 5px solid $white;
+          }
+        }
+      }
+
+      tr:nth-child(even) {
+        background-color: $medium-gray;
+
+        td.right-spacing {
+          border-right: 15px solid $medium-gray;
+
+          @media (max-width: 767px) {
+            border-right: none;
+            border-bottom: 5px solid $medium-gray;
+          }
+        }
+      }
+
+      .small-screen-label {
+        display: none;
+
+        @media (max-width: 767px) {
+          display: inline-block;
+          font-weight: bold;
+          margin-right: 5px;
+          width: 45%;
+        }
+      }
+
+      @media (max-width: 767px) {
+        td {
+          & > div,
+          & > span {
+            display: inline-block;
+            width: 45%;
+            padding: 10px;
+
+            &.result {
+              padding-right: 10px;
+            }
+          }
+        }
+      }
+    }
+
     #total-metalation {
       padding: 18px;
     }
@@ -132,6 +230,10 @@ $low-opacity-gray: rgb(96 96 96 / 20%);
       /* stylelint-disable */
       -moz-appearance: textfield;
       /* stylelint-enable */
+
+      @media (max-width: 767px) {
+        width: 100%;
+      }
     }
 
     /* Hide number up/down arrows in Chrome, Safari, Edge, Opera */
