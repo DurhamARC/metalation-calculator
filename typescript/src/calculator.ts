@@ -390,16 +390,22 @@ export class MetalationCalculator {
     const headings = rows[0].cells;
     const csvHeaders = [""];
     for (let k = 0; k < headings.length; k++) {
+      // Ensure header cell is visible so innerText does not include tooltip
+      const headingDisplay = headings[k].style.display;
+      headings[k].style.display = "table-cell";
+
       const tooltips = headings[k].getElementsByClassName("tooltiptext");
       if (tooltips.length > 0) {
         let detailText = tooltips[0].innerHTML;
         let detailTextTitle = headings[k].innerText;
         detailTextTitle = cleanData(detailTextTitle);
-        csvHeaders.push(detailTextTitle);
+        csvHeaders.push('"' + detailTextTitle + '"');
         detailText = cleanData(detailText);
         detailText = convertToPlainText(detailText);
         explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
       }
+      // Reset cell display
+      headings[k].style.display = headingDisplay;
     }
     // Add main headings to top, explanations to bottom
     csv.unshift(csvHeaders.join(separator));

@@ -10,7 +10,9 @@ Notes on security can be found in [security.md](security.md).
 
 ## Wordpress Plugin
 
-The calculator can be installed as a Wordpress block plugin, allowing admin users can add a calculator to any page. The plugin can be installed by downloading the **metalation-calculator-wp.zip** file from the latest [release](https://github.com/DurhamARC/metalation-calculator/releases), and uploading the file to the Wordpress admin interface.
+The calculator can be installed as a Wordpress block plugin, allowing admin users can add a calculator to any page. The plugin can be installed by downloading the **metalation-calculator-wp.zip** file from the latest [release](https://github.com/DurhamARC/metalation-calculator/releases), and uploading the file to the plugins section of the Wordpress admin interface.
+
+Note that in order to update the plugin via the 'Upload' feature, the filename needs to be kept as **metalation-calculator-wp.zip**, otherwise it will be treated as a new plugin but will conflict with the existing one. (If this happens, it can be fixed by deactivating and deleting the old plugin.)
 
 ## Development
 
