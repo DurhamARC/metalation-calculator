@@ -29,6 +29,7 @@
     "jest": "^27.3.1",
     "prettier": "^2.4.1",
     "sass": "^1.39.0",
+    "stylelint": "^14.9.1",
     "stylelint-config-standard-scss": "^3.0.0",
     "ts-jest": "^27.0.7",
     "tsify": "^5.0.4",
