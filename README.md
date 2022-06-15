@@ -16,7 +16,7 @@ The calculator can be installed as a Wordpress block plugin, allowing admin user
 
 The code for the calculator is in two parts:
 
- * The `typescript` directory contains code for a static web app. It uses TypeScript with gulp to generate the static website. GitHub Actions builds the `main` branch from the `typescript` directory and pushes the compiled site to GitHub Pages (on the `gh-pages` branch).
+ * The `typescript` directory contains code for a static web app. It uses TypeScript with gulp to generate the static website. GitHub Actions builds the `main` branch from the `typescript` directory and pushes the compiled site to [GitHub Pages](https://durhamarc.github.io/metalation-calculator/) (on the `gh-pages` branch).
  * The `metalation-calculator-wp` directory contains a Wordpress block plugin, which
 
 
@@ -79,3 +79,30 @@ You should then be able to access your local Wordpress instance at http://localh
 http://localhost:8888/wp-admin.
 
 Enable the **Metalation Calculator** plugin, then add a 'metalation calculator' block to a post or page to test it out.
+
+## Releases
+
+To create a new release:
+
+1. Update the version number in the following files in **metalation-calculator-wp**, e.g. if the previous version was 1.0.2 then use 1.0.3.
+   - **block.json**
+   - **metalation-calculator-wp.php**
+
+   Commit and push the changes to main.
+
+2. Create a new (lightweight) [git tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging#_lightweight_tags) from main to match the new version number, following the vX.Y.Z formatting (e.g. v1.0.3):
+   ```bash
+   git tag v1.0.3
+   ```
+
+3. Push the tag to GitHub:
+   ```bash
+   git push origin v1.0.3
+   ```
+   You can check the tag has been created from the [tags](https://github.com/DurhamARC/metalation-calculator/tags) page of the repository.
+
+4. GitHub Actions should run on the tag push, including the jobs to release the Wordpress plugin.
+
+5. Go to the [releases](https://github.com/DurhamARC/metalation-calculator/releases) page and check that the release, including a file **metalation-calculator-wp.zip**, has been created.
+
+To publish the updated plugin to https://mib-nibb.webspace.durham.ac.uk, contact the web team at Durham University CIS and give them the details of the new release.
