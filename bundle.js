@@ -304,16 +304,21 @@ var MetalationCalculator = /** @class */ (function () {
         var headings = rows[0].cells;
         var csvHeaders = [""];
         for (var k = 0; k < headings.length; k++) {
+            // Ensure header cell is visible so innerText does not include tooltip
+            var headingDisplay = headings[k].style.display;
+            headings[k].style.display = "table-cell";
             var tooltips = headings[k].getElementsByClassName("tooltiptext");
             if (tooltips.length > 0) {
                 var detailText = tooltips[0].innerHTML;
                 var detailTextTitle = headings[k].innerText;
                 detailTextTitle = cleanData(detailTextTitle);
-                csvHeaders.push(detailTextTitle);
+                csvHeaders.push('"' + detailTextTitle + '"');
                 detailText = cleanData(detailText);
                 detailText = convertToPlainText(detailText);
                 explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
             }
+            // Reset cell display
+            headings[k].style.display = headingDisplay;
         }
         // Add main headings to top, explanations to bottom
         csv.unshift(csvHeaders.join(separator));
