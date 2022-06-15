@@ -16,7 +16,7 @@ The calculator can be installed as a Wordpress block plugin, allowing admin user
 
 The code for the calculator is in two parts:
 
- * The `typescript` directory contains code for a static web app. It uses TypeScript with gulp to generate the static website. GitHub Actions builds the `main` branch from the `typescript` directory and pushes the compiled site to GitHub Pages (on the `gh-pages` branch).
+ * The `typescript` directory contains code for a static web app. It uses TypeScript with gulp to generate the static website. GitHub Actions builds the `main` branch from the `typescript` directory and pushes the compiled site to [GitHub Pages](https://durhamarc.github.io/metalation-calculator/) (on the `gh-pages` branch).
  * The `metalation-calculator-wp` directory contains a Wordpress block plugin, which
 
 
