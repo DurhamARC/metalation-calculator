@@ -14,7 +14,7 @@ const debug = require('gulp-debug');
 const gulpStylelint = require('@ronilaukkarinen/gulp-stylelint');
 const terser = require("gulp-terser");
 const paths = {
-  ts: ["src/main.ts", "src/metals.ts"],
+  ts: ["src/main.ts", "src/metals.ts", "src/calculator.ts"],
   pages: ["src/*.html", "src/includes/*.html"],
   styles: ["src/scss/*.scss"],
   tests: ["src/?(*.)+(spec|test).+(ts|tsx|js)"],
