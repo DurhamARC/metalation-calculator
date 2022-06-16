@@ -397,12 +397,19 @@ export class MetalationCalculator {
       const tooltips = headings[k].getElementsByClassName("tooltiptext");
       if (tooltips.length > 0) {
         let detailText = tooltips[0].innerHTML;
-        let detailTextTitle = headings[k].innerText;
-        detailTextTitle = cleanData(detailTextTitle);
-        csvHeaders.push('"' + detailTextTitle + '"');
         detailText = cleanData(detailText);
         detailText = convertToPlainText(detailText);
-        explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
+
+        let detailTextTitle = headings[k].innerText;
+        detailTextTitle = cleanData(detailTextTitle);
+        if (!detailTextTitle) {
+          // Quick fix for Safari where the headingDisplay trick doesn't work
+          detailTextTitle = detailText;
+        } else {
+          // Only add the explanation if header is not the full detail
+          explanation.push('"# ' + detailTextTitle + " = " + detailText + '"');
+        }
+        csvHeaders.push('"' + detailTextTitle + '"');
       }
       // Reset cell display
       headings[k].style.display = headingDisplay;
