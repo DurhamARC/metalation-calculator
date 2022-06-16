@@ -1,6 +1,6 @@
 {
 	"name": "metalation-calculator-wp",
-	"version": "1.0.0",
+	"version": "1.0.4",
 	"description": "Calculator to predict metal occupancies in vivo",
 	"author": "Alison Clarke",
 	"license": "MIT",

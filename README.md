@@ -89,8 +89,10 @@ To create a new release:
 1. Update the version number in the following files in **metalation-calculator-wp**, e.g. if the previous version was 1.0.2 then use 1.0.3.
    - **block.json**
    - **metalation-calculator-wp.php**
+   - **package.json**
+   - **readme.txt**: as well as updating the 'stable tag' at the top, add a new section to the Changelog with the new version number and notes on what has changed.
 
-   Commit and push the changes to main.
+   Run `npm install` to update version number in **package-lock.json**. Commit and push the changes to the main branch on GitHub.
 
 2. Create a new (lightweight) [git tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging#_lightweight_tags) from main to match the new version number, following the vX.Y.Z formatting (e.g. v1.0.3):
    ```bash

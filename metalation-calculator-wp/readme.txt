@@ -2,7 +2,7 @@
 Contributors:      Alison Clarke
 Tags:              block
 Tested up to:      5.9.1
-Stable tag:        1.0.0
+Stable tag:        1.0.4
 License:           MIT
 License URI:       http://opensource.org/licenses/MIT
 
@@ -28,6 +28,9 @@ Sciences Research Council.
 
 
 == Changelog ==
+
+= 1.0.4 =
+* Made calculator useable on mobile devices/smaller screens
 
 = 1.0.0 =
 * Initial release

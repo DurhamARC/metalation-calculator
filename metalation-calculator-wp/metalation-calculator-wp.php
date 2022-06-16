@@ -4,7 +4,7 @@
  * Description:       Calculator to predict metal occupancies in vivo.
  * Requires at least: 5.8
  * Requires PHP:      7.0
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            Alison Clarke
  * License:           MIT
  * License URI:       http://opensource.org/licenses/MIT
